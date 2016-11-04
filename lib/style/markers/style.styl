@@ -1,0 +1,88 @@
+.inforWindow
+	width 300px !important
+	&__image
+		width 100%
+		height 200px
+		&--photo
+			width 300px
+			height 200px
+			background-size cover
+			background-repeat no-repeat
+			background-position center
+	&__content
+		padding .5em 1em
+		&--head
+			width 100%
+			border-bottom 1px solid Gris_Lighter
+			position relative
+			.title
+				p
+					color Gris_Bolder rgba(86,95,98,1)
+					font-size 1.3em
+					font-family AvenirBold "Avenir Bold"
+			.data
+				position absolute
+				top 0
+				right 0
+				&__priority, &__status
+					margin .5em
+					border 5px
+					font-family AvenirLighter '"Avenir Lighter"'
+					font-size 14px
+					padding .2em 1.3em
+					border-radius 3px
+				&__priority
+					color Gris_lighter rgba(158,169, 175,1)
+					background-color Gris_background #e2e2e2
+				&__status
+					color White
+			.infoOrder
+				&__direction
+					color Gris_Bolder
+					font-family AvenirBold
+				&__service
+					color Gris_lighter
+					font-family AvenirLighter
+		&--userInfo
+			.info
+				padding .5em
+				&__title
+					color Gris_Bolder rgba(86,95,98,1)
+
+					font-size AvenirBold
+				&__text
+					color Gris_lighter
+					font-size AvenirLighter
+			.card
+				margin .5em 1em
+				border-radius 5px
+				&__user
+					position relative
+					padding .5em .5em .5em 50px
+					background-color Gris_hover #f5f5f5
+					border 5px 5px 0 0
+					&--avatar
+						border-radius 50%
+						background-size cover
+						background-position center
+						background-repeat no-repeat
+					&--name
+						color Gris_Bolder
+						font-family AvenirBold
+				&__other
+					display flex
+					justify-content space-around
+					flex-wrap wrap
+					&--left, &--right
+						width 50%
+						padding 5px
+						.title
+							font-family AvenirBold
+							color Gris_Bolder
+						.text
+							font-family AvenirLighter
+							color Gris_lighter
+				
+			
+				
+				

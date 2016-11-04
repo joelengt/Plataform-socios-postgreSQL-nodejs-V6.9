@@ -1,0 +1,501 @@
+<div>
+	<div ng-include="global.navUrl"></div>
+	<div class="OrderWork Containner">
+		<div class="OrderWork__left Containner__left">
+			<div class="OrderWork__left--filter">
+				<div class="Filter">
+					<div class="Filter__head">
+						<div class="Filter__head--content" id="viewFilter" ng-click="viewFilter()">
+							<h2><span class="icon-icon_filtro"></span> Filtros</h2>
+						</div>
+					</div>
+					<div class="Filter__options" id="FilterContents">
+						<div class="Filter__options--triangle" id="triangle"></div>
+						<div class="Filter__options--content">
+							<div class="Items">
+								<div class="Items__left">
+									<p>Orden</p>
+								</div>
+								<div class="Items__right">
+									<div class="selectBox">
+										<select id="estado" class="selectBox__select" name="">
+											<option value="true">Publicado</option>
+											<option value="false">No Publicado</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="Items">
+								<div class="Items__left">
+									<p>Tipo de Servicio</p>
+								</div>
+								<div class="Items__right checks">
+									<div class="checkboks">
+										<input checked name="service" id="poste" type="checkbox"/>
+										<label for="poste">Poste</label>
+									</div>
+									<div class="checkboks">
+										<input checked name="service" id="cliente" type="checkbox"/>
+										<label for="cliente">Cliente</label>
+									</div>
+								</div>
+							</div>
+							<div class="Items">
+								<div class="Items__left">
+									<p>Contratista</p>
+								</div>
+								<div class="Items__right">
+									<div class="selectBox">
+										<select class="selectBox__select" name="" id="contratista">
+											<div class="selectedOptions">
+												<option value="all">Todos</option>	
+												<option ng-repeat="contratista in contratistas" value="{{contratista._id}}">{{contratista.name}}</option>
+											</div>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="Items" id="dates">
+								<div class="Items__left">
+									<p>Fecha</p>
+								</div>
+								<div class="Items__right">
+									<div>
+										<input id="date_one" type="date"/>
+									</div>
+									<div>
+										<input id="date_two" type="date"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="OrderWork__left--list">
+				<!-- <section class="DatasItems" ng-if="pendientes.length > 0">
+					<div class="DatasItems__title">
+						<h2>PENDIENTES</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in pendientes">
+						<div class="Item__containner" data-id="{{orderWork._id}}" ng-click="detailOrder(orderWork._id)">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+						<div data-content="{{orderWork._id}}" ng-mouseleave="optionsHide(orderWork._id)" ng-mouseover="optionsShow(orderWork._id)" class="Item__options">
+							<div class="Item__options--btn">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__options--desplegable">
+								<div class="Element"  ng-click="cancelOrder(orderWork._id)">
+									<p>Cancelar</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="resuelto.length > 0">
+					<div class="DatasItems__title">
+						<h2>RESUELTAS</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in resuelto">
+						<div class="Item__containner" data-id="{{orderWork._id}}"  ng-click="detailOrder(orderWork._id)">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+						<div data-content="{{orderWork._id}}" ng-mouseleave="optionsHide(orderWork._id)" ng-mouseover="optionsShow(orderWork._id)" class="Item__options">
+							<div class="Item__options--btn">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__options--desplegable">
+								<div class="Element">
+									<p>Exportar</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="no_resuelto.length > 0">
+					<div class="DatasItems__title">
+						<h2>NO RESUELTAS</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in no_resuelto">
+						<div class="Item__containner" data-id="{{orderWork._id}}" ng-click="detailOrder(orderWork._id)">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+						<div data-content="{{orderWork._id}}" ng-mouseleave="optionsHide(orderWork._id)" ng-mouseover="optionsShow(orderWork._id)" class="Item__options">
+							<div class="Item__options--btn">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__options--desplegable">
+								<div class="Element">
+									<p>Exportar</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="reportado.length > 0">
+					<div class="DatasItems__title">
+						<h2>REPORTADAS</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in reportado">
+						<div class="Item__containner" data-id="{{orderWork._id}}" ng-click="detailOrder(orderWork._id)">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+						<div data-content="{{orderWork._id}}" ng-mouseleave="optionsHide(orderWork._id)" ng-mouseover="optionsShow(orderWork._id)" class="Item__options">
+							<div class="Item__options--btn">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__options--desplegable">
+								<div class="Element">
+									<p>Ver Reporte</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="reprogramado.length > 0">
+					<div class="DatasItems__title">
+						<h2>REPROGRAMADAS</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in reprogramado">
+						<div class="Item__containner" data-id="{{orderWork._id}}" ng-click="detailOrder(orderWork._id)">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="en_proceso.length > 0">
+					<div class="DatasItems__title">
+						<h2>EN CURSO</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in en_proceso">
+						<div class="Item__containner" data-id="{{orderWork._id}}" ng-click="detailOrder(orderWork._id)">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+						<div data-content="{{orderWork._id}}" ng-mouseleave="optionsHide(orderWork._id)" ng-mouseover="optionsShow(orderWork._id)" class="Item__options">
+							<div class="Item__options--btn">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__options--desplegable">
+								<div class="Element">
+									<p>Cancelar</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="no_asignado.length > 0">
+					<div class="DatasItems__title">
+						<h2>NO ASIGNADO</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in no_asignado" ng-click="detailOrder(orderWork._id)">
+						<div class="Item__containner" data-id="{{orderWork._id}}">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+				<!-- <section class="DatasItems" ng-if="cancelado.length > 0">
+					<div class="DatasItems__title">
+						<h2>CANCELADAS</h2>
+					</div>
+					<div class="Item" ng-repeat="orderWork in cancelado" data-IdOrder="" ng-click="detailOrder(orderWork._id)">
+						<div class="Item__containner" data-id="{{orderWork._id}}">
+							<figure class="Item__containner--image">
+								<img src="{{orderWork.cover_image.path}}" alt="" width="60">
+							</figure>
+							<div class="Item__containner--text">
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_P'">Poste</h3>
+								<h3 class="title" ng-if="orderWork.tipo_servicio === 'tipo_servicio_C'">Cliente</h3>
+								<p class="direction">{{orderWork.direccion}}</p>
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_A'">Zona sin Alumbrado Publico</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CH'">Poste Chocado</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_CC'">Poste Caido por Corrosion</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_M'">Mantenimiento de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_I'">Instalacion de Poste</p>
+								
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_R'">Registro de Poste</p>
+								
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_VC'">Verificar Direccion de Cliente</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RD'">Registro de Direccion</p>
+
+								<p class="type_Servicio" ng-if="orderWork.detalle_servicio === 'detalle_servicio_RCN'">Registrar Cliente Nuevo</p>
+							</div>
+							<div class="Item__containner--priority">
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_A'">
+									<p>Alta</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_M'">
+									<p>Media</p>
+								</div>
+								<div style="background-color:#dde1e3" class="btnPriority" ng-if="orderWork.tipo_urgencia === 'tipo_urgencia_B'">
+									<p>Baja</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+			</div>
+		</div>
+		<div class="OrderWork__right Containner__right">
+		</div>
+	</div>
+</div>

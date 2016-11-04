@@ -1,0 +1,50 @@
+<div class="Home">
+	<div class="Home__containner">
+		<div class="Home__containner--left">
+			<div class="CoverImage"></div>
+		</div>
+		<div class="Home__containner--right">
+			<div class="LoginContainner">
+				<div class="LoginContainner__title">
+					<h2>Iniciar Sesión</h2>
+				</div>
+				<form class="LoginContainner__form" name="loginForm" ng-submit="doLogin(loginForm)">
+					<div class="LoginContainner__form--inputContainner">
+						<label class="astrum__label" for="username">USUARIO</label>
+						<input class="astrum__input" type="text" id="username" ng-model="login.username" placeholder="Ingresa tu nombre de Usuario" autocomplete="off" required>
+						<!-- <div class="form-control-bottom"></div> -->
+					</div>
+					<div class="LoginContainner__form--inputContainner">
+						<label class="astrum__label" for="password">CONTRASEÑA</label>
+						<input class="astrum__input" type="password" id="password" ng-model="login.password" placeholder="Ingresa tu Contraseña" autocomplete="off" required>
+						<!-- <div class="form-control-bottom"></div> -->
+					</div>
+					<div class="LoginContainner__form--btnSubmit">
+						<input class="loginSubmit" type="submit" value="INGRESAR">
+					</div>
+				</form>
+				<div class="ErrorLogin"></div>
+			</div>
+			<div class="LoginContainner">
+				<div class="LoginContainner__form--dateForget">
+					<p>¿Has olvidado tu usuario ó contraseña?</p>
+					<a href="#/forgetpassword">ENTRAR</a>
+				</div>
+			</div>
+		</div>
+		<footer class="Home__containner--footer">
+			<div class="Links">
+				<ul class="Links__left">
+					<li class="Links__left--list"><a href="">Soporte</a></li>
+					<li class="Links__left--list"><a href="">Contacto</a></li>
+					<li class="Links__left--list"><a href="">Términos y Condiciones</a></li>
+					<li class="Links__left--list"><a href="">Políticas de privacidad</a></li>
+					<li class="Links__left--list"><a href="">Nosotros</a></li>
+				</ul>
+				<div class="Links__right">
+					<p>Desarrollado por Astrum Coder.</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+</div>

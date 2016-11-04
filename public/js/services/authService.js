@@ -1,0 +1,3 @@
+myApp.service('authService', ['', function(){
+	
+}])

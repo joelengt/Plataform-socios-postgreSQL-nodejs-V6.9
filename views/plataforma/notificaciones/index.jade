@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		//- link(rel="stylesheet", href="./css/normalize.css")
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		//- link(rel="stylesheet", href="../css/index.css")
+	body(class="wrap")
+
+	header
+		header
+			h1 AstrumApp
+			//- img(src="#{user.photo.path}", width="80")
+			p @#{user.username}
+			p permiso: #{user.permiso}
+			p empresa: #{user.empresa_admin}
+			
+		h2 Notificaciones del usuario de Campo
+	section
+		div
+			strong Notificaciones: #{notificaciones_cant_news}
+
+		div(style="display:none;")
+			input(type="text", id="NotificationsRoom", value="#{user._id}")
+		div(class="ContentNotifications")
+			each notificacion in notificaciones
+				p work_order_id: #{notificacion.work_order_id}
+				p Tipo Servicio: #{notificacion.type_service}
+				p Estado: #{notificacion.type_status}
+
+				label message: #{notificacion.content}
+				//- p user_id: #{notificacion.user_emiter.user_id}
+				p #{notificacion.fecha_creacion}
+
+
+script(type="text/javascript", src="https://cdn.socket.io/socket.io-1.2.0.js")
+script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+script(type="text/javascript", src="../../../js/socket_io/notificaciones/index.js")

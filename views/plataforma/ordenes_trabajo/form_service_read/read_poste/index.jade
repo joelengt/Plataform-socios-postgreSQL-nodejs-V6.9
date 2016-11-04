@@ -1,0 +1,126 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { height: 80%; width: 80%;}
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap")
+
+		header
+			h1 AstrumApp
+			img(src="../../../../../#{user.photo.path}", width="80")
+			p @#{user.username}
+
+		section
+			h2  Actualizar data: #{type_service}
+			article
+				div
+					div
+						label codigo de poste:
+					div
+						div
+							a(id="btn_buscar_poste",  class="btn btn-default") Buscar
+							p(id="msg_busqueda")
+						p #{service.codigo_poste}
+
+				div
+					div
+						label codigo de orden de trabajo:
+						p #{codigo_work_order}
+
+				div
+					div
+						label tipo de poste
+					div
+						p #{service.type_poste}
+
+				div
+					div
+						label altura de poste
+					div
+						p #{service.altura_poste}
+
+				div
+					div
+						label tipo de material
+					div
+						p #{service.type_material}
+
+				div
+					div
+						label tipo de pastoral
+					div
+						p #{service.type_pastoral}
+
+				div
+					div
+						label tipo de luminaria
+					div
+						p #{service.type_luminaria}
+
+				div
+					div
+						label tipo de lampara
+					div
+						p #{service.type_lampara}
+
+				div
+					div
+						label Galeria Multimedia
+						div
+							each element in service.imagen_poste
+								img(src="#{element.path}", width="100")
+
+				div
+					div
+						label observaciones
+						p #{service.observaciones}
+
+				div
+					div
+						label estado poste
+						p #{service.estado_poste}
+
+				div
+					div
+						label estado pastoral
+						p #{service.estado_pastoral}
+
+				div
+					div
+						label estado luminaria
+						p #{service.estado_luminaria}
+
+				div
+					div
+						label estado lampara
+						p #{service.estado_lampara}
+
+				div
+						div(style="display: none;")
+							
+							input(type="text", name="coordenada_X", value="#{service.coordenada_X}", id="txt_coordenada_X", class="form-control  wrap_padding")
+							input(type="text", name="coordenada_Y", value="#{service.coordenada_Y}", id="txt_coordenada_Y", class="form-control  wrap_padding")
+							a(id="btn_goPoints", class="btn btn-default") Buscar
+					div
+						div
+							label coordenada_X
+							p #{service.coordenada_X}
+
+						div
+							label coordenada_Y
+							p #{service.coordenada_Y}
+
+		
+		div(id="map")
+		script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+		script(type='text/javascript', src="../../../../../../js/gmaps/index.js")
+		script(type='text/javascript', src="../../../../../../js/plataforma/modulos/form_poste/index.js")
+		script(type='text/javascript', src="../../../../../../js/plataforma/work_orders/poste/index.js")
+		script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Astrum">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1"/>
+	<title>Astrum</title>
+	<link rel="icon" type="image/png" href="./images/favicon.png">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./css/pannellum.css"/>
+	<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script type="text/javascript" src="./js/random/socket.io-stream.js"></script>
+	<script src="./js/random/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="./js/random/pannellum.js"></script>
+	<!-- <script src="./js/random/jquery.slides.min.js"></script> -->
+	<script src="./js/random/gmaps.js"></script>
+	<script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY"></script>
+	<!-- <script src="./js/random/google-maps-key.js"></script> -->
+	<script src="./js/random/angular.min.js"></script>
+	<script src="./js/random/angular-route.min.js"></script>
+	<script src="./js/random/angular-cookies.min.js"></script>
+	<!-- <script src="./js/random/socket.js"></script> -->
+	<!-- <script src="./js/random/ngDraggable.js"></script> -->
+	<!-- <script src="./js/random/angularjs-google-maps.js"></script> -->
+	<script src="./js/index.js"></script>
+	<script src="./js/routes/routes.js"></script>
+	<script src="./js/factorys/userModel.js"></script>
+	<script src="./js/factorys/loader.js"></script>
+	<script src="./js/controllers/home/index.js"></script>
+	<script src="./js/controllers/forgetPassword/index.js"></script>
+	<script src="./js/controllers/globalController/index.js"></script>
+	<script src="./js/controllers/dashboard/index.js"></script>
+	<script src="./js/controllers/order_work/index.js"></script>
+	<script src="./js/controllers/navbar/index.js"></script>
+	<script src="./js/controllers/navbar/notification/index.js"></script>
+	<script src="./js/controllers/navbar/chatroom/index.js"></script>
+	<script src="./js/controllers/users/index.js"></script>
+	<script src="./js/controllers/kml/index.js"></script>
+	<script src="./js/controllers/logout/index.js"></script>
+	<script src="./js/factorys/SocketFactory.js"></script>
+	<script src="./js/services/multipartForm.js"></script>
+	<script src="./js/directives/files.js"></script>
+</head>
+<body>
+	<div class="container" ng-controller="globalController">
+		<div ng-view></div>
+	</div>
+</body>
+</html>

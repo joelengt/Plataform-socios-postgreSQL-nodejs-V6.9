@@ -1,0 +1,635 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { height: 80%; width: 80%;}
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap")
+
+		header
+			h1 AstrumApp
+			img(src="../../../../../#{user.photo.path}", width="80")
+			p @#{user.username}
+
+		section
+			h2  Actualizar data: #{type_service}
+			form(action="http://localhost:5000/plataforma/work-order/#{work_order._id}/item/#{type_service}/#{service._id}?_method=put", method="post")
+				div
+					div
+						label > codigo de poste:
+					div
+						input(type="number", name="codigo_poste", value="#{service.codigo_poste}", id="txt_codigo_poste", class="form-control  wrap_padding")
+						a(id="btn_buscar_poste",  class="btn btn-default") Buscar
+						p(id="msg_busqueda")
+				div
+					div
+						label > codigo de orden de trabajo:
+						p #{codigo_work_order}
+
+				div
+					div
+						label > tipo de poste
+					div
+						div
+							input(type="radio", name="type_poste", value="type_poste_AP")
+							label Alumbrado Publico
+						div
+							input(type="radio", name="type_poste", value="type_poste_SP")
+							label Servicio Particular
+						div
+							input(type="radio", name="type_poste", value="type_poste_MT")
+							label Media Tension
+						div
+							input(type="radio", name="type_poste", value="type_poste_C")
+							label Compartido
+						//-div
+							p Campo autorellenado
+							input(type="text", name="type_poste", value="#{service.type_poste}", id="txt_type_poste", class="form-control  wrap_padding")
+
+				div
+					div
+						label > tipo de material
+					div
+						div
+							input(type="radio", name="type_material", value="type_material_C")
+							label Concreto
+						div
+							input(type="radio", name="type_material", value="type_material_A")
+							label Acero
+						div
+							input(type="radio", name="type_material", value="type_material_M")
+							label Madera
+						div
+							input(type="radio", name="type_material", value="type_material_F")
+							label Fibra de Vidrio
+						//-div
+							p Campo autorellando
+							input(type="text", name="type_material", value="#{service.type_material}", id="txt_type_material", class="form-control  wrap_padding")
+
+				div
+					div
+						label > altura de poste
+					div
+						div
+							strong material - Concreto (type_material_C)
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_0C")
+								label 0m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_5C")
+								label 5m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_6C")
+								label 6m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_7C")
+								label 7m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_8C")
+								label 8m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_9C")
+								label 9m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_11C")
+								label 11m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_13C")
+								label 13m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_15C")
+								label 15m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_11C2")
+								label 11m-C
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_13C2")
+								label 13m-C
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_15C2")
+								label 15m-C
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_22C2")
+								label 22m-C
+
+						div
+							strong material - Acero (type_material_A)
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_0A")
+								label 0m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_5A")
+								label 5m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_6A")
+								label 6m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_7A")
+								label 7m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_8A")
+								label 8m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_9A")
+								label 9m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_11A")
+								label 11m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_13A")
+								label 13m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_15A")
+								label 15m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_20A")
+								label 20m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_21A")
+								label 21m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_22A")
+								label 22m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_25A")
+								label 25m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_25A2")
+								label 25m T
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_28A")
+								label 28m
+						
+						div
+							strong material - Madera (type_material_M)
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_7M")
+								label 7.62m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_9M")
+								label 9.14m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_11M")
+								label 10.67m
+
+						div
+							strong  material - Fibra de Vidrio (type_material_F)
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_8F")
+								label 8m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_9F")
+								label 9m
+							div
+								input(type="radio", name="altura_poste", value="altura_poste_11F")
+								label 11m
+
+						div
+							//-input(type="text", name="altura_poste", value="#{service.altura_poste}", id="txt_altura_poste", class="form-control  wrap_padding")
+
+				div
+					div
+						label > tipo de pastoral
+					div
+						div
+							strong  material - Concreto (type_material_C)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC0")
+								label Farola Simple
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC1")
+								label PS/0,50/0,25/125 (sucre recortado)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC2")
+								label PS/1,30/0,90/125 (sucre)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC3")
+								label PS/1,50/1,30/120 (simple)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC4")
+								label PS/1,50/1,90/120 (parabólico)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC5")
+								label PD/0,50/0,25/125 (sucre doble corto)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC6")
+								label PD/1,30/0,90/125 (sucre doble)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC7")
+								label PD/1,50/1,30/120 (simple doble)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC8")
+								label PT/0,50/0,25/125 (sucre triple corto)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC9")
+								label PT/1,30/0,90/125 (sucre triple)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC10")
+								label PC/0,50/0,25/125 (sucre cuádruple)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PC11")
+								label Otros
+						
+						div
+							strong material - Acero (type_material_A)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA0")
+								label Lampara Colgante Simple
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA1")
+								label PS/1,50/1,90/1,5"Ø
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA2")
+								label PS/3,20/3,40/1,5"Ø
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA3")
+								label PS/3,40/2,30/2,0"Ø
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA4")
+								label PS/1,00/3,00/1,5"Ø
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA5")
+								label PD/1,50/1,90/1,5"Ø
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA6")
+								label PD/3,20/3,40/1,5"Ø (doble)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA7")
+								label PD/3,40/2,30/2,0"Ø (doble)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA8")
+								label PS/1,20/0,90/1,5"Ø (tipo R)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA9")
+								label PS/1,30/1,60/1,5"Ø (R modificado)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA10")
+								label PS/1,20/1,75/1,5"Ø (DAE)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA11")
+								label otros tipos
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA12")
+								label PSR/0,55/1,0/1,5
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA13")
+								label PS/1,5/3,0/1,5
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA14")
+								label PS/0,26/1,0/1,5
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA15")
+								label PS/1,50/0,5/1,5
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA16")
+								label PS/0,50/1,30/1,5
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA17")
+								label PS/1,014/0,13/VELERO A°G°
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA18")
+								label PD/0,99/0,13/VELERO A°G°
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA19")
+								label PDO/1,00/0,07/2,0"Ø (bahia)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA20")
+								label PSO/1,32/0,55/2,0"Ø (tucan)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA21")
+								label PSO/0,93/0,1/2,0"Ø (sigüeña)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA22")
+								label PSO/1,6/1,15/2,0"Ø (parihuana)
+							div
+								input(type="radio", name="type_pastoral", value="type_pastoral_PA23")
+								label De reflector (Ficticio)
+					div
+						//-input(type="text", name="type_pastoral", value="#{service.type_pastoral}", id="txt_type_pastoral", class="form-control  wrap_padding")
+				div
+					div
+						label > tipo de luminaria
+					div
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ1")
+							label JOSFEL ASTRO
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ2")
+							label JOSFEL BSH-83
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ3")
+							label JOSFEL BIH-100RS
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ4")
+							label JOSFEL ALTEC
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ5")
+							label JOSFEL JP-250 (FAROLA)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ6")
+							label JOSFEL JPI-250P (FAROLA)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ7")
+							label JOSFEL MIRH-64
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ8")
+							label JOSFEL BIH-83
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ9")
+							label JOSFEL BIH-100
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ10")
+							label JOSFEL MRH-83
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ11")
+							label JOSFEL REFL. RL70 E C/2 OMBI(2x400)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ12")
+							label JOSFEL LUXIOD EX. Int. Con (REFLECTOR)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LJ13")
+							label JOSFEL MILENIUM
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LP1")
+							label PHILIPS ECOM
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LP2")
+							label PHILIPS SRC-510
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LP3")
+							label PHILIPS SRC-511
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LP4")
+							label PHILIPS SRC-515
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LP5")
+							label PHILIPS HPC (FAROLA)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LP6")
+							label PHILIPS REFLECTOR SNF 111(2x400)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS1")
+							label SCHREDER AX1
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS2")
+							label SCHREDER Z1
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS3")
+							label SCHREDER Z2
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS4")
+							label SCHREDER REFLECTOR RT4 (2x400)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS5")
+							label SCHREDER OPALO
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS6")
+							label SCHREDER ONIX
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS7")
+							label SCHREDER REFLECTOR RADIAL2 MOD.1640
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS8")
+							label SCHREDER ONYX 3
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS9")
+							label SCHREDER AMBAR 3
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS10")
+							label SCHREDER FURYO
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LS11")
+							label SCHREDER RADIAL 2
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LC1")
+							label CITECIL CITELUX
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LC2")
+							label CITECIL JB512 (FAROLA)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LG1")
+							label GENERAL ELECTRIC SOLARIS
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LG2")
+							label GENERAL ELECTRIC M150R2
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LG3")
+							label GENERAL ELECTRIC M250R2
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LG4")
+							label GENERAL ELECTRIC M400R2
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LG5")
+							label GENERAL ELECTRIC M400
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH1")
+							label HIERALSA ARMADURA H
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH2")
+							label HIERALSA HR500
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH3")
+							label HIERALSA HR500M
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH4")
+							label HIERALSA TAM
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH5")
+							label HIERALSA TAM MM
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH6")
+							label HIERALSA JP (FAROLA)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LH7")
+							label HIERALSA F1 (FAROLA)
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LD1")
+							label SOL 5QLEDCH
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LO1")
+							label OTRAS MARCAS CUALQUIER MODELO
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LR1")
+							label OTRAS MARCAS REFLECTOR ASIMETRICO 2x400 W
+						div
+							input(type="radio", name="type_luminaria", value="type_luminaria_LT1")
+							label OTRAS MARCAS LUMINARIA TEMPORAL
+
+						//-input(type="text", name="type_luminaria", value="#{service.type_luminaria}", id="txt_type_luminaria", class="form-control  wrap_padding")
+				div
+					div
+						label > tipo de lampara
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_MX1")
+							label MIXTA 250 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_MH1")
+							label MERCURIO 125 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_MH2")
+							label MERCURIO 250 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_MH3")
+							label MERCURIO 400 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_VSS1")
+							label SODIO 70 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_VSS2")
+							label SODIO 150 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_VSS3")
+							label SODIO 250 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_VSS4")
+							label SODIO 400 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_VSS5")
+							label SODIO 50 W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_HM1")
+							label HALOGENURO METALICO 400W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_HM2")
+							label HALOGENURO METALICO 150W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_HM3")
+							label HALOGENURO METALICO 150W
+						div
+							input(type="radio", name="type_lampara", value="type_lampara_L1")
+							label LEDS 75W
+
+					//-div
+						input(type="text", name="type_lampara", value="#{service.type_lampara}", id="txt_type_lampara", class="form-control  wrap_padding")
+				div
+					div
+						label > imagen_poste
+						div
+							img(type="text", src="../../../images/photo-icon-1.png", width="80")
+							img(type="text", src="../../../images/photo-icon-1.png", width="80")
+							img(type="text", src="../../../images/photo-icon-1.png", width="80")
+							input(type="file", name="imagen_poste")
+				div
+					div
+						label > observaciones
+						input(type="text", name="observaciones", value="#{service.observaciones}", id="txt_observaciones", class="form-control  wrap_padding")
+				div
+					div
+						label > estado poste
+						div
+							input(type="radio", name="estado_poste", value="estado_poste_OP")
+							label Operativo y en buen estado
+
+						div
+							input(type="radio", name="estado_poste", value="estado_poste_AN")
+							label Operativo y antiguo
+
+						div
+							input(type="radio", name="estado_poste", value="estado_poste_MA")
+							label Operativo y requiere mantenimiento
+
+						div
+							input(type="radio", name="estado_poste", value="estado_poste_RE")
+							label Operativo y requiere reemplazo
+
+						div
+							input(type="radio", name="estado_poste", value="estado_poste_NO")
+							label No operativo
+
+						//-div
+							p Campo autorellenado
+							input(type="text", name="estado_poste", value="#{service.estado_poste}", id="txt_estado_poste", class="form-control  wrap_padding")
+				div
+					div
+						label > estado pastoral
+						div
+							input(type="radio", name="estado_pastoral", value="estado_pastoral_OP")
+							label Operativo y en buen estado
+
+						div
+							input(type="radio", name="estado_pastoral", value="estado_pastoral_AN")
+							label Operativo y antiguo
+
+						div
+							input(type="radio", name="estado_pastoral", value="estado_pastoral_MA")
+							label Operativo y requiere mantenimiento
+
+						div
+							input(type="radio", name="estado_pastoral", value="estado_pastoral_RE")
+							label Operativo y requiere reemplazo
+
+						div
+							input(type="radio", name="estado_pastoral", value="estado_pastoral_NO")
+							label No operativo
+						//-div
+							input(type="text", name="estado_pastoral", value="#{service.estado_pastoral}", id="txt_estado_pastoral", class="form-control  wrap_padding")
+				div
+					div
+						label > estado luminaria
+						div
+							div
+								input(type="radio", name="estado_luminaria", value="estado_luminaria_OP")
+								label Operativo y en buen estado
+
+							div
+								input(type="radio", name="estado_luminaria", value="estado_luminaria_AN")
+								label Operativo y antiguo
+
+							div
+								input(type="radio", name="estado_luminaria", value="estado_luminaria_MA")
+								label Operativo y requiere mantenimiento
+
+							div
+								input(type="radio", name="estado_luminaria", value="estado_luminaria_RE")
+								label Operativo y requiere reemplazo
+
+							div
+								input(type="radio", name="estado_luminaria", value="estado_luminaria_NO")
+								label No operativo
+						//-div
+							input(type="text", name="estado_luminaria", value="#{service.estado_luminaria}", id="txt_estado_luminaria", class="form-control  wrap_padding")
+				div
+					div
+						label > estado lampara
+						div
+							input(type="radio", name="estado_lampara", value="estado_lampara_OP")
+							label Operativo y en buen estado
+
+						div
+							input(type="radio", name="estado_lampara", value="estado_lampara_AN")
+							label Operativo y antiguo
+
+						div
+							input(type="radio", name="estado_lampara", value="estado_lampara_MA")
+							label Operativo y requiere mantenimiento
+
+						div
+							input(type="radio", name="estado_lampara", value="estado_lampara_RE")
+							label Operativo y requiere reemplazo
+
+						div
+							input(type="radio", name="estado_lampara", value="estado_lampara_NO")
+							label No operativo
+						//-div
+							input(type="text", name="estado_lampara", value="#{service.estado_lampara}", id="txt_estado_lampara", class="form-control  wrap_padding")
+				div
+					div
+						label > coordenada_X
+						input(type="text", name="coordenada_X", value="#{service.coordenada_X}", id="txt_coordenada_X", class="form-control  wrap_padding")
+						label > coordenada_Y
+						input(type="text", name="coordenada_Y", value="#{service.coordenada_Y}", id="txt_coordenada_Y", class="form-control  wrap_padding")
+						a(id="btn_goPoints", class="btn btn-default") Buscar
+
+				button(class="btn btn-success  btn-lg btn-block") Guardar
+		
+		div(id="map")
+		script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+		script(type='text/javascript', src="../../../js/gmaps/index.js")
+		script(type='text/javascript', src="../../../js/plataforma/modulos/form_cliente/index.js")
+		script(type='text/javascript', src="../../../js/plataforma/work_orders/poste/index.js")
+		script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')

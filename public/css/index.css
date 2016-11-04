@@ -1,0 +1,35 @@
+body {
+	background: #f5f5f5;
+}
+
+.wrap {
+	max-width: 900px;
+	text-align: left;
+	margin: 0 auto;
+}
+
+.wrap_padding {
+	margin: 1rem;
+}
+
+.center {
+	text-align: center;
+}
+
+.box_item {
+	border: 1px solid white;
+	border-radius: 30px;
+    padding: 1rem;
+    background: white;
+    margin: 1.5rem;
+}
+
+.max_space {
+	margin-top: 1.5rem;
+	margin-bottom: 2.5rem;
+}
+
+.streetview {
+	height: 80%; 
+	width: 80%;
+}

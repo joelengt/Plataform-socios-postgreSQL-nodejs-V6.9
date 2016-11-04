@@ -1,0 +1,70 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { 
+				height: 80%;
+				width: 80%;
+			}
+
+		link(rel="stylesheet", href="./css/normalize.css")
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../css/index.css")
+	body(id="App_Container", class="wrap")
+		header
+			h1 AstrumApp
+			img(src="../../#{user.photo.path}", width="80")
+			p @#{user.username}
+			
+		section(class="ArticlesContainer")
+			article(style="border-top: 1px solid black", class="Article__read__item", data-id="#{work_order._id}")
+				img(src="#{work_order.cover_image.path}", width="250")
+				p codigo_orden: #{work_order.codigo_orden}
+				p codigo_supervisor: #{work_order.codigo_supervisor}
+				p codigo_contratista: #{work_order.codigo_contratista}
+				p tipo_servicio: #{work_order.tipo_servicio}
+				p detalle_servicio: #{work_order.detalle_servicio}
+				p tipo_urgencia: #{work_order.tipo_urgencia}
+				p coordenada_X: #{work_order.coordenada_X}
+				p coordenada_Y: #{work_order.coordenada_Y}
+				p direccion: #{work_order.direccion}
+				p descripcion: #{work_order.descripcion}
+				p public: #{work_order.public}
+				p estado: #{work_order.estado}
+				p conclusiones: #{work_order.conclusiones}
+				p fecha_publicado: #{work_order.fecha_publicado}
+				p fecha_visita_esperada: #{work_order.fecha_visita_esperada}
+				p fecha_trabajo_realizado: #{work_order.fecha_trabajo_realizado}
+				p reprogramado_de: #{work_order.reprogramado_de}
+				p fecha creada: #{work_order.fecha_creada} 
+				div
+					strong Elementos:
+					each elemento in work_order.elementos 
+						p id: #{elemento._id}
+						img(src="#{elemento.image_element.path}", width="80")
+						p type: #{elemento.type}
+						div
+							form(action="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order._id}/read/#{type_service}/#{service._id}", method="post")
+								button ver elemento
+						br
+						br
+
+				div
+					form(action="http://localhost:5000/dashboard/ordenes_trabajo/edit/#{work_order._id}", method="post")
+						button(class="btn_article_detalles") Editar Orden
+				div
+					form(action="http://localhost:5000/dashboard/ordenes_trabajo/delete/#{work_order._id}?_method=delete", method="post")
+						button(class="btn_article_detalles") Eliminar Orden
+				br
+				br
+
+script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+script(type="text/javascript", src="../../../js/gmaps/index.js")
+script(type="text/javascript", src="../../../js/gmaps/modulos/list_orders/index.js")
+script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')
+	
+	

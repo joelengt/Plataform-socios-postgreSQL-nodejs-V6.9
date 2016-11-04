@@ -1,0 +1,258 @@
+.Kml
+	&__left
+		background-color White
+		&--markers
+			padding 1em
+			background-color White
+			border-bottom 1px solid Gris_lighter
+			.inputContainner
+				label
+					color Gris_Bold
+					font-family AvenirBold
+		&--firstForm
+			background-color Gris_backgroundLighter
+			height 90%
+			width 100%
+			display flex
+			align-items center
+			justify-content center
+			flex-wrap wrap
+			.FormMsgFirst
+				width 250px
+				border-radius 5px
+				background-color Gris_hover
+				#Drap
+					padding .5em 1em
+				&__input
+					width 0.1px
+					height 0.1px
+					opacity 0
+					overflow hidden
+					position absolute
+					z-index -1
+				&__label
+					cursor pointer
+					&--image
+						margin 0 auto
+						width 150px
+						height 150px
+						background-size cover
+						background-position center
+						background-repeat no-repeat
+					&--text
+						// font-family AvenirLighter
+						color Gris_lighter
+						text-align center
+					&--btn
+						margin 1em auto .5em
+						border 1px solid Gris_lighter
+						padding .5em
+						border-radius 100px
+						color Gris_lighter
+						text-align center
+						width 80px
+		&--lastForm
+			padding 1em 0
+			background-color White
+			.FormMsg
+				width 95%
+				margin 0 auto
+				display flex
+				justify-content space-between
+				align-items center
+				&__text
+					color Gris_Bold
+				&__input
+					input + label
+						width 70px
+						font-size 1rem
+						text-overflow ellipsis
+						white-space nowrap
+						cursor pointer
+						display inline-block
+						overflow hidden
+						padding 0.5rem 1rem
+					input
+						width 0.1px
+						height 0.1px
+						opacity 0
+						overflow hidden
+						position absolute
+						z-index -1
+					label
+						text-align center
+						border 1px solid Gris_lighter
+						border-radius 3px
+						background-color Gris_hover
+						color Gris_Bold
+						font-family AvenirBold
+						cursor pointer
+						outline 0
+						span
+							img
+								margin 0 5px -3px 0
+		&--items
+			width 100%
+			background-color White
+			.ItemKml
+				width 90%
+				padding 1.5em 10px 
+				border-radius 3px
+				box-shadow 0 0 2px Gris_lighter
+				margin 0 auto .5em
+				position relative
+				&__content
+					position relative
+					&--title
+						a
+							color Gris_Bolder
+					&--checked
+						position absolute
+						z-index 5
+						top 0
+						right 0
+						.kmlView
+							width 50px
+							height 20px
+							background Verde_bold
+							margin 0 auto
+							border-radius 50px
+							position relative
+							box-shadow inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2)
+							&:before
+								content ''
+								font 12px/26px Arial, sans-serif
+								color #00bf00
+								position absolute
+								left 10px
+								z-index 0
+								font-weight bold
+							&:after
+								content ''
+								font 12px/26px Arial, sans-serif
+								color #000
+								position absolute
+								right 10px
+								z-index 0
+								font-weight bold
+								text-shadow 1px 1px 0px rgba(255,255,255,.15)
+							&__check
+								visibility hidden
+							&__label
+								display block
+								width 18px
+								height 18px
+								border-radius 50px
+								transition all .4s ease
+								cursor pointer
+								position absolute
+								top .8px
+								left 1px
+								z-index 1
+								box-shadow 0px 2px 5px 0px rgba(0,0,0,0.3)
+								background #fcfff4
+								background linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%)
+								// filter: progid DXImageTransform.Microsoft.gradient( startColorstr '#fcfff4', endColorstr '#b3bead',GradientType 0 )
+							input[type=checkbox]:checked + label
+								left 31px
+								background Verde_light
+				&__options
+					position absolute
+					top 4px
+					right 4px
+					cursor pointer
+					&--icon
+						width 18px
+						height 14px
+						line-height 11px
+						span
+							font-size .5em
+							color Gris_lighter
+					&--content
+						width 150px
+						display none
+						border-radius 5px
+						z-index 10
+						position absolute
+						right 0
+						top 20px
+						background-color White
+						border 1px solid Gris_lighter
+						box-shadow 3px 3px 5px colorShadow
+						.optionDelete
+							button
+								cursor pointer
+								padding .5rem
+								outline none
+								border-radius 5px 5px 0 0
+								width 100%
+								font-size 1rem
+								border 0
+								background-color White
+								font-family AvenirLight
+								text-align center
+								color Gris_Bold
+						.optionUpdate
+							line-height 1rem
+							input + label
+								width 100%
+								font-size 1rem
+								text-overflow ellipsis
+								white-space nowrap
+								cursor pointer
+								display inline-block
+								overflow hidden
+								padding .5rem
+							input
+								width 0.1px
+								height 0.1px
+								opacity 0
+								overflow hidden
+								position absolute
+								z-index -1
+							label
+								cursor pointer
+								text-align center
+								box-sizing border-box
+								// border 1px solid Gris_lighter
+								// border-radius 3px
+								// background-color Gris_hover
+								color Gris_Bold
+								font-family AvenirLight
+								cursor pointer
+								outline 0
+								
+	&__right
+		&--map
+			.coords
+				position absolute
+				bottom .5em
+				left 0
+				right 0
+				margin 0 auto
+				width 400px
+				box-shadow 0 0 7px colorShadow
+				&__content
+					position relative
+					background-color White
+					div
+						padding 5px
+						background-color white
+						// border .5px solid Gris_lighter
+						color Gris_Bold
+						table
+							tr
+								// border-bottom 1px solid Gris_lighter
+								background-color White
+								color 					
+								td
+									word-break break-all
+									background-color White
+									min-width 100px
+					.CloseInfoKml
+						position absolute
+						cursor pointer
+						font-size .7em
+						top 5px
+						right 5px
+						color Gris_Bold

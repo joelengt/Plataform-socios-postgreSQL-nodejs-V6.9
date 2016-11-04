@@ -1,0 +1,112 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { height: 80%; width: 80%;}
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap")
+
+		header
+			h1 AstrumApp
+			img(src="../../../../../#{user.photo.path}", width="80")
+			p @#{user.username}
+
+		section
+			h2  Actualizar data: #{type_service}
+			form(action="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order_id}/item/#{type_service}/#{service._id}?_method=put", method="post", enctype="multipart/form-data")
+				div
+					div
+						label codigo de poste:
+					div
+						input(type="number", name="codigo_poste", value="#{service.codigo_poste}", id="txt_codigo_poste", class="form-control  wrap_padding")
+						a(id="btn_buscar_poste",  class="btn btn-default") Buscar
+						p(id="msg_busqueda")
+				div
+					div
+						label codigo de orden de trabajo:
+						p #{codigo_work_order}
+
+				div
+					div
+						label tipo de poste
+					div
+						input(type="text", name="type_poste", value="#{service.type_poste}", id="txt_type_poste", class="form-control  wrap_padding")
+				div
+					div
+						label altura de poste
+					div
+						input(type="text", name="altura_poste", value="#{service.altura_poste}", id="txt_altura_poste", class="form-control  wrap_padding")
+				div
+					div
+						label tipo de material
+					div
+						input(type="text", name="type_material", value="#{service.type_material}", id="txt_type_material", class="form-control  wrap_padding")
+				div
+					div
+						label tipo de pastoral
+					div
+						input(type="text", name="type_pastoral", value="#{service.type_pastoral}", id="txt_type_pastoral", class="form-control  wrap_padding")
+				div
+					div
+						label tipo de luminaria
+					div
+						input(type="text", name="type_luminaria", value="#{service.type_luminaria}", id="txt_type_luminaria", class="form-control  wrap_padding")
+				div
+					div
+						label tipo de lampara
+					div
+						input(type="text", name="type_lampara", value="#{service.type_lampara}", id="txt_type_lampara", class="form-control  wrap_padding")
+				div
+					div
+						label Galeria Multimedia
+						div
+							each element in service.imagen_poste
+								img(src="#{element.path}", width="100")
+								a(id="", href="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order_id}/delete/#{type_service}/#{service._id}/item/#{element.position}") Eliminar
+
+							input(type="file", name="new_file_upload")
+				div
+					div
+						label observaciones
+						input(type="text", name="observaciones", value="#{service.observaciones}", id="txt_observaciones", class="form-control  wrap_padding")
+				div
+					div
+						label estado poste
+						input(type="text", name="estado_poste", value="#{service.estado_poste}", id="txt_estado_poste", class="form-control  wrap_padding")
+				div
+					div
+						label estado pastoral
+						input(type="text", name="estado_pastoral", value="#{service.estado_pastoral}", id="txt_estado_pastoral", class="form-control  wrap_padding")
+				div
+					div
+						label estado luminaria
+						input(type="text", name="estado_luminaria", value="#{service.estado_luminaria}", id="txt_estado_luminaria", class="form-control  wrap_padding")
+				div
+					div
+						label estado lampara
+						input(type="text", name="estado_lampara", value="#{service.estado_lampara}", id="txt_estado_lampara", class="form-control  wrap_padding")
+				div
+					div
+						label coordenada_X
+						input(type="text", name="coordenada_X", value="#{service.coordenada_X}", id="txt_coordenada_X", class="form-control  wrap_padding")
+						label coordenada_Y
+						input(type="text", name="coordenada_Y", value="#{service.coordenada_Y}", id="txt_coordenada_Y", class="form-control  wrap_padding")
+						a(id="btn_goPoints", class="btn btn-default") Buscar
+
+				button(class="btn btn-success  btn-lg btn-block") Guardar y Enviar
+
+			form(action="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order_id}/delete/#{type_service}/#{service._id}?_method=delete", method="post")
+				button(class="btn btn-danger  btn-lg btn-block") Eliminar Orden de Trabajo
+		
+		div(id="map")
+		script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+		script(type='text/javascript', src="../../../../js/gmaps/index.js")
+		script(type='text/javascript', src="../../../../js/gmaps/modulos/form_poste/index.js")
+		script(type='text/javascript', src="../../../../js/work_orders/poste/index.js")
+		script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')
+

@@ -1,0 +1,37 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		link(rel="stylesheet", href="./css/normalize.css")
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap")
+		header
+			h1 AstrumApp
+			img(src="../../#{user.photo.path}", width="80")
+			p @#{user.username}
+			
+
+		section
+			form(action="/dashboard/usuarios/#{type_user}/new")
+				button(class="btn btn-primary") Registrar Nuevo Usuario
+		section
+			h3  Usuarios - Lista de : #{type_user}
+
+		section
+			p Lista de los usuarios #{type_user} registrados
+			div
+				each usuario in usuarios
+					div(style="border-bottom: 1px solid black;")
+						img(src="../../../#{usuario.photo.path}", width="100")
+						p Nombre completo: #{usuario.full_name}
+						p @#{usuario.username}
+						p permiso: #{usuario.permiso}
+						p Empresa perteneciente: #{usuario.empresa_admin}
+						p Contratista perteneciente: #{usuario.contratista}
+						p fecha registro: #{usuario.fecha_creada}
+						
+						div
+								button(class="btn btn-default") Detalles

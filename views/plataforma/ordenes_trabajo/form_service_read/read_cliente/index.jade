@@ -1,0 +1,205 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; } 
+			#map { height: 80%; width: 80%;}
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap")
+		header
+			h1 AstrumApp
+			img(src="../../../../../#{user.photo.path}", width="80")
+			p @#{user.username}
+
+		section
+			h2  Actualizar data: #{type_service}
+			article
+				div
+					div
+						label cliente id:
+					div
+						div
+							a(id="btn_buscar_cliente",  class="btn btn-default") Buscar
+							p(id="msg_busqueda")
+						p #{service.cliente_id}
+
+				div
+					div
+						label codigo de orden de trabajo
+					div
+						p #{codigo_work_order}
+
+					div
+						div
+							label numero de cliente:
+						div
+							p #{service.numero_cliente}
+
+					div
+						div
+							label codigo via:
+						div
+							p #{service.codigo_via}
+
+					div
+						div
+							label numero puerta
+						div
+							p #{service.numero_puerta}
+
+					div
+						div
+							label numero interior
+						div
+							p #{service.numero_interior}
+
+					div
+						div
+							label codigo localidad
+						div
+							p #{service.codigo_localidad}
+
+					div
+						div
+							label manzana
+						div
+							p #{service.manzana}
+
+					div
+						div
+							label lote
+						div
+							p #{service.lote}
+
+					div
+						div
+							label nombre del cliente
+						div
+							p #{service.nombre_de_cliente}
+
+					div
+						div
+							label tipo recidencial
+						div
+							p #{service.type_residencial}
+
+					div
+						div
+							label Es maximetro bt
+						div
+							p #{service.is_maximetro_bt}
+
+					div
+						div
+							label suministro derecha
+						div
+							p #{service.suministro_derecha}
+
+					div
+						div
+							label suministro izquierda
+						div
+							p #{service.suministro_izquierda}
+
+					div
+						div
+							label medidor derecha
+						div
+							p #{service.medidor_derecha}
+
+					div
+						div
+							label medidor izquierda
+						div
+							p #{service.medidor_izquierda}
+
+					div
+						div
+							label numero del poste cercano
+						div
+							p #{service.numero_poste_cercano}
+
+					div
+						div
+							label tipo de conexion
+						div
+							p #{service.type_conexion}
+
+					div
+						div
+							label tipo de acomedida
+						div
+							p #{service.type_acometida}
+
+					div
+						div
+							label tipo de cable de acomedida
+						div
+							p #{service.type_cable_acometida}
+
+					div
+						div
+							label calibre cable de acomedida
+						div
+							p #{service.calibre_cable_acometida}
+
+					div
+						div
+							label calibre cable matriz
+						div
+							p #{service.calibre_cable_matriz}
+
+					div
+						div
+							label observaciones
+						div
+							p #{service.observaciones}
+
+					div
+						div
+							label fecha_ejecucion
+						div
+							p #{service.fecha_ejecucion}
+					div
+						label Galeria Multimedia  
+						div
+							each element in service.imagen_cliente
+								div
+									img(src="#{element.path}", width="100")
+
+								br
+									
+					div
+						div
+							label croquis
+						div
+							img(src="../../../../../../images/from 2016-07-08 03-57-44.png", width="200")
+
+					div
+						div(style="display: none;")
+							
+							input(type="text", name="coordenada_X", value="#{service.coordenada_X}", id="txt_coordenada_X", class="form-control  wrap_padding")
+							input(type="text", name="coordenada_Y", value="#{service.coordenada_Y}", id="txt_coordenada_Y", class="form-control  wrap_padding")
+							a(id="btn_goPoints", class="btn btn-default") Buscar
+					div
+						div
+							label coordenada_X
+							p #{service.coordenada_X}
+
+						div
+							label coordenada_Y
+							p #{service.coordenada_Y}
+
+
+		
+		div(id="map")
+
+		script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+		script(type='text/javascript', src="../../../../../../js/gmaps/index.js")
+		script(type='text/javascript', src="../../../../../../js/plataforma/modulos/form_cliente/index.js")
+		script(type='text/javascript', src="../../../../../../js/plataforma/work_orders/cliente/index.js")
+		script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')

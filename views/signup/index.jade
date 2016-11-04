@@ -1,0 +1,32 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+	body
+		h1 Signup: Registrar a un nuevo usuario de campo en la plataforma
+		p #{msg}
+
+		form(action="/auth/plataforma", method="post")
+			div
+				label Nombre
+				input(type="text", name="name", required)
+			div
+				label Apellidos
+				input(type="text", name="lastname", required)
+			div
+				label Telefono
+				input(type="text", name="phone", required)
+			div
+				label Usuario
+				input(type="text", name="username", required)
+			div
+				label Contraseña
+				input(type="password", name="password", required)
+
+			div
+				label Confirmar Contraseña
+				input(type="password", name="re_password", required)
+			div
+				button Registrar

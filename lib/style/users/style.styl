@@ -1,0 +1,549 @@
+.users
+	display flex
+	justify-content space between
+	flex-wrap wrap
+	&__left
+		position relative
+		background-color Gris_backgroundUser
+		&--filter
+			width 100%
+			margin 0 auto
+			padding 10px 0
+			background-color White
+			.Filter 
+				width 95%
+				border-radius 3px
+				margin 0 auto
+				background-color white
+				box-shadow 0 0 3px rgba(202, 202, 202, 0.53)
+				box-sizing border-box
+				&__head
+					margin 1em
+					border 1px solid #c7c7c7
+					display inline-block
+					background-color #f5f5f5
+					border-box 0 0 1px rgba(202, 202, 202, 0.53)
+					border-radius 3px
+					cursor pointer
+					&--content
+						padding .8em 1.5em
+						h2
+							font-size 1em
+							color #6f6f6f
+				&__options
+					// display none
+					border-bottom 0
+					background-color #f7f7f7
+					transition max-height .3s ease-in
+					padding 0
+					margin 0
+					height 0
+					max-height 0
+					overflow hidden
+					list-style none
+					&--triangle
+						position absolute
+						display none
+						margin-top -20px
+						margin-left 50px
+						border-top 10px solid transparent
+						border-bottom 10px solid #f7f7f7
+						border-left 10px solid transparent
+						border-right 10px solid transparent
+					&--content
+						.Items
+							padding 1.3em 0
+							display flex
+							flex-wrap wrap
+							justify-content space-between
+							border-bottom 1px solid #e2e1e1
+							&__left, &__right
+								width 48%
+								.Data
+									width 100%
+									display flex
+									flex-wrap wrap
+									align-items center
+									&__left
+										color #8c9099
+										text-align right
+										width 45%
+										padding 0 1em
+										box-sizing border-box
+									&__right
+										width 50%
+	&__list
+		width 95%
+		margin 0 auto
+		.Item__containnerEnlace
+			padding-top .5em
+		.Item
+			cursor pointer
+			background-color white
+			border-radius 3px
+			position relative
+			&__containner
+				position relative
+				&--image
+					width 50px
+					position absolute
+					top 10px
+					left 10px
+					margin 0
+					padding 0
+					img
+						width 100%
+						border-radius 50%
+				&--text
+					width 100%
+					height 70px
+					box-sizing border-box
+					display flex
+					flex-wrap wrap
+					justify-content center
+					flex-direction column
+					padding 10px 20px 10px 70px
+					.titleUser
+						h3
+							font-size 1em
+							color Gris_Bold
+					.detailUser
+						display flex
+						flex-wrap wrap						
+						&__name
+							width 40%
+							color Gris_lighter
+						&__username
+							width 40%
+							color Gris_lighter
+							white-space nowrap
+							overflow hidden
+							text-overflow ellipsis
+			&__dropdown
+				position absolute
+				top 5px
+				width 18px
+				right 10px
+				z-index 85
+				&--icon
+					width 18px
+					.icon-icon_submenu
+						font-size .5em
+						color Gris_lighter
+				&--content
+					position absolute
+					display none
+					right 0
+					top 25px
+					box-shadow 1px 1px 5px #b5b5b5
+					.DropdownOption
+						width 150px
+						padding 5px 0
+						text-align center
+						background-color white
+						border 1px solid #c1c1c1
+						p
+							color Gris_Bold
+							font-family AvenirLighter
+			&__userStatus
+				position absolute
+				top 35px
+				right 15px
+				&--box
+					color green
+					font-size 30px
+					line-height 0
+	&__right
+		&--mapCanvas
+			position relative
+			.Defect
+				height 100%
+				width 100%
+				display flex
+				align-items center
+				justify-content center
+				&__content
+					width 400px
+					&--image
+						margin 0 auto
+						background-image url('../images/option_user.svg')
+						width 150px
+						height 150px
+						background-size contain
+						background-repeat no-repeat
+						background-position center
+						margin-bottom 2em
+					&--text
+						text-align center
+						color Gris_lighter
+						font-style italic
+						font-family AvenirLighter
+			.infoUser
+				background-color White
+				height 100%
+				width 100%
+				&__containner
+					&--data
+						width 80%
+						margin 0 auto
+						border-bottom 1px solid Gris_BoldLighter
+						padding 3em 0
+						.headDetail
+							text-align center
+							&__image
+								width 100%
+								margin 0
+								img
+									width 90px
+									border-radius 50%
+							&__text
+								width 100%
+								h3
+									color Gris_Bold
+								p
+									color Gris_lighter
+									font-family AvenirLighter
+					&--detailUser
+						width 80%
+						margin 0 auto
+						.DataUser
+							padding 1.5em 0
+							&__option
+								width 100%
+								display flex
+								flex-wrap wrap
+								&--left
+									padding 1em
+									box-sizing border-box
+									width 50%
+									text-align right
+									color Gris_Bold
+								&--right
+									width 50%
+									padding 1em
+									box-sizing border-box
+									text-align left
+									color Gris_lighter
+									font-family AvenirLighter
+								&--btn
+									width 100%
+									text-align center
+									padding 1.5em
+									button
+										background-color Verde_bold
+										border 0
+										border-radius 3px
+										font-family AvenirBold
+										padding .5em
+										color blancoPrimary
+										cursor pointer
+										width 150px
+			.editInfoUser
+				position absolute
+				overflow overlay
+				top 0
+				width 100%
+				height 100%
+				background-color White
+				&__containner
+					&--data
+						width 80%
+						margin 0 auto
+						border-bottom 1px solid Gris_BoldLighter
+						padding 3em 0
+						.headDetail
+							text-align center
+							&__image
+								width 100%
+								margin 0
+								img
+									width 90px
+									border-radius 50%
+					&--detailUser
+						width 80%
+						margin 0 auto
+						.FormEditUser
+							padding 1.5em 0
+							&__option
+								width 100%
+								display flex
+								flex-wrap wrap
+								&--left
+									width 50%
+									box-sizing border-box
+									padding 1em
+									text-align right
+									color Gris_Bold
+								&--right
+									width 50%
+									box-sizing border-box
+									padding .5em
+									.editPassword
+										color White
+										background-color Verde_bold
+										border-radius 3px
+										padding .3em 0
+										margin .2em 0
+										cursor pointer
+										text-align center
+									.newUserContratist
+										padding-top .5em
+										display flex
+										justify-content space-around
+										flex-wrap wrap
+										input
+											width 50%
+											font-size 12px
+										.button
+											width auto
+											font-size 12px
+											// color White
+											color Verde_bold
+											border-radius 3px
+											padding 0 .3em
+											line-height 30px
+											border 1px solid Verde_bold
+											box-sizing border-box
+											cursor pointer
+								.select
+									padding-right 2em
+									box-sizing border-box
+									position relative
+									span
+										position absolute
+										cursor pointer
+										top 13px
+										right 7px
+										color Gris_lighter
+							&__btns
+								width 100%
+								display flex
+								flex-wrap wrap
+								padding 2em 0
+								&--btnCancel, &--btnSend
+									box-sizing border-box
+									padding 0 1em
+									width 50%
+									text-align center
+									button
+										border-radius 3px
+										font-family AvenirBold
+										width 150px
+										padding .5em 0
+										border 0
+										cursor pointer
+								&--btnCancel
+									text-align right
+									button
+										color Gris_Bold
+										background-color Gris_Button
+								&--btnSend
+									text-align left
+									button
+										color White
+										background-color Verde_bold	
+			.infoTracking
+				position absolute
+				background-color white
+				bottom 0
+				left 0
+				right 0
+				margin 0 auto
+				width 400px
+				&__containner
+					&--title
+						background-color Azul_semiMarino
+						h2
+							font-family AvenirLighter
+							color White
+					&--content
+						overflow-y auto
+						height 150px
+						.Item
+							border-bottom 1px solid Gris_BoldLighter
+							display flex
+							flex-wrap wrap
+							.date
+								width 20%
+								color Gris_Bold
+							.coord-X
+								width 40%
+								color Gris_lighter
+								font-family AvenirLighter
+							.coord-Y
+								width 40%
+								color Gris_lighter
+								font-family AvenirLighter
+.ModalContainner
+	width 100%
+	height 100vh
+	z-index 90
+	position absolute
+	background-color colorModal
+	top 0
+	display flex
+	flex-wrap wrap
+	justify-content center
+	align-items center
+	padding 2em 0
+	&__box
+		box-shadow 1px 1px 7px colorShadow
+		width 60%
+		background-color Gris_hover
+		// padding 1em
+		max-width 500px
+		&--title
+			padding 5px
+			background-color Azul_semiMarino
+			h2
+				color White
+				font-size 1.2em
+				padding .3em
+				font-family AvenirLighter
+		&--form
+			padding 1em .5em .5em
+			.FormUser
+				background-color White
+				padding 0 1em
+				&__option
+					display flex
+					justify-content space-around
+					flex-wrap wrap
+					border-bottom 1px solid Gris_BoldLighter
+					&--left
+						display flex
+						align-items center
+						padding 1em 0
+						width 50%
+						label
+							color Gris_Bold
+					&--right
+						padding 1em 0
+						width 50%
+						.listContratistas
+							position relative
+							&__containner
+								list-style none
+								position absolute
+								padding 0
+								background-color white
+								border 1px solid black
+								&--item
+									display none
+									&:hover
+										background-color red
+										color white
+						.newUserContratist
+							padding-top .5em
+							display flex
+							justify-content space-around
+							flex-wrap wrap
+							input
+								width 60%
+								font-size 12px
+							.button
+								width auto
+								font-size 12px
+								// color White
+								color Verde_bold
+								border-radius 3px
+								padding 0 .5em
+								line-height 30px
+								border 1px solid Verde_bold
+								box-sizing border-box
+								cursor pointer
+					.select
+						padding-right 2em
+						box-sizing border-box
+						position relative
+						span
+							position absolute
+							top 20px
+							right 10px
+				&__btns
+					padding 1.5em 0 1em
+					display flex 
+					justify-content space-around
+					&--cancel, &--send
+						button
+							border 0
+							width 150px
+							padding .5em
+							cursor pointer
+							font-family AvenirBold
+							border-radius 3px
+					&--cancel
+						button
+							color Gris_Bold
+							background-color Gris_background
+					&--send
+						button
+							color White
+							background-color Verde_bold
+
+.ChangePass
+	position fixed
+	top 0
+	width 100%
+	height 100%
+	z-index 85
+	background-color colorModal
+	display flex
+	justify-content center
+	align-items center
+	&__containner
+		width 600px
+		border-radius 5px
+		background-color White
+		box-shadow 0 0 3px colorShadow
+		&--title
+			border-radius 5px 5px  0 0
+			background-color Azul_semiMarino
+			padding 1em
+			h3
+				font-size 1em
+				font-family AvenirLighter
+				color White
+		&--inputs
+			padding 1.5em 0 0
+			.inputs
+				padding 1em 0
+				display flex
+				width 70%
+				margin 0 auto
+				justify-content space-around
+				align-items center
+				label
+					text-align right
+					width 45%
+					color Gris_Bolder
+				input
+					width 45%
+		&--btns
+			width 60%
+			margin 0 auto
+			display flex
+			justify-content space-around
+			padding 2em 0
+			.cancel, .chosePass
+				border 0
+				width 150px
+				padding .5em
+				cursor pointer
+				// font-size 1.2em
+				outline none
+				font-family AvenirBold
+				border-radius 3px
+			.cancel
+				color Gris_Bold
+				background-color Gris_background
+			.chosePass
+				color White
+				background-color Verde_bold
+				
+			
+		.ErrorPass
+			padding-bottom 1em
+			width 60%
+			margin 0 auto
+			color Gris_Bold

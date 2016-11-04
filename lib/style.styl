@@ -1,0 +1,278 @@
+@import 'nib'
+
+@font-face
+	font-family 'Avenir Bolder'
+	font-style normal
+	font-weight normal
+	src local('Avenir Bolder'), url('../fonts/AvenirLTStd-Black.woff') format('woff')
+
+@font-face
+	font-family 'Avenir Light'
+	font-style normal
+	font-weight normal
+	src local('Avenir Light'), url('../fonts/AvenirLTStd-Book.woff') format('woff')
+
+@font-face
+	font-family 'Avenir Bold'
+	font-style normal
+	font-weight normal
+	src local('Avenir Bold'), url('../fonts/AvenirLTStd-Heavy.woff') format('woff')
+
+@font-face
+	font-family 'Avenir Lighter'
+	font-style normal
+	font-weight normal
+	src local('Avenir Lighter'), url('../fonts/AvenirLTStd-Light.woff') format('woff')
+
+@font-face
+	font-family 'Avenir Normal'
+	font-style normal
+	font-weight normal
+	src local('Avenir Normal'), url('../fonts/AvenirLTStd-Medium.woff') format('woff')
+
+@font-face
+	font-family 'Avenir 500'
+	font-style normal
+	font-weight normal
+	src local('Avenir 500'), url('../fonts/AvenirLTStd-Roman.woff') format('woff')
+
+// VARIABALES
+
+Gris_Bolder = rgba(86,95,98,1)
+Gris_Bold = #555e61
+Gris_light = #4D4D4D
+// Gris_lighter = rgba(158,169, 175,1)
+Gris_lighter = #99a9af
+Gris_BorderImage = #f2f2f2
+Gris_background = #e2e2e2
+Gris_border = #dcdcdc
+Gris_checkbox = #7d7d7d
+Verde_ok = #099692
+Rojo_error = #e22830
+Gris_Login = #99a9af
+// #00e2b8
+Verde_bold = #008178
+Gris_footer = #525f62
+Verde_light = #00eab1
+Withe = #fff
+Gris_body = #fafafa
+Gris_icon = #efefef
+Gris_hover = #f5f5f5
+Gris_lightbox = rgba(46, 46, 46, 0.63)
+Gris_shadow = rgba(0, 0, 0, 0.2)
+Gris_Button = #cecece
+Gris_backgroundLighter = #fbfbfb
+Gris_backgroundUser = #f9f9f9
+Gris_hoverText = rgba(220, 220, 220, 0.63)
+Azul_imageChat = #374850
+
+AvenirLighter = 'Avenir Lighter'
+AvenirLight = 'Avenir Light'
+AvenirBold = 'Avenir Bold'
+AvenirNormal = 'Avenir Normal'
+Gris_BoldLighter = #ecedf1
+Azul_Chat = #455a64
+Azul_Bold = #35414f
+	
+body 
+	background-color #fafafa
+	margin 0
+	padding 0
+	font-size 14px
+	font-family 'Avenir Normal', sans-serif
+
+colorShadow = rgba(97, 97, 97, 0.36)
+Azul_semiMarino = #35414f	
+colorModal = rgba(230, 230, 230, 0.42)
+blancoPrimary = rgba(255, 255, 255, 1)
+
+scroll()
+	&::-webkit-scrollbar
+		width 7px
+		background #dbe8ec
+		border-radius 10px
+		margin 5px
+	&::-webkit-scrollbar-button
+		width 0px
+		height 0px
+	&::-webkit-scrollbar-track
+		background rgba(210, 210, 210, 0.19)
+		border thin solid rgba(210, 210, 210, 0.19)
+		-webkit-box-shadow inset 0 0 6px rgba(210, 210, 210, 0.19)
+		border-radius 10px
+	&::-webkit-scrollbar-thumb
+		background rgba(105, 105, 105, 0.37)
+		border thin solid rgba(105, 105, 105, 0)
+		border-radius 10px
+
+.Containner
+	height 100vh
+	padding-top 60px
+	box-sizing border-box
+	
+h1, h2, h3, h4, h5, h6, p
+	margin 0 
+	padding 0
+	
+h1, h2, h3, h4
+	font-family 'Avenir Bolder'
+	
+h5, h6
+	font-family 'Avenir Bold'
+
+input, select
+	font-family 'Avenir Normal'
+	color #4c4c4c
+
+p
+	padding 0
+	margin 0
+	
+.astrum__label
+	padding .5em 0
+	font-weight bold
+	display none
+.astrum__input
+	font-size 14px
+	width 100%
+	border 1px solid #d0d0d0
+	outline 0
+	border-radius 2px
+	padding 10px 5px
+	box-sizing border-box
+	color Gris_lighter
+	
+.ContentMap
+	&__box
+		height 100%
+		width 100%
+	&__btnBottom
+		position absolute
+		z-index 40
+		bottom 20px
+		right 60px
+		&--containner
+			position relative
+			// z-index 90 !important
+			.BtnPlus
+				cursor pointer
+				width 40px
+				height 40px
+				display flex
+				justify-content center
+				align-items center
+				background-color #3a3a3a
+				box-shadow 1px 1px 3px gray
+				border-radius 50%
+				span
+					font-size 15px
+					color white
+			.BtnList
+				position absolute
+				bottom 20px
+				right 0
+				padding 0 5px
+				list-style none
+				display none
+				overflow hidden
+				li
+					cursor pointer
+					display flex
+					justify-content center
+					align-items center
+					width 30px
+					height 30px
+					margin-bottom 1em
+					color white
+					border-radius 50%
+					background-color #3a3a3a
+					box-shadow 1px 1px 3px gray
+
+.selectBox
+	position relative
+	border 1px solid #ccc
+	width 100%
+	overflow hidden
+	background-color #fff
+	// border-radius 5px
+	&:before
+		content ''
+		position absolute
+		right 8px
+		top 12px
+		width 0
+		height 0
+		border-style solid
+		border-width 7px 5px 0 5px
+		border-color #656565 transparent transparent transparent
+		z-index 5
+		pointer-events none
+	&__select
+		padding 5px 25px 5px 5px
+		cursor pointer
+		background transparent
+		width 100%
+		border 0
+		border-radius 0
+		-webkit-appearance none
+		font-family AvenirLighter
+		cursor pointer
+		font-size 15px
+		line-height 19px
+		color #4c4c4c
+		outline none
+		&:disabled
+			color #989898
+
+.form-control
+	width 100%
+	border 0
+	padding 5px
+	font-size 16px
+	box-sizing border-box
+	margin 5px 0
+	outline 0
+	
+.inputs-label
+	width 100%
+	border 0
+	padding 7px
+	color Gris_lighter
+	font-size 16px
+	box-sizing border-box
+	border 1px solid Gris_BoldLighter
+	font-family AvenirLighter
+	// margin 5px 0
+	outline 0
+	&:focus
+		border 1px solid #66afe9
+		box-shadow inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+		
+.form-control-bottom
+	width 100%
+	height 5px
+	border-bottom 1px solid #adadad
+	border-right 1px solid #adadad
+	border-left 1px solid #adadad
+
+.btnSubmit
+	padding .7em 0
+	color green
+	background-color white
+	width 100%
+	border 2px solid green
+	border-radius 100px
+	cursor pointer
+	outline 0
+
+@import './style/home/style'
+@import './style/navbar/style'
+@import './style/fonts/style'
+@import './style/dashboar/style'
+@import './style/loader/style'
+@import './style/chat/style'
+@import './style/baseContain/style'
+@import './style/users/style'
+@import './style/orderDetail/style'
+@import './style/kml/style'
+@import './style/markers/style'

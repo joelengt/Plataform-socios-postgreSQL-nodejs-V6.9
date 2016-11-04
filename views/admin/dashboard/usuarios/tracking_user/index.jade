@@ -1,0 +1,59 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { 
+				height: 80%; 
+				width: 80%;
+			}
+
+		//- link(rel="stylesheet", href="./css/normalize.css")
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		//- link(rel="stylesheet", href="../../css/index.css")
+	body(id="App_Container", class="wrap")
+		header
+			h1 AstrumApp
+			//- img(src="../../#{user.photo.path}", width="80")
+			p @#{user.username}
+			input(id="user_id", value="#{user_info._id}")
+
+
+		section
+			h3  Administrando Tracking de Usuarios
+			div
+				p Datos del usuario
+				h3 Nombre: #{user_info.full_name}
+				img(src="../../../../#{user_info.photo.path}", width="80")
+				p Empresa: #{user_info.empresa_admin}
+				p Contratista: #{user_info.contratista}
+				p Username: #{user_info.username}
+				p Permiso: #{user_info.permiso}
+
+			
+		div(id="map")
+		div(id="streetview")
+			p lista de ordendes de trabajoAAA
+			strong #{msg}
+			
+		section
+			h3 Tracking
+			div(class="box_Tracking_Collections")
+				p #{tracking_list.user_id}
+				each track in tracking_list.track_info
+					div
+						p Coordenada X: #{track.coordX}
+						p Coordenada Y: #{track.coordY}
+						p Fecha: #{track.date}
+						p ––––––––––––––––––––––––––––––––––––––
+
+script(type="text/javascript", src="https://cdn.socket.io/socket.io-1.2.0.js")
+script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+script(type="text/javascript", src="../../../../js/gmaps/index.js")
+script(type="text/javascript", src="../../../../js/socket_io/tracking_admin_users/index.js")
+script(type="text/javascript", src="../../../../js/gmaps/tracking_admin/index.js")
+script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')
+	

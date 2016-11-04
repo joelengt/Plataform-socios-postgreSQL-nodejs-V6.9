@@ -1,0 +1,46 @@
+<div>
+	<div ng-include="global.navUrl"></div>
+	<div class="Kml Containner">
+		<div class="Kml__left Containner__left">
+			<div class="Kml__left--markers">
+				<div class="inputContainner">
+					<label for="viewMarker">Ordenes de Trabajo - Marcadores</label>
+					<input checked="checked" id="viewMarker" type="checkbox">
+				</div>
+			</div>
+			<div class="Kml__left--firstForm"  ng-if="kmls.length <= 0">
+				<form class="FormMsgFirst" id="FormMsgFirst" enctype="multipart/form-data">
+					<div id="Drag">
+						<input class="FormMsgFirst__input" id="fileFirst" type="file" required onchange="angular.element(this).scope().changeInput(this)">
+						<label class="FormMsgFirst__label" for="fileFirst">
+							<div class="FormMsgFirst__label--image" style="background-image:url(../images/upload.svg)"></div>
+							<div class="FormMsgFirst__label--text">
+								<p id="txt">Arrastra hasta aqui y sube tus archivos KML</p>
+							</div>
+							<div class="FormMsgFirst__label--btn">
+								<p>Subir</p>
+							</div>
+						</label>
+					</div>
+				</form>
+			</div>
+			<div class="Kml__left--lastForm" ng-if="kmls.length > 0">
+				<form class="FormMsg" ng-submit="AddKml()" id="FormMsg" enctype="multipart/form-data">
+					<div class="FormMsg__text">
+						<h4>SUBIR KML</h4>
+					</div>
+					<div class="FormMsg__input">
+						<input id="file" onchange="angular.element(this).scope().changeInput(this)" type="file" required>
+						<label for="file"><span id="pathFile"><img width="20" src="../images/upload.svg" alt=""> Subir</span></label>
+					</div>
+				</form>
+			</div>
+			<div class="Kml__left--items ArticlesContainer">
+			</div>
+		</div>
+		<div class="Kml__right Containner__right">
+			<div class="Kml__right--map Containner__right--mapCanvas" id="map">
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,77 @@
+	<!DOCTYPE html>
+html(lang="en")
+head
+	meta(charset="UTF-8")
+	title Plataforma
+body(id="App_Container")
+	header
+		h2 Logo Ascent
+		div
+			img(src="#{user.photo.path}", width="50")
+			//- p #{user.email}
+			p @ #{user.nickname}	
+			div
+				a(href="/plataforma/perfil/#{user._id}") Perfil
+			div
+				a(href="/logout") Salir
+	nav
+		ul
+			li
+				a(href="/plataforma/perfil/#{user._id}") Perfil
+			li
+				a(href="/plataforma/") Cursos 
+				a(href="/plataforma/diplomados") |  Diplomados
+			li
+				a(href="/plataforma/comunidad") Comunidad
+
+	section
+		p Vista de Buscando amigos
+
+		ul
+			li
+				a(href="/plataforma/comunidad/") Comunidad
+			li
+				a(href="/plataforma/comunidad/find-friends/actions") Buscar Amigos
+			li
+				a(href="/plataforma/comunidad/chat/list") Chat
+			li
+				a(href="/plataforma/comunidad/friends/list") Amigos
+			li
+				a(href="/plataforma/notificaciones") Notificaciones
+
+	section
+		input(type="text" id="user_id_here", value="#{user._id}")
+		h2 Sistema de chat
+		div
+			a(href="/dashboard/chat/list-friends") Iniciar chat con un amigo
+		p Lista de canales de chat con amigos
+		p(id="counterMax") mensaje no leidos #{counter_max}
+		section(class="ContentChats")		
+			each chat in chats
+				if chat.status_read === false
+					- var color_no_read = '#68e29b'
+				else 
+					- var color_no_read = 'white'
+
+
+				article(class="ChatItem", style="border-bottom:1px solid black; background: #{color_no_read};", data-id="#{chat.list.chat_content_id}")
+					img(src="#{chat.photo.path}", width="50")
+					h3 
+						a(href="/plataforma/muro/#{chat.user_id}") #{chat.name}
+					p @#{chat.nick}
+					p(class="u_user_id") #{chat.user_id}
+					p(class="u_msg") #{chat.list.ultime_mesage.message}
+					p(class="u_date") #{chat.list.ultime_mesage.date_send}
+					p(class="u_counter") #{chat.counter}
+					p #{chat.status_read}
+					form(action="/dashboard/chat/room/#{chat.list.chat_content_id}/#{chat.user_id}", method="post")
+						button Abrir chat
+
+					form(action="/dashboard/chat/#{chat.user_id}?_method=delete", method="post")
+						button X
+
+script(type="text/javascript", src="https://cdn.socket.io/socket.io-1.2.0.js")
+script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+script(type="text/javascript", src="../../../js/socket_io/chat/chatList/index.js")
+script(type="text/javascript", src="../../../js/socket_io/connect_status/chatList/index.js")
+

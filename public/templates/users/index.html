@@ -1,0 +1,144 @@
+<div>
+	<div ng-include="global.navUrl"></div>
+	<div class="users Containner">
+		<div class="users__left Containner__left">
+			<div class="users__left--filter">
+				<div class="Filter">
+					<div class="Filter__head">
+						<div class="Filter__head--content" id="viewFilter" ng-click="viewFilter()">
+							<h2><span class="icon-icon_filtro"></span> Filtros</h2>
+						</div>
+					</div>
+					<div class="Filter__options" id="FilterContents">
+						<div class="Filter__options--triangle" id="triangle"></div>
+						<div class="Filter__options--content">
+							<div class="Items">
+								<div  class="Items__left">
+									<div class="Data">
+										<div class="Data__left">
+											<p>Usuario</p>
+										</div>
+										<div class="Data__right">
+											<div class="selectBox">
+												<select id="usuarios" class="selectBox__select" name="">
+													<option value="todos">Todos</option>
+													<option value="users-campo">Usuario de Campo</option>
+													<option value="officers">Usuario de Oficina</option>
+													<option value="officer-viewer">Usuario de Viewer</option>
+												</select>
+											</div>
+										</div>
+									</div>								
+								</div>
+							</div>
+							<div class="Items">
+								<div class="Items__left">
+									<div class="Data">
+										<div class="Data__left">
+												<p>Estado</p>
+										</div>
+										<div class="Data__right">
+											<div class="selectBox">
+												<select id="estado" class="selectBox__select" name="">
+													<option value="todos">Todos</option>
+													<option value="activos">Activo</option>
+													<option value="inactivos">inactivo</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="Items__right">
+									<div class="Data">
+										<div class="Data__left">
+											<p>Vista</p>
+										</div>
+										<div class="Data__right">
+											<div class="selectBox">
+												<select class="selectBox__select" name="" id="vista">
+													<option value="perfil">Perfil</option>	
+													<option value="traking">Tracking</option>
+												</select>
+											</div>
+										</div>										
+									</div>
+								</div>								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="users__list">
+				<div ng-repeat="user in users" class="Item__containnerEnlace" data-containneruser="{{user._id}}">
+					<div class="Item" ng-if="user.contratista" data-iduser="{{user._id}}">
+						<div class="Item__containner" ng-click="actionUser(user._id)">
+							<figure class="Item__containner--image">
+								<img src="{{user.photo.path}}" alt="{{user.full_name}}" width="50">
+							</figure>
+							<div class="Item__containner--text">
+								<div class="titleUser">
+									<h3>{{user.names}} {{user.last_names}}</h3>
+								</div>
+								<div class="detailUser">
+									<p class="detailUser__name">@{{user.username}}</p>
+									<p class="detailUser__username">• {{user.contratista}}</p>
+								</div>
+							</div>
+						</div>
+						<div class="Item__dropdown">
+							<div class="Item__dropdown--icon" ng-click="viewBtn(user._id)">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__dropdown--content">
+								<div class="DropdownOption">
+									<p data-id="{{user._id}}" class="deleteUser" ng-click="deleteUser(user._id)">Eliminar Usuario</p>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="Item__userStatus">
+							<div class="Item__userStatus--box">•</div>
+						</div> -->
+					</div>
+					<div class="Item" ng-if="!user.contratista" ng-click="actionUser(user._id)">
+						<div class="Item__containner">
+							<figure class="Item__containner--image">
+								<img src="{{user.photo.path}}" alt="{{user.full_name}}" width="50">
+							</figure>
+							<div class="Item__containner--text">
+								<div class="titleUser">
+									<h3>{{user.names}} {{user.last_names}}</h3>
+								</div>
+								<div class="detailUser">
+									<p class="detailUser__name">@{{user.username}}</p>
+								</div>
+							</div>
+						</div>
+						<div class="Item__dropdown">
+							<div class="Item__dropdown--icon">
+								<span class="icon-icon_submenu"></span>
+							</div>
+							<div class="Item__dropdown--content">
+								<div class="DropdownOption">
+									<p data-id="{{user._id}}" class="deleteUser">Eliminar Usuario</p>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="Item__userStatus">
+							<div class="Item__userStatus--box">•</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="users__right Containner__right">
+			<div class="users__right--mapCanvas Containner__right--mapCanvas" id="map">
+				<div class="Defect">
+					<div class="Defect__content">
+						<div class="Defect__content--image"></div>
+						<p class="Defect__content--text">Escoge tus filtros y haz click en el usuario para visualizar su información o su tracking</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

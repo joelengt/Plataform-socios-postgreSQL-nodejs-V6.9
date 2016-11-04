@@ -1,0 +1,49 @@
+cdoctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		link(rel="stylesheet", href="./css/normalize.css")
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../css/index.css")
+	body
+	header
+		h1 AstrumApp
+		img(src="../#{user.photo.path}", width="80")
+		p @#{user.username}
+	
+	section 
+		h3 Estado
+		div
+			a(href="/dashboard/usuarios") Todos
+		div
+			a(href="/dashboard/usuarios/estado/activo") Activos
+		div
+			a(href="/dashboard/usuarios/estado/inactivo") Inactivos
+
+
+	section
+		h3  Usuario
+		div
+			a(href="/dashboard/usuarios/onwers") Onwer/admin
+		div
+			a(href="/dashboard/usuarios/admins") Admins
+		div
+			a(href="/dashboard/usuarios/officers") Usuarios Oficina
+		div
+			a(href="/dashboard/usuarios/users-campo") Usuarios de Campo
+
+	section
+		p Todos los usuarios
+			each usuario in list_usuarios
+				div(style="border-bottom: 1px solid black;")
+					img(src="../../../#{usuario.photo.path}", width="100")
+					p Nombre completo: #{usuario.full_name}
+					p @#{usuario.username}
+					p permiso: #{usuario.permiso}
+					p #{usuario.empresa_admin}
+					p #{usuario.contratista}
+					div
+							button(class="btn btn-default") Detalles
+							

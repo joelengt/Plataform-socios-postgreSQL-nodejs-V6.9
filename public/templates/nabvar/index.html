@@ -1,0 +1,49 @@
+<header ng-controller="navbarController" class="navHeader">
+	<nav class="navHeader__containner">
+		<div class="navHeader__containner--logo">
+			<h1 class="PageLogo"><a href="{{url_dashboard}}">Astrum</a></h1>
+		</div>
+		<ul class="navHeader__containner--navs">
+			<li class="linkNav"><a class="linkNav__link" href="{{url_dashboard}}"><span class="icon-nav icon-icon_orden_de_trabajo"></span> Ordenes de Trabajo</a></li>
+			<li class="linkNav"><a class="linkNav__link" href="{{url_users}}"><span class="icon-nav icon-icon_usuarios"></span> Usuarios</a></li>
+			<li class="linkNav"><a class="linkNav__link" href="{{url_kml}}">KML</a></li>
+			<li class="linkNav">
+				<a class="linkNav__link actionLink">
+					<div class="actionLink__notification">
+						<div class="actionLink__notification--icon">
+							<span class="icon-nav icon-icon_notificaciones"></span>
+							<span class="CounterNotifications">{{count}}</span>
+						</div>
+						<div class="ViewNotification">
+							<div ng-include=" './templates/nabvar/notificaciones/index.html' "></div>
+						</div>						
+					</div>
+					<div class="actionLink__message">
+						<div class="actionLink__message--icon" id="messageChat">
+							<span class="icon-nav icon-icon_chat"></span>
+							<span class="CounterMessages"></span>
+						</div>
+					</div>
+				</a>
+			</li>
+			<li class="linkNav dropdown">
+				<div class="linkNav__linkUser" ng-click="viewOptionUser()">
+					<a class="linkNav__link">
+						<figure class="dropdown__avatar">
+							<img class="dropdown__avatar--image" src="{{user.user.photo.path}}" alt="{{user.user.names}}" height="40">
+						</figure>
+						<span class="dropdown__name">{{user.user.names}} <span class="icon-nav icon-icon_submenu"></span></span>
+					</a>
+					<ul class="dropdown__list" id="viewSubNav">
+						<!-- <li class="dropdown__list--link"><a >Editar Perfil</a></li> -->
+						<!-- <li class="dropdown__list--link"><a >Configuración</a></li> -->
+						<li class="dropdown__list--link"><a ng-click="doLogout()">Cerrar sesion</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</nav>
+</header>
+<div class="">
+	<div ng-include=" './templates/nabvar/chat/index.html' "></div>
+</div>

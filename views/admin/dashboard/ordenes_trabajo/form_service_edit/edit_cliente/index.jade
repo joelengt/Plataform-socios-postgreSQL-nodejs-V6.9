@@ -1,0 +1,178 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; } 
+			#map { height: 80%; width: 80%;}
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap")
+		header
+			h1 AstrumApp
+			img(src="../../../../../#{user.photo.path}", width="80")
+			p @#{user.username}
+
+		section
+			h2  Actualizar data: #{type_service}
+			form(action="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order_id}/item/#{type_service}/#{service._id}?_method=put", method="post", enctype="multipart/form-data")
+				div
+					div
+						label cliente id:
+					div
+						input(type="text", id="txt_cliente_id" name="cliente_id", value="#{service.cliente_id}", class="form-control  wrap_padding")
+						a(id="btn_buscar_cliente", class="btn btn-default") Buscar
+						p(id="msg_busqueda")
+				div
+					div
+						label codigo de orden de trabajo
+					div
+						p #{codigo_work_order}
+					div
+						div
+							label numero de cliente:
+						div
+							input(type="text", name="numero_cliente", value="#{service.numero_cliente}", id="txt_numero_cliente", class="form-control  wrap_padding")
+					div
+						div
+							label codigo via:
+						div
+							input(type="text", name="codigo_via", value="#{service.codigo_via}", id="txt_codigo_via", class="form-control  wrap_padding")
+					div
+						div
+							label numero puerta
+						div
+							input(type="text", name="numero_puerta", value="#{service.numero_puerta}",id="txt_numero_puerta", class="form-control  wrap_padding")
+					div
+						div
+							label numero interior
+						div
+							input(type="text", name="numero_interior", value="#{service.numero_interior}", id="txt_numero_interior", class="form-control  wrap_padding")
+					div
+						div
+							label codigo localidad
+						div
+							input(type="text", name="codigo_localidad", value="#{service.codigo_localidad}", id="txt_codigo_localidad", class="form-control  wrap_padding")
+					div
+						div
+							label manzana
+						div
+							input(type="text", name="manzana", value="#{service.manzana}", id="txt_manzana", class="form-control  wrap_padding")
+					div
+						div
+							label lote
+						div
+							input(type="text" name="lote", value="#{service.lote}", id="txt_lote", class="form-control  wrap_padding")
+					div
+						div
+							label nombre del cliente
+						div
+							input(type="text", name="nombre_de_cliente", value="#{service.nombre_de_cliente}", id="txt_nombre_de_cliente", class="form-control  wrap_padding")
+					div
+						div
+							label tipo recidencial
+						div
+							input(type="text", name="type_residencial", value="#{service.type_residencial}", id="txt_type_residencial", class="form-control  wrap_padding")
+					div
+						div
+							label Es maximetro bt
+						div
+							input(type="text", name="is_maximetro_bt", value="#{service.is_maximetro_bt}", id="txt_is_maximetro_bt", class="form-control  wrap_padding")
+					div
+						div
+							label suministro derecha
+						div
+							input(type="text", name="suministro_derecha", value="#{service.suministro_derecha}", id="txt_suministro_derecha", class="form-control  wrap_padding")
+					div
+						div
+							label suministro izquierda
+						div
+							input(type="text", name="suministro_izquierda", value="#{service.suministro_izquierda}", id="txt_suministro_izquierda", class="form-control  wrap_padding")
+					div
+						div
+							label medidor derecha
+						div
+							input(type="text", name="medidor_derecha", value="#{service.medidor_derecha}", id="txt_medidor_derecha", class="form-control  wrap_padding")
+					div
+						div
+							label medidor izquierda
+						div
+							input(type="text", name="medidor_izquierda", value="#{service.medidor_izquierda}", id="txt_medidor_izquierda", class="form-control  wrap_padding")
+					div
+						div
+							label numero del poste cercano
+						div
+							input(type="text", name="numero_poste_cercano", value="#{service.numero_poste_cercano}", id="txt_numero_poste_cercano", class="form-control  wrap_padding")
+					div
+						div
+							label tipo de conexion
+						div
+							input(type="text", name="type_conexion", value="#{service.type_conexion}", id="txt_type_conexion", class="form-control  wrap_padding")
+					div
+						div
+							label tipo de acomedida
+						div
+							input(type="text", name="type_acometida", value="#{service.type_acometida}", id="txt_type_acometida", class="form-control  wrap_padding")
+					div
+						div
+							label tipo de cable de acomedida
+						div
+							input(type="text", name="type_cable_acometida", value="#{service.type_cable_acometida}", id="txt_type_cable_acometida", class="form-control  wrap_padding")
+					div
+						div
+							label calibre cable de acomedida
+						div
+							input(type="text", name="calibre_cable_acometida", value="#{service.calibre_cable_acometida}", id="txt_calibre_cable_acometida", class="form-control  wrap_padding")
+					div
+						div
+							label calibre cable matriz
+						div
+							input(type="text", name="calibre_cable_matriz", value="#{service.calibre_cable_matriz}", id="txt_calibre_cable_matriz", class="form-control  wrap_padding")
+					div
+						div
+							label observaciones
+						div
+							textarea(name="observaciones", id="txt_observaciones", class="form-control  wrap_padding") #{service.observaciones}
+					div
+						div
+							label fecha_ejecucion
+						div
+							input(type="text", name="fecha_ejecucion" value="#{service.fecha_ejecucion}", id="txt_fecha_ejecucion", class="form-control  wrap_padding")
+					div
+						label Galeria Multimedia  
+						div
+							each element in service.imagen_cliente
+								div
+									img(src="#{element.path}", width="100")
+								div
+									a(id="btn_eliminar_item_multimedia", href="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order_id}/delete/#{type_service}/#{service._id}/item/#{element.position}") Eliminar
+								br
+
+							input(type="file", name="new_file_upload")
+
+					div
+						div
+							label croquis
+						div
+							img(src="../../../../images/from 2016-07-08 03-57-44.png", width="200")
+						div
+							input(type="file", name="croquis")
+					div
+						label Coordenada X:
+						input(type="text", value="#{service.coordenada_X}", id="txt_coordenada_X", class="form-control  wrap_padding", name="coordenada_X")
+						label Coordenada Y:
+						input(type="text", value="#{service.coordenada_Y}", id="txt_coordenada_Y", class="form-control  wrap_padding", name="coordenada_Y")
+						a(id="btn_goPoints", class="btn btn-default") Buscar
+
+				button(class="btn btn-success  btn-lg btn-block") Guardar y Enviar
+		
+		div(id="map")
+
+		script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+		script(type='text/javascript', src="../../../../js/work_orders/cliente/element.js")
+		script(type='text/javascript', src="../../../../js/gmaps/index.js")
+		script(type='text/javascript', src="../../../../js/gmaps/modulos/form_cliente/index.js")
+		script(type='text/javascript', src="../../../../js/work_orders/cliente/index.js")
+		script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')

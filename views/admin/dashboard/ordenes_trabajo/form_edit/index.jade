@@ -1,0 +1,243 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+		title Astrum
+		style(type='text/css').
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { height: 80%; width: 80%;}
+		link(rel="stylesheet", href="./css/normalize.css")
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel="stylesheet", href="../../../css/index.css")
+	body(class="wrap", id="App_Container")
+		header
+			h1 AstrumApp
+			img(src="../../../#{user.photo.path}", width="80")
+			p @#{user.username}
+			p empresa: #{user.empresa_admin}
+			p contratista: #{user.contratista}
+
+		section
+			h2  Editar la Orden de Trabajo
+
+			form(action="http://localhost:5000/dashboard/ordenes_trabajo/#{work_order._id}?_method=put", method="post", class="max_space")
+				article
+					h4 Datos de usuarios .........................................
+					div
+						div
+							label
+								strong > Codigo de Orden
+							p #{work_order.codigo_orden}
+						div
+							label 
+								strong > Codigo de supervisor
+							p select: #{work_order.codigo_supervisor}
+						div
+							p yo mismo
+							ul
+								li 
+									input(type="radio", name="codigo_supervisor", value="#{user._id}")
+									img(src="../../../#{user.photo.path}", width="40") 
+									label #{user.names} (Yo)
+									p #{user.permiso}
+
+							p Otro usuario de oficina
+							ul
+								each officer in officers
+									li 
+										input(type="radio", name="codigo_supervisor", value="#{officer._id}") 
+										img(src="../../../#{officer.photo.path}", width="40")
+										label #{officer.names}
+										p nick: @#{officer.username}
+										p permiso: #{officer.permiso}
+										p empresa: #{officer.empresa_admin}
+										p contratista: #{officer.contratista}
+					
+					div
+						div
+							label 
+								strong > Codigo de contratista
+							p select: #{work_order.codigo_contratista}
+
+						div
+							ul
+								each user_campo in user_campos
+									li 
+										input(type="radio", name="codigo_contratista", value="#{user_campo._id}") 
+										img(src="../../../#{user_campo.photo.path}", width="40")
+										label #{user_campo.names}
+										p nick: @ #{user_campo.username}
+										p permiso: #{user_campo.permiso}
+										p empresa: #{user_campo.empresa_admin}
+										p contratista: #{user_campo.contratista}
+
+				article
+					h4 Datos de Servicio .................................
+					div
+						div
+							label 
+								strong > Tipo de servicio
+							p select: #{work_order.tipo_servicio}
+
+					div
+						div
+							label 
+								strong > Detalle de servicio
+							p select: #{work_order.detalle_servicio}
+
+						ul
+							strong Poste
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_A")
+								label Zona sin Alumbrado Publico
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_CH")
+								label Poste Chocado
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_CC")
+								label Poste Caido por Corrosion
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_M")
+								label Mantenimiento de Poste
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_I")
+								label Instalacion de Poste
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_R")
+								label Registro de Poste
+
+						ul
+							strong Cliente
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_VC")
+								label Verificar Direccion de Cliente
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_RD")
+								label Registro de Direccion
+							li
+								input(type="radio", name="detalle_servicio", value="detalle_servicio_RCN")
+								label Registrar Cliente Nuevo
+					
+					div
+						div
+							label 
+								strong > Tipo de urgencia
+							p select: #{work_order.tipo_urgencia}
+
+						ul
+							li
+								input(type="radio", name="tipo_urgencia", value="tipo_urgencia_A")
+								label Alta
+							li
+								input(type="radio", name="tipo_urgencia", value="tipo_urgencia_M")
+								label Media
+							li
+								input(type="radio", name="tipo_urgencia", value="tipo_urgencia_B")
+								label Bajo
+
+				article
+					h3 Datos Detalles ................................
+					div
+						div
+							label > Descripción
+							textarea(name="descripcion", class="form-control  wrap_padding") #{work_order.descripcion}
+
+						div
+							label > Conclusiones
+							textarea(name="conclusiones", class="form-control  wrap_padding") #{work_order.conclusiones}
+
+						div
+							label > Fecha visita esperada
+							p select: #{work_order.fecha_visita_esperada}
+							input(type="date", name="fecha_visita_esperada", class="form-control  wrap_padding") 
+
+						div
+							label > Fecha de order publicada
+							p #{work_order.fecha_publicado}
+
+						div
+							label > Fecha de trabajo realizado
+							p #{work_order.fecha_trabajo_realizado}
+
+						div
+							label > Fecha de creación de la orden
+							p #{work_order.fecha_creada}
+
+						div
+							label > Reprogramado de:
+							p Seleccionar para reprogramar
+							p #{work_order.reprogramado_de}
+
+				article
+					h3 Datos de Estado y condicion
+					ul
+						strong > public
+						p select: #{work_order.public}
+						li
+							input(type="radio", name="public", value="true")
+							label true
+						li
+							input(type="radio", name="public", value="false")
+							label false
+
+					ul
+						strong Estado
+						p select: #{work_order.estado}
+
+				article
+					h3 Datos de la ubicación ......................................
+					div
+						div
+							strong > Coordenada X
+							p select: #{work_order.coordenada_X}
+							input(type="text", name="coordenada_X", id="txt_coordenada_X", class="form-control  wrap_padding")
+
+							strong > Coordenada Y
+							p select: #{work_order.coordenada_Y}
+							input(type="text", name="coordenada_Y", id="txt_coordenada_Y", class="form-control  wrap_padding")
+							a(id="btn_goPoints", class="btn btn-default") Buscar
+					
+					div
+						div
+							label 
+								strong > Dirección 
+						div
+							input(type="text", name="direccion", id="address", class="form-control  wrap_padding", value="#{work_order.direccion}")
+
+				article(class="ArticlesContainer")
+					h3 Elemento de la orden
+					div(class="box_work_order_element")
+						div(style="display: none;")
+							input(type="text", value="#{work_order._id}", id="txt_work_order_id")
+							input(type="text", value="#{type_service_re}", id="txt_work_order_type")
+
+						each elemento in work_order.elementos
+							div(class="Article__read__item", data-id="#{elemento._id}")
+								div(style="display: none;")
+									input(type="text", value="#{elemento._id}", id="txt_elemento_id")
+
+								p id: #{elemento._id}
+								img(src="#{elemento.image_element.path}", width="100")
+								p type: #{elemento.type}
+								a(class="btn_edit_element") Editar Elemento
+					div
+						a(id="btn_add_element_work_order") Añadir elemento
+
+				button(class="btn btn-primary btn-lg btn-block") Guardar Cambios
+
+			form(action="http://localhost:5000/dashboard/ordenes_trabajo/delete/#{work_order._id}?_method=delete", method="post")
+				button(class="btn btn-danger btn-lg btn-block") Eliminar
+			
+
+		div(id="map")
+
+		script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
+		script(type='text/javascript', src="../../../js/gmaps/index.js")
+		script(type='text/javascript', src="../../../js/gmaps/modulos/index.js")
+		script(type='text/javascript', src="../../../js/gmaps/modulos/element/edit/index.js")
+		script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxTzYjPzybx9d2yiNzXWnHFag9dp6OY&callback=initMap')
+
+
+
+

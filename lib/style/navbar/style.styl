@@ -1,0 +1,312 @@
+a
+	text-decoration none
+	color #4f585b
+.navHeader
+	height 60px
+	position absolute
+	width 100%
+	background-color white
+	// overflow hidden
+	box-shadow 0 0 7px #bbb
+	z-index 85
+	top 0
+	&__containner
+		display flex
+		justify-content space-between
+		flex-wrap wrap
+		&--logo
+			// background-color crimson
+			height 60px
+			margin-left 10px
+			.PageLogo
+				a
+					text-indent -99999px
+					width 125px
+					height 26px
+					margin 17px 0
+					background-repeat no-repeat
+					background-size cover
+					background-image url("../images/logo.svg")
+					display block
+		&--navs
+			// width 80%
+			list-style none
+			margin 0
+			display flex
+			justify-content flex-end
+			flex-wrap wrap
+			padding 0
+			// text-align center
+			.linkNav
+				min-width 100px
+				// width 16%
+				// height 60px
+				// max-width 150px
+				text-align center
+				// line-height 60px
+				border-left 1px solid #dcdcdc
+				&:hover
+					background-color #f7f7f7
+				&__linkUser
+					cursor pointer
+					display flex
+					justify-content center
+					align-items center
+					height 60px
+					width 100%
+				&__link
+					cursor pointer
+					display flex
+					justify-content center
+					align-items center
+					height 60px
+					width 100%
+					padding 0 1em
+					box-sizing border-box
+					.icon-nav
+						color Gris_lighter
+						margin-right .5em
+				.actionLink
+					width 150px
+					padding 0
+					display flex
+					justify-content space-around
+					&:hover
+						background-color white
+					&__notification
+						position relative
+						cursor pointer
+						width 50%
+						// height 60px
+						// display flex
+						// justify-content center
+						// align-items center
+						&:hover
+							background-color #f7f7f7
+						&--icon
+							width 100%
+							display flex
+							font-size 1.3em
+							justify-content center
+							align-items center
+							height 60px
+							&:hover
+								background-color #f7f7f7
+							.CounterNotifications
+								position absolute
+								top 14px
+								width 9px
+								right 28px
+								font-size 8px
+								color White
+								background-color Verde_bold
+								border-radius 100px
+								padding 3px
+						&--content
+							position absolute
+							width 350px
+							left -142px
+							top 60px
+							// margin 0 auto
+							.notificaciones
+								position relative
+								&__triangle
+									z-index 90
+									top 0
+									left 0
+									right 0
+									position absolute
+									border-bottom 10px solid white
+									border-left 10px solid transparent
+									border-right 10px solid transparent
+									border-top 10px solid transparent
+									width 0
+									margin -10px auto 0
+								&__containner
+									top 10px
+									position absolute
+									background-color white
+									width 350px
+									box-shadow 1px 1px 10px #a0a0a0
+									.Title
+										border-bottom 1px solid gray
+										height 40px
+										display flex
+										align-items center
+										justify-content center
+									.Notifications
+										overflow-y auto
+										list-style none
+										max-height 350px
+										margin 0
+										padding 0
+										&__containner 
+											padding 10px
+											min-height 40px
+											height auto
+											border-bottom 1px solid Gris_lighter
+											&:hover
+												background-color Verde_ok !important
+												color White
+											.ItemNone
+												&__textContainner
+													display flex
+													flex-wrap wrap
+													justify-content space-around
+													height 40px
+													line-height 40px
+													width 300px
+											.ItemMore
+												&__textContainner
+													display flex
+													flex-wrap wrap
+													justify-content space-around
+													height 40px
+													line-height 40px
+													width 100%
+													font-size 16px
+											.Item
+												position relative
+												&__userAvatar
+													position absolute
+													&--image
+														margin 0
+														padding 0
+														img
+															width 40px
+															border-radius 50%
+												&__textContainner
+													padding-left 50px
+													display flex
+													align-items center
+													text-align left
+													p
+														width 100%
+														font-family AvenirLighter
+														strong
+															font-family AvenirBold
+													// &--text
+													// 	text-overflow ellipsis
+													// 	overflow hidden
+													// 	white-space wrap
+					&__message
+						width 50%
+						position relative
+						cursor pointer
+						&--icon
+							display flex
+							font-size 1.3em
+							justify-content center
+							align-items center
+							height 60px
+							&:hover
+								background-color #f7f7f7
+							.CounterMessages
+								position absolute
+								top 14px
+								width 9px
+								right 28px
+								font-size 8px
+								color White
+								background-color Verde_bold
+								border-radius 100px
+								padding 3px
+			.dropdown
+				position relative
+				&__avatar
+					position absolute
+					z-index 85
+					width 40px
+					height 40px
+					left 10px
+					margin 0
+					top 10px
+					&--image
+						width 100%
+						border-radius 50%
+				&__name
+					padding-left 60px
+					.icon-icon_submenu
+						font-size .5em
+						margin-left .5em
+				&__list
+					z-index 85
+					top 60px
+					left 0
+					background-color white
+					position absolute
+					display none
+					margin 0
+					padding 0
+					list-style none
+					&--link
+						height 40px
+						width 150px
+						text-align center
+						line-height 40px
+						border-bottom 1px solid #e8e8e8
+						&:hover
+							background-color Gris_hover
+							
+// MODAL REPORT
+.ModalReport
+	position fixed
+	z-index 85
+	top 0
+	width 100%
+	height 100%
+	display flex
+	justify-content center
+	align-items center
+	.Report
+		background-color white
+		box-shadow  0 0 4px Gris_shadow
+		width 650px
+		border-radius 5px
+		&__containner
+			// padding 5px
+			&--title
+				padding 1em
+				background-color Gris_hover
+				.TitleReport
+					color Verde_bold
+					font-family AvenirBold
+					font-size 1.5em
+				.SubtitleReport
+					font-family AvenirLighter
+					color Gris_lighter
+			&--description
+				padding 1em 2em
+				.Description__detail
+					p
+						color Gris_Bold
+				.Description__image
+					padding 1em 2em
+					&--photo
+						background-size cover
+						width 400px
+						height 200px
+						margin 0 auto
+			&--btns
+				padding 1em 1em
+				display flex
+				justify-content center
+				.cancel, .acept
+					width 150px
+					margin 0 1em
+					button
+						width 100%
+						border 0
+						outline 0
+						padding .3em .5em
+						font-size 1.2em
+						cursor pointer
+						border-radius 3px
+				.cancel
+					button
+						background-color Gris_Button
+						color Gris_Bolder
+				.acept
+					button
+						background-color Verde_bold
+						color blancoPrimary

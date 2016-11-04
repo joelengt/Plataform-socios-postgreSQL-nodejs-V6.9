@@ -1,0 +1,29 @@
+Switch database
+
+\c DBname
+
+> Entrar en una base de datos
+ 
+ psql DataBaseName
+
+---
+
+> Crear una nueva base de datos
+
+* dentro de psql
+
+> create database DataBaseName;
+
+
+
+EJECUTAR Codigo .sql
+
+> psql frutas < ./create.sql
+
+
+-----
+
+crear tabla
+
+> create table pups
+

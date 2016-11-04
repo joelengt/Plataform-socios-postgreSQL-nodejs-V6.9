@@ -1,0 +1,65 @@
+<div  class="actionLink__notification--content" ng-controller="notificationController">
+	<div class="notificaciones">
+		<div class="notificaciones__triangle"></div>
+		<div class="notificaciones__containner">
+			<div class="Title">
+				<h4>Notificaciones</h4>
+			</div>
+			<ul class="Notifications">
+				<li class="Notifications__containner" ng-if="NotNotification">
+					<div  class="ItemNone">
+						<div class="ItemNone__textContainner">
+							<p class="ItemNone__textContainner--text">No tienes notificaciones aún</p>
+						</div>
+					</div>
+				</li>
+				<li class="Notifications__containner" ng-repeat="notification in itemsNotifications" data-id="{{notification._id}}" style="background-color: {{notification.color}}">
+					<!-- <a href="">{{notification.type_notifications}}</a> -->
+					<div ng-if="notification.type_notification === 'reporte'">
+						<div  class="Item" ng-click="viewReport(notification)">
+							<div class="Item__userAvatar">
+								<figure class="Item__userAvatar--image">
+									<img src="{{notification.users.user_emiter.photo.path}}" width="50" alt="{{notification.users.user_emiter.username}}">
+								</figure>
+							</div>
+							<div class="Item__textContainner">
+								<p class="Item__textContainner--text">El usuario <strong>{{notification.users.user_emiter.username}}</strong> reportó la orden de trabajo <strong>{{notification.codigo_orden}}</strong></p>
+							</div>
+						</div>
+					</div>
+					<div ng-if="notification.type_notification === 'new_orden'">
+						<div class="Item" ng-click="viewOrder()">
+							<div class="Item__userAvatar">
+								<figure class="Item__userAvatar--image">
+									<img src="{{notification.users.user_emiter.photo.path}}" width="50" alt="{{notification.users.user_emiter.username}}">
+								</figure>
+							</div>
+							<div class="Item__textContainner">
+								<p class="Item__textContainner--text">El usuario <strong>{{notification.users.user_emiter.username}}</strong> ha creado una nueva orden: <strong>{{notification.codigo_orden}}</strong></p>
+							</div>
+						</div>
+					</div>
+					<div ng-if="notification.type_notification === 'change_status'">
+						<div class="Item" ng-click="viewStatus(notification.work_order_id, notification._id, notification.status_lectura)">
+							<div class="Item__userAvatar">
+								<figure class="Item__userAvatar--image">
+									<img src="{{notification.users.user_emiter.photo.path}}" width="50" alt="{{notification.users.user_emiter.username}}">
+								</figure>
+							</div>
+							<div class="Item__textContainner">
+								<p class="Item__textContainner--text">El usuario <strong>{{notification.users.user_emiter.username}}</strong> ha actualizado la orden: <strong>{{notification.codigo_orden}}</strong></p>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="Notifications__containner" ng-if="CountTotalNotification" ng-click="moreNotification()">
+					<div  class="ItemMore">
+						<div class="ItemMore__textContainner">
+							<p class="ItemMore__textContainner--text"><span class="icon-icon_agregar_poste"></span> Mostrar más notificaciones</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
