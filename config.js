@@ -7,7 +7,7 @@ var config = {
 		pass : '12345678'
 	},
 	mongodb:{
-		local: 'mongodb://localhost/caballeria',
+		local: 'mongodb://localhost/astrum',
 		mlab: 'mongodb://astrum:astrum@ds145395.mlab.com:45395/caballeria',
 		mlab_test: 'mongodb://astrum:astrum@ds139685.mlab.com:39685/caballeria'
 	},

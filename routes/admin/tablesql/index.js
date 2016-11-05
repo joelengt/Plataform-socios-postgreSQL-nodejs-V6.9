@@ -37,7 +37,7 @@ app.get('/list/:value', isLoggedIn, (req, res, next) => {
 
     var value_select = Number(req.params.value)
 
-    if (value_select >= 0 && value_select <= 5) {
+    if (value_select >= 0 && value_select <= 2) {
 
       const results = [];
       // Get a Postgres client from the connection pool
@@ -121,7 +121,7 @@ app.post('/list/add', isLoggedIn, (req, res, next) => {
     });
 
   });
-});*/
+});
 
 // UPDATE item from list
 app.put('/list/:todo_id', isLoggedIn, (req, res, next) => {
