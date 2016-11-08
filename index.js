@@ -85,7 +85,7 @@ var dashboard_usurios = require('./routes/admin/dashboard/usuarios')
 
 var dashboard_perfil = require('./routes/admin/dashboard/perfil/index.js')
 var dashboard_get_my_data = require('./routes/send_email/index.js')
-var dashboard_db_postgre = require('./routes/admin/tablesql/index.js')
+var dashboard_socios_clientes = require('./routes/admin/dashboard/socios_clientes/index.js')
 
 
 // Routes usage
@@ -98,7 +98,7 @@ app.use('/dashboard/usuarios', dashboard_usurios)
 
 app.use('/dashboard/perfil', dashboard_perfil)
 app.use('/get-my-access/send_email', dashboard_get_my_data)
-app.use('/dashboard/street-data-map', dashboard_db_postgre)
+app.use('/dashboard/socios-clientes', dashboard_socios_clientes)
 
 // Error 404
 app.use(function (req, res) {

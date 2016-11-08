@@ -3,7 +3,7 @@ html(lang='en')
 	head
 		meta(charset='UTF-8')
 		meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
-		title Astrum
+		title CaballeriaDB
 		link(rel="stylesheet", href="./css/normalize.css")
 		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
 		link(rel="stylesheet", href="../css/index.css")
@@ -11,7 +11,7 @@ html(lang='en')
 
 	header
 		header
-			h1 AstrumApp
+			h1 CaballeriaDB
 			img(src="#{user.photo.path}", width="80")
 			p @#{user.username}
 			p permiso: #{user.permiso}
@@ -20,29 +20,13 @@ html(lang='en')
 		h2 Bienvenido al dashboard de oficina
 
 	section
-		a(href="/dashboard/ordenes_trabajo") Ordenes de trabajo
+		a(href="/dashboard/ordenes_trabajo") Usuarios Socios 
 
 	section
-		a(href="/dashboard/usuarios") Usuarios
+		a(href="/dashboard/usuarios") Usuarios Administrativos
 
 	section
 		div
-			a(href="/dashboard/perfil") Ver perfil
+			a(href="/dashboard/perfil") Ver Mi perfil
 		div
 			a(href="/logout") Salir
-
-	section
-		a(href="/dashboard/notificaciones") Notificaciones
-	
-	section
-		a(href="/dashboard/mensajes") Mensajes
-
-	section
-		a(href="/dashboard/viewer-kml") Viewer KML
-	section 
-		a(href="/dashboard/usuarios/tracking/") Tracking de Usuarios
-
-	section
-		h3 Administrar Servicios
-		a(href="/dashboard/servicios") Ver data Servicios
-	

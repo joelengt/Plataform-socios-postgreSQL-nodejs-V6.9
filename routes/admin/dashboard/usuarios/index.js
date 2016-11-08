@@ -9,7 +9,6 @@ var Contratista = require('../../../../models/usuarios/contratistas/index.js')
 var Empresas_Cliente = require('../../../../models/usuarios/empresas_clientes/index.js')
 
 var FindUserData = require('../../../../controllers/find_user_data/index.js')
-var TrackingUsers = require('../../../../models/usuarios/tracking_users/index.js')
 
 var config = require('../../../../config.js')
 

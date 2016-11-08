@@ -25,14 +25,14 @@ app.get('/', isLoggedIn, function (req, res) {
 	   req.user.permiso === users_type.viewer) {
 
 		console.log('El usuario tiene acceso a la plataforma')
-		// res.render('./admin/dashboard/index.jade', {
-		// 	   user: req.user
-		// })
+		res.render('./admin/dashboard/index.jade', {
+		 	user: req.user
+		})
 
-		res.status(200).json({
+		/*res.status(200).json({
 			status: 'ok',
 			user: req.user
-		})
+		})*/
 
 	} else {
 		console.log('El usuario no esta autentificado. Requiere logearse')

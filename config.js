@@ -13,8 +13,8 @@ var config = {
 	},
 	postgresql: {
 	  local: 'postgres://joelengt:kuroyukihime2110@localhost:4002/caballeria', // mac joel
-	  //local: 'postgres://postgres:@localhost:5432/astrum_map_production_pro',         // servidor
-	  //local: 'postgres://postgres:gatogato@localhost:5432/astrum_map_production_pro', // windows
+	  //local: 'postgres://postgres:@localhost:5432/caballeria',         // servidor
+	  //local: 'postgres://postgres:gatogato@localhost:5432/caballeria', // windows
 	  data_connect: {
 	  	user: 'joelengt', //env var: PGUSER
 	  	database: 'caballeria', //env var: PGDATABASE

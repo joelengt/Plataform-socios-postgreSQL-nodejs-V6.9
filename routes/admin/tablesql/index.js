@@ -3,8 +3,6 @@ var pg = require('pg')
 var app = express.Router()
 var path = require('path')
 
-var Urbs = require('../../../models/urbanizaciones/index.js')
-
 var config = require('../../../config')
 
 var users_type = config.users_access
@@ -83,7 +81,6 @@ app.get('/list/:value', isLoggedIn, (req, res, next) => {
             message: 'El usuario no esta autentificado. Requiere logearse'
          })
   }
-
 })
 
 // CREATE item from list

@@ -1,9 +1,6 @@
 var express = require('express')
 var app = express.Router()
 
-var Work_Order = require('../../models/orden_trabajo')
-var Cliente = require('../../models/orden_trabajo/cliente')
-var Poste = require('../../models/orden_trabajo/poste')
 var Usuarios = require('../../models/usuarios')
 var Contratista = require('../../models/usuarios/contratistas/index.js')
 
