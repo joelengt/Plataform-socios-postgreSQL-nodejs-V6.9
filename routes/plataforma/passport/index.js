@@ -47,8 +47,8 @@ app.post('/auth/dashboard', function(req, res, next) {
 
     // Si el usuario es true, lo logea y trae su data
     req.logIn(user, function(err) {
-      if (err) { 
-      	return next(err); 
+      if (err) {
+      	return next(err);
       }
 
       return res.status(200).json({
@@ -60,7 +60,6 @@ app.post('/auth/dashboard', function(req, res, next) {
       //   user: req.user,
       //   token_auth: req.user.token_auth
       // })
-
     });
 
   })(req, res, next);
