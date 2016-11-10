@@ -77,16 +77,14 @@ var login = require('./routes/login')
 var plataforma = require('./routes/plataforma')
 var plataforma_passport = require('./routes/plataforma/passport')
 
-
 // Rotes - admin
 var dashboard = require('./routes/admin/dashboard')
 var dashboard_usurios = require('./routes/admin/dashboard/usuarios')
 
-
 var dashboard_perfil = require('./routes/admin/dashboard/perfil/index.js')
 var dashboard_get_my_data = require('./routes/send_email/index.js')
 var dashboard_socios_clientes = require('./routes/admin/dashboard/socios_clientes/index.js')
-
+var dashboard_socios_clientes_filter = require('./routes/admin/dashboard/socios_clientes/filtro_dinamico/index.js')
 
 // Routes usage
 app.use('/', login)
@@ -99,6 +97,7 @@ app.use('/dashboard/usuarios', dashboard_usurios)
 app.use('/dashboard/perfil', dashboard_perfil)
 app.use('/get-my-access/send_email', dashboard_get_my_data)
 app.use('/dashboard/socios-clientes', dashboard_socios_clientes)
+app.use('/dashboard/socios-clientes/filter', dashboard_socios_clientes_filter)
 
 // Error 404
 app.use(function (req, res) {

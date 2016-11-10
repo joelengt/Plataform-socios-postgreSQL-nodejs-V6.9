@@ -157,7 +157,7 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
 });
 
 // CREATE item from list
-app.post('/item/socio/add/:table_select', function (req, res) {
+app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
     // if(req.user.permiso === users_type.onwers ||
     //    req.user.permiso === users_type.admins ||
     //    req.user.permiso === users_type.officers ||
@@ -501,7 +501,7 @@ app.post('/item/socio/add/:table_select', function (req, res) {
 })
 
 // // DELETE item from list
-app.delete('/item/delete/:table_select/:socio_id', function (req, res) {
+app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, res) {
    // if(req.user.permiso === users_type.onwers ||
    //    req.user.permiso === users_type.admins ||
    //    req.user.permiso === users_type.officers ||
@@ -578,7 +578,7 @@ app.delete('/item/delete/:table_select/:socio_id', function (req, res) {
 })
 
 // UPDATE item from list
-app.put('/item/update/:table_select/:socio_id', function (req, res) {
+app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) {
     // if(req.user.permiso === users_type.onwers ||
     //    req.user.permiso === users_type.admins ||
     //    req.user.permiso === users_type.officers ||
