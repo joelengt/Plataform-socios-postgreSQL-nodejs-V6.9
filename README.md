@@ -4,7 +4,7 @@ Socios de Legion de Caballeria
 ## Descarga
 Para descargar en proyecto con todo el avance y ramas, necesitas bajarlo con git, desde la consola.
 ```
-git clone https://github.com/Fernandocq16/Ascent.git
+git clone https://github.com/joelengt/Plataform-socios-postgreSQL-nodejs-V6.9.git
 ```
 
 ## Instalación

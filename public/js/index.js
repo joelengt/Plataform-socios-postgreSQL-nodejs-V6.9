@@ -41,38 +41,11 @@
         // Construir Template de Usuario
         buildUserTemplate() {
             // Template de Usuario
-            let template_user_item = `<tr class="itemUser" data-id="${ this.id_item }">
-                                        <td class="text-center">${ this.id_item }</td>
-                                        <td class="text-center">${ this.fecha_ingreso }</td>
-                                        <td class="text-center">${ this.numero_carnet }</td>
-                                        <td class="text-center">${ this.grado }</td>
-                                        <td class="text-center">${ this.arma }</td>
+            let template_user_item = `<td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
                                         <td class="text-center">${ this.nombres }</td>
-                                        <td class="text-center">${ this.unidad }</td>
-                                        <td class="text-center">${ this.gguu }</td>
-                                        <td class="text-center">${ this.region }</td>
-                                        <td class="text-center">${ this.guarnicion }</td>
-                                        <td class="text-center">${ this.situacion }</td>
-                                        <td class="text-center">${ this.filial }</td>
+                                        <td class="text-center">${ this.grado }</td>
                                         <td class="text-center">${ this.cip }</td>
-                                        <td class="text-center">${ this.dni }</td>
-                                        <td class="text-center">${ this.email }</td>
-                                        <td class="text-center">${ this.celular1 }</td>
-                                        <td class="text-center">${ this.celular2 }</td>
-                                        <td class="text-center">${ this.rpm1 }</td>
-                                        <td class="text-center">${ this.rpm2 }</td>
-                                        <td class="text-center">${ this.telefono1 }</td>
-                                        <td class="text-center">${ this.telefono2 }</td>
-                                        <td class="text-center">${ this.cd_leg }</td>
-                                        <td class="text-center">${ this.onomastico }</td>
-                                        <td class="text-center">${ this.cd_esp }</td>
-                                        <td class="text-center">${ this.ono_esp }</td>
-                                        <td class="text-center">${ this.esposa }</td>
-                                        <td class="text-center">${ this.domicilio }</td>
-                                        <td class="text-center">${ this.diversos }</td>
-                                        <td class="text-center">${ this.obs }</td>
-                                        <td class="text-center">${ this.campo28 }</td>
-                                        <td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
+                                        <td class="text-center">${ this.arma }</td>
                                       </tr>`;
             return template_user_item
         }
