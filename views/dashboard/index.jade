@@ -1,0 +1,81 @@
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    title Caballeria
+    meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+    meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
+    // Esstilos Enlaces CSS
+    link(rel='icon', type='image/png', href='../images/favicon.png')
+    link(rel='stylesheet', type='text/css', href='../css/index.css')
+    link(rel='stylesheet', type='text/css', href='../css/modal/index.css')
+  body#App_Container
+    .App_Container__box
+      // Header Main
+      header.HeaderMain
+        .HeaderMain__box
+          // Title
+          h2 Caballeria
+      // Table List
+      section.TableList
+        .TableList__box
+
+          // Form search
+          .TableList__search
+            input#txt_box_search(type='text', placeholder='Ingresa nombre del usuario')
+            button#btn_box_search  Buscar 
+            button.btn_change_order Ordenar
+
+          // Table with Items
+          .TableList__table
+            table.TableList__Item.table.table-bordered.fixed
+              thead.header
+                tr.cheader
+                  th.text-center(rowspan='2') Id
+                  th.text-center(rowspan='2') fecha_ingreso
+                  th.text-center(rowspan='2') numero_carnet
+                  th.text-center(rowspan='2') grado
+                  th.text-center(rowspan='2') arma
+                  th.text-center(rowspan='2') nombres
+                  th.text-center(rowspan='2') unidad
+                  th.text-center(rowspan='2') gguu
+                  th.text-center(rowspan='2') region
+                  th.text-center(rowspan='2') guarnicion
+                  th.text-center(rowspan='2') situacion
+                  th.text-center(rowspan='2') filial
+                  th.text-center(rowspan='2') cip
+                  th.text-center(rowspan='2') dni
+                  th.text-center(rowspan='2') email
+                  th.text-center(rowspan='2') celular1
+                  th.text-center(rowspan='2') celular2
+                  th.text-center(rowspan='2') rpm1
+                  th.text-center(rowspan='2') rpm2
+                  th.text-center(rowspan='2') telefono1
+                  th.text-center(rowspan='2') telefono2
+                  th.text-center(rowspan='2') cd_leg
+                  th.text-center(rowspan='2') onomastico
+                  th.text-center(rowspan='2') cd_esp
+                  th.text-center(rowspan='2') ono_esp
+                  th.text-center(rowspan='2') esposa
+                  th.text-center(rowspan='2') domicilio
+                  th.text-center(rowspan='2') diversos
+                  th.text-center(rowspan='2') obs
+                  th.text-center(rowspan='2') campo28
+                  th.text-center(rowspan='2') foto
+
+              tbody#boxListUsers.Articles_containers
+          // Pagination
+          .TableList__pagination
+            .Pagination
+              .PaginationContent
+      // The Modal
+      #myModal.modal
+        // The Close Button
+        span.close(onclick="document.getElementById('myModal').style.display='none'") ×
+        // Modal Content (The Image)
+        img#img01.modal-content
+        // Modal Caption (Image Text)
+        #caption
+      // Enlaces Script JS
+      script(src='https://code.jquery.com/jquery-1.11.3.min.js')
+      script(src='../js/index.js')

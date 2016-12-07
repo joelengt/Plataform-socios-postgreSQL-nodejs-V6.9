@@ -39,10 +39,17 @@ app.post('/auth/dashboard', function(req, res, next) {
 
     // Si el parametro user es falso
     if (!user) { 
-    	return res.status(403).json({
-    		status: 'not_access',
-    		message: info.message
-    	})
+    	
+      // return res.status(403).json({
+    	// 	status: 'not_access',
+    	// 	message: info.message
+    	// })
+
+      // Render 
+      return res.status(200).render('./login/index.jade', {
+        status: 'ok',
+        message: info.message
+      })
     }
 
     // Si el usuario es true, lo logea y trae su data
@@ -51,15 +58,16 @@ app.post('/auth/dashboard', function(req, res, next) {
       	return next(err);
       }
 
-      return res.status(200).json({
-      		user: req.user,
-      		token_auth: req.user.token_auth
-      })
-
-      // res.render('./admin/dashboard/index.jade', {
-      //   user: req.user,
-      //   token_auth: req.user.token_auth
+      // return res.status(200).json({
+      //     status: 'ok',
+      // 		user: req.user,
+      // 		token_auth: req.user.token_auth
       // })
+
+      res.status(200).render('./dashboard/index.jade', {
+        user: req.user,
+        token_auth: req.user.token_auth
+      })
     });
 
   })(req, res, next);

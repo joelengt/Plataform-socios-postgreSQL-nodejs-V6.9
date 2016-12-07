@@ -34,6 +34,7 @@
     "method-override": "^2.3.5",
     "mongoose": "^4.4.12",
     "morgan": "^1.7.0",
+    "msexcel-builder": "0.0.2",
     "multer": "^0.1.8",
     "nodemailer": "^2.6.4",
     "nodemailer-smtp-transport": "^2.7.2",

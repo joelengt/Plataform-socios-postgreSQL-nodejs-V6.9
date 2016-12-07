@@ -73,8 +73,8 @@ register_user(app, passport)
 
 // Routes - user
 
-var login = require('./routes/login')
-var plataforma = require('./routes/plataforma')
+// var login = require('./routes/login')
+// var plataforma = require('./routes/plataforma')
 var plataforma_passport = require('./routes/plataforma/passport')
 
 // Rotes - admin
@@ -86,10 +86,16 @@ var dashboard_get_my_data = require('./routes/send_email/index.js')
 var dashboard_socios_clientes = require('./routes/admin/dashboard/socios_clientes/index.js')
 var dashboard_socios_clientes_filter = require('./routes/admin/dashboard/socios_clientes/filtro_dinamico/index.js')
 
+// Export excel
+var dashboard_export_excel = require('./routes/admin/dashboard/excel_export/index.js')
+
+// Export pdf
+var dashboard_export_pdf = require('./routes/admin/dashboard/pdf_export/index.js')
+
 // Routes usage
-app.use('/', login)
+// app.use('/', login)
 app.use('/', plataforma_passport)
-app.use('/plataforma', plataforma)
+// app.use('/plataforma', plataforma)
 
 app.use('/dashboard', dashboard)
 app.use('/dashboard/usuarios', dashboard_usurios)
@@ -98,6 +104,9 @@ app.use('/dashboard/perfil', dashboard_perfil)
 app.use('/get-my-access/send_email', dashboard_get_my_data)
 app.use('/dashboard/socios-clientes', dashboard_socios_clientes)
 app.use('/dashboard/socios-clientes/filter', dashboard_socios_clientes_filter)
+
+app.use('/dashboard/try-build-excel', dashboard_export_excel)
+app.use('/dashboard/try-build-pdf', dashboard_export_pdf)
 
 // Error 404
 app.use(function (req, res) {

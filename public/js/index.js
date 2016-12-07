@@ -1,140 +1,444 @@
-'use strict';
-/**
-*  Module
-*
-* Description
-*/
-var myApp = angular.module('Astrum', ['ngRoute', 'ngCookies'])
+(function () {
 
-myApp.constant('url', {
-	url: 'http://localhost:5000',
-	order_work: '#/dashboard/order/',
-	dashboard: '#/dashboard/',
-	usuarios: '#/users/',
-	kml: '#/kml/',
-	en_proceso: 'en_proceso',
-	pendiente: 'pendiente',
-	en_curso: 'en_curso',
-	cancelado: 'cancelado',
-	resuelto: 'resuelto',
-	no_resuelto: 'no_resuelto',
-	reprogramado: 'reprogramado',
-	reportado: 'reportado',
-	no_asignado: 'no_asignado',
-	// MARKERS DE CADA ORDeN DE TRABAJO DE TIPO POSTE
-	marker_order_service_poste_pendiente: '../images/markers/17.icon_orden_poste_pendiente.png',
-	marker_order_service_poste_en_progreso: '../images/markers/17.1.icon_orden_poste_en_progreso.png',
-	marker_order_service_poste_resuelto: '../images/markers/17.2.icon_orden_poste_resuelto.png',
-	marker_order_service_poste_no_resuelto: '../images/markers/17.3.icon_orden_poste_no_resuelto.png',
-	marker_order_service_poste_reportado: '../images/markers/17.4.icon_orden_poste_reportado.png',
-	marker_order_service_poste_reprogramado: '../images/markers/17.5.icon_orden_poste_reprogramado.png',
-	marker_order_service_poste_cancelado: '../images/markers/17.6.icon_orden_poste_cancelado.png',
-	marker_order_service_poste_no_asignado: '../images/markers/17.1.icon_orden_poste_en_curso.png',
-	// MARKERS DE CADA ORDeN DE TRABAJO DE TIPO CLIENTE
-	marker_order_service_cliente_pendiente: '../images/markers/19.icon_orden_cliente_pendiente.png',
-	marker_order_service_cliente_en_curso: '../images/markers/19.1.icon_orden_cliente_en_curso.png',
-	marker_order_service_cliente_resuelto: '../images/markers/19.2.icon_orden_cliente_resuelto.png',
-	marker_order_service_cliente_no_resuelto: '../images/markers/19.3.icon_orden_cliente_no_resuelto.png',
-	marker_order_service_cliente_reportada: '../images/markers/19.4.icon_orden_cliente_reportada.png',
-	marker_order_service_cliente_reprogramada: '../images/markers/19.5.icon_orden_cliente_reprogramada.png',
-	marker_order_service_cliente_cancelada: '../images/markers/19.6.icon_orden_cliente_cancelada.png',
-	marker_order_service_cliente_no_asignada: '../images/markers/19.6.icon_orden_cliente_no_asignada.png',
-	// MARKERS DE TIPO CLIENTE
-	marker_client_pendiente_big: '../images/markers/15.icon_cliente_pendiente2x.png',
-	marker_client_pendiente_short: '../images/markers/15.icon_cliente_pendiente.png',
-	marker_client_cancelada_big: '../images/markers/15.6.icon_cliente_cancelado2x.png',
-	marker_client_cancelada_short: '../images/markers/15.6.icon_cliente_cancelado.png',
-	marker_client_resuelta_big: '../images/markers/15.2.icon_cliente_resuelto2x.png',
-	marker_client_resuelta_short: '../images/markers/15.2.icon_cliente_resuelto.png',
-	marker_client_no_resuelta_big: '../images/markers/15.3.icon_cliente_no_resuelto2x.png',
-	marker_client_no_resuelta_short: '../images/markers/15.3.icon_cliente_no_resuelto.png',
-	marker_client_reprogramada_big: '../images/markers/15.5.icon_cliente_reprogramado2x.png',
-	marker_client_reprogramada_short: '../images/markers/15.5.icon_cliente_reprogramado.png',
-	marker_client_reportada_big: '../images/markers/15.4.icon_cliente_reportado2x.png',
-	marker_client_reportada_short: '../images/markers/15.4.icon_cliente_reportado.png',
-	marker_client_en_curso_big: '../images/markers/15.1.icon_cliente_en_curso2x.png',
-	marker_client_en_curso_short: '../images/markers/15.1.icon_cliente_en_curso.png',
-	marker_client_no_asignada_big: '../images/markers/15.icon_cliente_pendiente2x.png',
-	marker_client_no_asignada_short: '../images/markers/15.icon_cliente_pendiente.png',
-	// MARKERS DE TIPO POSTE
-	marker_poste_pendiente_big: '../images/markers/16.icon_poste_en_curso2x.png',
-	marker_poste_pendiente_short: '../images/markers/16.icon_poste_en_curso.png',
-	marker_poste_en_curso_big: '../images/markers/16.icon_poste_en_curso2x.png',
-	marker_poste_en_curso_short: '../images/markers/16.icon_poste_en_curso.png',
-	marker_poste_cancelada_big: '../images/markers/16.6.icon_poste_cancelado2x.png',
-	marker_poste_cancelada_short: '../images/markers/16.6.icon_poste_cancelado.png',
-	marker_poste_resuelta_big: '../images/markers/16.3.icon_poste_resuelta2x.png',
-	marker_poste_resuelta_short: '../images/markers/16.3.icon_poste_resuelta.png',
-	marker_poste_no_resuelta_big: '../images/markers/16.2.icon_poste_no_resuelto2x.png',
-	marker_poste_no_resuelta_short: '../images/markers/16.2.icon_poste_no_resuelto.png',
-	marker_poste_reprogramada_big: '../images/markers/16.5.icon_poste_reprogramado2x.png',
-	marker_poste_reprogramada_short: '../images/markers/16.5.icon_poste_reprogramado.png',
-	marker_poste_reportada_big: '../images/markers/16.4.icon_poste_reportado2x.png',
-	marker_poste_reportada_short: '../images/markers/16.4.icon_poste_reportado.png',
-	marker_poste_en_progreso_big: '../images/markers/16.1.icon_poste_en_progreso2x.png',
-	marker_poste_en_progreso_short: '../images/markers/16.1.icon_poste_en_progreso.png',
-	// marker_poste_no_asignada_big: '../images/markers/16.icon_poste_pendiente2x.png',
-	// marker_poste_no_asignada_short: '../images/markers/16.icon_poste_pendiente.png',
-// MARKERS DE TIPO POSTER EN FOCO
-	markers_focus_poste_pendiente_short: '../images/markers/18.icon_orden_poste_pendiente_active.png',
-	markers_focus_poste_pendiente_big: '../images/markers/18.icon_orden_poste_pendiente_active2x.png',
-	markers_focus_poste_en_curso_short: '../images/markers/18.1.icon_orden_poste_en_curso_active.png',
-	markers_focus_poste_en_curso_big: '../images/markers/18.1.icon_orden_poste_en_curso_active2x.png',
-	markers_focus_poste_resuelto_short: '../images/markers/18.2.icon_orden_poste_resuelto_active.png',
-	markers_focus_poste_resuelto_big: '../images/markers/18.2.icon_orden_poste_resuelto_active2x.png',
-	markers_focus_poste_no_resuelto_short: '../images/markers/18.3.icon_orden_poste_no_resuelto_active.png',
-	markers_focus_poste_no_resuelto_big: '../images/markers/18.3.icon_orden_poste_no_resuelto_active2x.png',
-	markers_focus_poste_reportado_short: '../images/markers/18.4.icon_orden_poste_reportado_active.png',
-	markers_focus_poste_reportado_big: '../images/markers/18.4.icon_orden_poste_reportado_active2x.png',
-	markers_focus_poste_reprogramado_short: '../images/markers/18.5.icon_orden_poste_reprogramado_active.png',
-	markers_focus_poste_reprogramado_big: '../images/markers/18.5.icon_orden_poste_reprogramado_active2x.png',
-	markers_focus_poste_cancelado_short: '../images/markers/18.6.icon_orden_poste_cancelado_active.png',
-	markers_focus_poste_cancelado_big: '../images/markers/18.6.icon_orden_poste_cancelado_active2x.png',
-	// MARKERS DE TIPO CLIENTE EN FOCO
-	markers_focus_cliente_pendiente_short:'../images/markers/20.icon_orden_cliente_pendiente_active.png',
-	markers_focus_cliente_pendiente_big:'../images/markers/20.icon_orden_cliente_pendiente_active2x.png',
-	markers_focus_cliente_cancelado_short:'../images/markers/20.1.icon_orden_cliente_cancelada_active.png',
-	markers_focus_cliente_cancelado_big:'../images/markers/20.1.icon_orden_cliente_cancelada_active2x.png',
-	markers_focus_cliente_en_curso_short:'../images/markers/20.1.icon_orden_cliente_en_curso_active.png',
-	markers_focus_cliente_en_curso_big:'../images/markers/20.1.icon_orden_cliente_en_curso_active2x.png',
-	markers_focus_cliente_resuelto_short:'../images/markers/20.2.icon_orden_cliente_resuelto_active.png',
-	markers_focus_cliente_resuelto_big:'../images/markers/20.2.icon_orden_cliente_resuelto_active2x.png',
-	markers_focus_cliente_no_resuelto_short:'../images/markers/20.3.icon_orden_cliente_no_resuelto_active.png',
-	markers_focus_cliente_no_resuelto_big:'../images/markers/20.3.icon_orden_cliente_no_resuelto_active2x.png',
-	markers_focus_cliente_reportado_short:'../images/markers/20.4.icon_orden_cliente_reportada_active.png',
-	markers_focus_cliente_reportado_big:'../images/markers/20.4.icon_orden_cliente_reportada_active2x.png',
-	markers_focus_cliente_reprogramado_short:'../images/markers/20.5.icon_orden_cliente_reprogramada_active.png',
-	markers_focus_cliente_reprogramado_big:'../images/markers/20.5.icon_orden_cliente_reprogramada_active2x.png',
-	// MARKERS TIPO CLIENTE EN INFORMACION DE ITEM TIPO CLEINTE
-	// marker_view_cliente_en_curso_short: '../images/markers/15.1.icon_cliente_en_curso.png',
-	// marker_view_cliente_en_curso_big: '../images/markers/15.1.icon_cliente_en_curso2x.png',
-	// marker_view_cliente_resuelto_short: '../images/markers/15.2.icon_cliente_resuelto.png',
-	// marker_view_cliente_resuelto_big: '../images/markers/15.2.icon_cliente_resuelto2x.png',
-	// marker_view_cliente_no_resuelto_short: '../images/markers/15.3.icon_cliente_no_resuelto.png',
-	// marker_view_cliente_no_resuelto_big: '../images/markers/15.3.icon_cliente_no_resuelto2x.png',
-	// marker_view_cliente_reportado_short: '../images/markers/15.4.icon_cliente_reportado.png',
-	// marker_view_cliente_reportado_big: '../images/markers/15.4.icon_cliente_reportado2x.png',
-	// marker_view_cliente_reprogramado_short: '../images/markers/15.5.icon_cliente_reprogramado.png',
-	// marker_view_cliente_reprogramado_big: '../images/markers/15.5.icon_cliente_reprogramado2x.png',
-	// marker_view_cliente_cancelado_short: '../images/markers/15.6.icon_cliente_cancelado.png',
-	// marker_view_cliente_cancelado_short: '../images/markers/15.6.icon_cliente_cancelado2x.png',
-	// marker_view_cliente_pendiente_short: '../images/markers/15.icon_cliente_pendiente.png',
-	// marker_view_cliente_pendiente_short: '../images/markers/15.icon_cliente_pendiente2x.png',
-	// MARKERS TIPO POSTE EN INFORMACION DE TIPO POSTE
-	// marker_view_poste_en_curso_short: '../images/markers/16.1.icon_poste_en_curso.png',
-	// marker_view_poste_en_curso_big: '../images/markers/16.1.icon_poste_en_curso2x.png',
-	// marker_view_poste_resuelto_short: '../images/markers/16.2.icon_poste_resuelto.png',
-	// marker_view_poste_resuelto_big: '../images/markers/16.2.icon_poste_resuelto2x.png',
-	// marker_view_poste_no_resuelto_short: '../images/markers/16.3.icon_poste_no_resuelto.png',
-	// marker_view_poste_no_resuelto_big: '../images/markers/16.3.icon_poste_no_resuelto2x.png',
-	// marker_view_poste_reportado_short: '../images/markers/16.4.icon_poste_reportado.png',
-	// marker_view_poste_reportado_big: '../images/markers/16.4.icon_poste_reportado2x.png',
-	// marker_view_poste_reprogramado_short: '../images/markers/16.5.icon_poste_reprogramado.png',
-	// marker_view_poste_reprogramado_big: '../images/markers/16.5.icon_poste_reprogramado2x.png',
-	// marker_view_poste_cancelado_short: '../images/markers/16.6.icon_poste_cancelado.png',
-	// marker_view_poste_cancelado_short: '../images/markers/16.6.icon_poste_cancelado2x.png',
-	// marker_view_poste_pendiente_short: '../images/markers/16.icon_poste_pendiente.png',
-	// marker_view_poste_pendiente_short: '../images/markers/16.icon_poste_pendiente2x.png',
-})
+    // Clase Usuario
+    class Usuario {
+        // Atributos
+        constructor(socio) {
+            this.id_item = socio.id_item;
+            this.fecha_ingreso = socio.fecha_ingreso;
+            this.numero_carnet = socio.numero_carnet;
+            this.foto = socio.foto;
+            this.grado = socio.grado;
+            this.arma = socio.arma;
+            this.nombres = socio.nombres;
+            this.unidad = socio.unidad;
+            this.gguu = socio.gguu;
+            this.region = socio.region;
+            this.guarnicion = socio.guarnicion;
+            this.situacion = socio.situacion;
+            this.filial = socio.situacion;
+            this.cip = socio.cip;
+            this.dni = socio.dni;
+            this.email = socio.email;
+            this.celular1 = socio.celular1;
+            this.celular2 = socio.celular2;
+            this.rpm1 = socio.rpm1;
+            this.rpm2 = socio.rpm2;
+            this.telefono1 = socio.telefono1;
+            this.telefono2 = socio.telefono2;
+            this.cd_leg = socio.cd_leg;
+            this.onomastico = socio.onomastico;
+            this.cd_esp = socio.cd_esp;
+            this.esposa = socio.esposa;
+            this.domicilio = socio.domicilio;
+            this.diversos = socio.diversos;
+            this.obs = socio.obs;
+            this.campo28 = socio.campo28;
+        }
+
+        // Metodos
+
+        // Construir Template de Usuario
+        buildUserTemplate() {
+            // Template de Usuario
+            let template_user_item = `<tr class="itemUser" data-id="${ this.id_item }">
+                                        <td class="text-center">${ this.id_item }</td>
+                                        <td class="text-center">${ this.fecha_ingreso }</td>
+                                        <td class="text-center">${ this.numero_carnet }</td>
+                                        <td class="text-center">${ this.grado }</td>
+                                        <td class="text-center">${ this.arma }</td>
+                                        <td class="text-center">${ this.nombres }</td>
+                                        <td class="text-center">${ this.unidad }</td>
+                                        <td class="text-center">${ this.gguu }</td>
+                                        <td class="text-center">${ this.region }</td>
+                                        <td class="text-center">${ this.guarnicion }</td>
+                                        <td class="text-center">${ this.situacion }</td>
+                                        <td class="text-center">${ this.filial }</td>
+                                        <td class="text-center">${ this.cip }</td>
+                                        <td class="text-center">${ this.dni }</td>
+                                        <td class="text-center">${ this.email }</td>
+                                        <td class="text-center">${ this.celular1 }</td>
+                                        <td class="text-center">${ this.celular2 }</td>
+                                        <td class="text-center">${ this.rpm1 }</td>
+                                        <td class="text-center">${ this.rpm2 }</td>
+                                        <td class="text-center">${ this.telefono1 }</td>
+                                        <td class="text-center">${ this.telefono2 }</td>
+                                        <td class="text-center">${ this.cd_leg }</td>
+                                        <td class="text-center">${ this.onomastico }</td>
+                                        <td class="text-center">${ this.cd_esp }</td>
+                                        <td class="text-center">${ this.ono_esp }</td>
+                                        <td class="text-center">${ this.esposa }</td>
+                                        <td class="text-center">${ this.domicilio }</td>
+                                        <td class="text-center">${ this.diversos }</td>
+                                        <td class="text-center">${ this.obs }</td>
+                                        <td class="text-center">${ this.campo28 }</td>
+                                        <td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
+                                      </tr>`;
+            return template_user_item
+        }
+
+        // Render Template
+        setUserTemplate(contentHtml) {
+            contentHtml.innerHTML+= this.buildUserTemplate();
+        }
+    }
+
+    // Obtener usuario como objeto
+    function getUser (element){
+        let nuevoUsuario = new Usuario(element);
+        return nuevoUsuario
+    }
+
+    // Recorriendo lista obtenida
+    function runList(array, limitStart, limitEnd, contentHtml) {
+        contentHtml.innerHTML = '';
+        // Evento ciclo
+        for(var i = limitStart; i <= limitEnd; i++) {
+            var elemento_usuario = array[i];
+
+            // Creando nuevo usuario
+            let nuevoUsuario = getUser(elemento_usuario);
+
+            // Pegar template de usuario en el html
+            nuevoUsuario.setUserTemplate(contentHtml);
+        }
+    }
+
+    // READ Todos los Usuarios
+    function readUsers(limitEachPage, contentHtml) {
+        // GET :: READ Lista de usuarios
+        $.ajax({
+            url: '/dashboard/socios-clientes/list/0',
+            method: 'get',
+            success: function (listUsuarios) {
+
+                contentHtml.innerHTML = '';
+
+                getPaginationTemplate(limitEachPage, listUsuarios.result.length);
+                var valueInit = 0;
+                var valueEnd = 9;
+
+                // Recorre lista y render Template en html
+                runList(listUsuarios.result, valueInit, valueEnd, contentHtml);
+
+            }
+        })  
+    }
+
+    // READ Usuario por id
+    function readUserById(user_id, contentHtml) {
+        // GET :: READ Lista de usuarios
+        $.ajax({
+            url: `/dashboard/socios-clientes/item/0/${ user_id }`,
+            method: 'get',
+            success: function (usuario) {
+
+                contentHtml.innerHTML = '';
+
+                // Recorre lista y render Template en html
+                let nuevoUser = getUser(usuario.result);
+
+                contentHtml.innerHTML = nuevoUser.buildUserTemplate();
+
+            }
+        }) 
+    }
+    
+    // Filtrando usuario por nombre
+    function searchByName(nameUser, contentHtml) {
+        let listUserFound = [];
+        $.ajax({
+            url: '/dashboard/socios-clientes/list/0',
+            method: 'get',
+            success: function (listUsuarios) {
+                console.log('Lista obtenida');
+                console.log(listUsuarios);
+
+                console.log('Comparando el .name con ' + nameUser);
+
+                contentHtml.innerHTML = '';
+
+                // Recorre lista y render Template en html
+                for(var j = 0; j <= listUsuarios.result.length - 1; j++) {
+                    var elementoUser = listUsuarios.result[j]
+                    var wordSolicitada = elementoUser.nombres.toLowerCase();
+                    nameUser = nameUser.toLowerCase()
+                    var coincidenciaMinima = 0;
+
+                    // Buscando coindicencia de la palabra
+                    for(var m = 0; m <= wordSolicitada.length - 1; m++) {
+                        if(wordSolicitada[m] !== nameUser[m]) {
+                              console.log('Ya no coincide')
+                              break
+                        }
+
+                        console.log(m)
+
+                        coincidenciaMinima++;
+                        
+                    }
+
+                    if(coincidenciaMinima === nameUser.length) {
+                        listUserFound.push(elementoUser);
+                    }
+  
+                }
+
+                console.log('Resultado del filtrado');
+                console.log(listUserFound);
+
+                // Render de kas coincidencias
+                if(listUserFound.length === 0) {
+                    contentHtml.innerHTML = '<tr>No se encontraron elementos con ese nombre</tr>';
+                    
+                } else {
+                    contentHtml.innerHTML = '';
+
+                    runList(listUserFound, 0, listUserFound.length - 1, contentHtml)
+                }
+
+            }
+        })
+
+    }
+
+    // Obtener Render de Paginacion
+    function getPaginationTemplate(limitEachPage, listUsuariosLength) {
+        console.log('Impriminedo lista');
+
+        // Obteniendo Template de Paginacion
+        var listCantidad = listUsuariosLength;
+        console.log('Cantidad: ' + listCantidad);
+        var numberPages =  listCantidad/limitEachPage;
+        var residuo = listCantidad%limitEachPage;
+
+        var $boxPagination = document.querySelector('.PaginationContent');
+
+        if(residuo > 0 && residuo < 10) {
+            console.log('Tiene residuo');
+            numberPages = numberPages + 1;
+        }
+
+        $boxPagination.innerHTML = '';
+
+        console.log('Pagina a imprimir: ' + numberPages);
+
+        // Generar Template con limites
+        for(var g = 1; g <= numberPages; g++) {
+            let value_init;
+            let value_end;
+
+            if(listCantidad >= 10) {
+                console.log('aaa');
+                value_init = (g - 1) * limitEachPage;
+                value_end = (g * limitEachPage) - 1;
+
+                listCantidad = listCantidad - 10;
+
+            } else {
+                console.log('nn');
+                value_init = (g - 1) * limitEachPage;
+                value_end = (g * limitEachPage) + residuo;
+                listCantidad = listCantidad - residuo;
+            }
+
+            $boxPagination.innerHTML += `<li class="selectPage" data-init="${ value_init }" data-end="${ value_end }">${ g }</li>`
+        }
 
 
+    }
+
+    // Cambiar orden de columna
+    function changePosition(htmlContentItems) {
+        console.log('Click');
+        let ContentItems = document.querySelectorAll('.itemUser');
+
+        console.log(ContentItems);
+
+        console.log('--------------------');
+        
+        htmlContentItems.innerHTML = '';
+
+        for (var i = ContentItems.length - 1; i >= 0; i--) {
+            let $item = ContentItems[i];
+            console.log($item.outerHTML);
+
+            htmlContentItems.innerHTML += $item.outerHTML;
+
+        }
+
+        console.log('--------------------');
+
+    }
+    // Modal de image
+    function showModalImage(imagePath, imageAlt) {
+        console.log('Imagen path');
+        console.log(imagePath);
+
+       // Get the modal
+       var modal = document.getElementById('myModal');
+
+       // Get the image and insert it inside the modal - use its "alt" text as a caption
+       var modalImg = document.getElementById("img01");
+       var captionText = document.getElementById("caption");
+
+       modal.style.display = "block";
+       modalImg.src = imagePath;
+       captionText.innerHTML = imageAlt;
+
+       // Get the <span> element that closes the modal
+       var span = document.getElementsByClassName("close")[0];
+
+       // When the user clicks on <span> (x), close the modal
+       span.onclick = function() { 
+         modal.style.display = "none";
+       }
+
+
+    }
+
+    function goheadfixed(classtable) {
+    
+        if($(classtable).length) {
+    
+            $(classtable).wrap('<div class="fix-inner"></div>'); 
+            $('.fix-inner').wrap('<div class="fix-outer" style="position:relative; margin:auto;"></div>');
+            $('.fix-outer').append('<div class="fix-head"></div>');
+            $('.fix-head').prepend($('.fix-inner').html());
+            $('.fix-head table').find('caption').remove();
+            $('.fix-head table').css('width','100%');
+    
+            $('.fix-outer').css('width', $('.fix-inner table').outerWidth(true)+'px');
+            $('.fix-head').css('width', $('.fix-inner table').outerWidth(true)+'px');
+            $('.fix-head').css('height', $('.fix-inner table thead').height()+'px');
+    
+            // If exists caption, calculte his height for then remove of total
+            var hcaption = 0;
+            if($('.fix-inner table caption').length != 0)
+                hcaption = parseInt($('.fix-inner table').find('caption').height()+'px');
+
+            // Table's Top
+            var hinner = parseInt( $('.fix-inner').offset().top );
+
+            // Let's remember that <caption> is the beginning of a <table>, it mean that his top of the caption is the top of the table
+            $('.fix-head').css({'position':'absolute', 'overflow':'hidden', 'top': hcaption+'px', 'left':0, 'z-index':0 });
+        
+            $(window).scroll(function () {
+                var vscroll = $(window).scrollTop();
+
+                if(vscroll >= hinner + hcaption)
+                    $('.fix-head').css('top',(vscroll-hinner)+'px');
+                else
+                    $('.fix-head').css('top', hcaption+'px');
+            });
+    
+            /*  If the windows resize   */
+            $(window).resize(goresize);
+    
+        }
+    }
+
+    function goresize() {
+        $('.fix-head').css('width', $('.fix-inner table').outerWidth(true)+'px');
+        $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
+    }
+
+    // Funcion Principal
+    function main() {
+        // Obteniendo Contenedo html
+        var $boxConntentHtml = document.querySelector('#boxListUsers');
+        var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
+        var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
+
+
+        var $txtBoxSearchByName = document.querySelector('#txt_box_search');
+        var $btnBoxSearchByName = document.querySelector('#btn_box_search');
+        var nameUserWord = '';
+
+        var $btn_change_order = document.querySelector('.btn_change_order');
+
+         // Paginacion
+        var limitePage = 10;
+
+        // Lectura de Usuarios
+        readUsers(limitePage, $boxConntentHtml);
+
+        // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
+       $btnBoxSearchByName.addEventListener('click', function (ev) {
+            let nameUser = $txtBoxSearchByName.value;
+            searchByName(nameUser, $boxConntentHtml);
+       })
+
+       // Filtro por evento key: enter
+       $txtBoxSearchByName.addEventListener('keypress', function (event) {
+            let nameUser = $txtBoxSearchByName.value;
+            if(event.charCode === 13) {
+                searchByName(nameUser, $boxConntentHtml);
+            }
+
+       })
+
+       // Evento click -> Cambiar Orden
+       $btn_change_order.addEventListener('click', function () {
+            console.log('hi');
+
+            changePosition($boxConntentHtml)
+
+       })
+
+       // Filter mientras la caja de texto cambia
+       $('#txt_box_search').bind('input', function() { 
+            if($(this).val() === '') {
+               nameUserWord = '';
+               readUsers($boxConntentHtml)
+           }
+
+           nameUserWord = $(this).val()
+           searchByName(nameUserWord, $boxConntentHtml);
+       });      
+       
+       // Filtro por evento key: enter
+       $ArticlesContainerPages.on('click', '.selectPage', function (ev) {
+            let $this = $(this)
+            console.log(this);
+
+            let $article = $this.closest('.selectPage');
+            let dataInit = $article.data('init');
+            let dataEnd = $article.data('end');
+
+            console.log('Page');
+            console.log(dataInit);
+            console.log(dataEnd);
+
+            $.ajax({
+                url: '/dashboard/socios-clientes/list/0',
+                method: 'get',
+                success: function (listUsuarios) {
+
+                    // Reset html
+                    $boxConntentHtml.innerHTML = '';
+                    
+                    // Recorre lista y render Template en html
+                    runList(listUsuarios.result, dataInit, dataEnd, $boxConntentHtml);
+
+                }
+            })  
+
+        })
+
+       $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
+        console.log('Click');
+            var imageUrl = this.src
+            var imageAlt = this.alt
+            showModalImage(imageUrl, imageAlt);
+
+        })
+
+        // goheadfixed('table.fixed')
+
+    }
+
+    // Inicializando Lectura
+    window.addEventListener('load', main);
+
+})();

@@ -1,35 +1,165 @@
 body {
-	background: #f5f5f5;
+    margin: 0 auto;
+    padding:50px;
+    font-family: sans-serif;
+    background: #f4f4f4;
 }
 
-.wrap {
-	max-width: 900px;
-	text-align: left;
-	margin: 0 auto;
+footer {
+    margin: 0 auto;
+    text-align: center;
+}
+    
+h2 {
+	font-size:36px;
+	margin:0 0 10px 0
 }
 
-.wrap_padding {
-	margin: 1rem;
+p {
+	margin:0 0 10px 0
 }
 
-.center {
-	text-align: center;
+table {
+	width: 100%;
+	margin: 0 0 50px 0;
 }
 
-.box_item {
-	border: 1px solid white;
-	border-radius: 30px;
-    padding: 1rem;
-    background: white;
-    margin: 1.5rem;
+table.TableList__table,
+table.TableList__Item {
+	border:1px solid #ccc;
+	width:100%;
+	margin:0 0 50px 0
 }
 
-.max_space {
-	margin-top: 1.5rem;
-	margin-bottom: 2.5rem;
+table .header {
+	background-color: #55d65e;
+	color: #FFFFFF;
 }
 
-.streetview {
-	height: 80%; 
-	width: 80%;
+.TableList__table th,
+.TableList__Item th {
+	background: #f14848;
+	padding:5px;
+	text-align:center;
+}
+
+.TableList__table td,
+.TableList__Item td {
+	border-bottom:1px solid #ccc;
+	padding:5px;
+	text-align:center
+}
+.TableList__table tr:last-child td, 
+.TableList__Item tr:last-child td{
+	border:0
+}
+    
+.rwd {
+	width:100%;
+	overflow:auto;
+}
+.rwd table.TableList__Item {
+	width:auto;
+	min-width:100%
+}
+.TableList__Item th,
+.TableList__Item td {
+	white-space: nowrap;
+}
+        
+@media only screen and (max-width: 760px)
+{
+
+    table.TableList__table, 
+    .TableList__table thead, 
+    .TableList__table tbody, 
+    .TableList__table th, 
+    .TableList__table td, 
+    .TableList__table tr { 
+    	display: block; 
+    }
+    
+    .TableList__table thead tr { 
+    	position: absolute;
+    	top: -9999px;
+    	left: -9999px; 
+    }
+    
+    .TableList__table tr { 
+    	border: 1px solid #ccc; 
+    }
+    
+    .TableList__table td { 
+    	border: none;
+    	border-bottom: 1px solid #ccc; 
+    	position: relative;
+    	padding-left: 50%;
+    	text-align:left 
+    }
+    
+    .TableList__table td:before {  
+    	position: absolute; 
+    	top: 6px; 
+    	left: 6px; 
+    	width: 45%; 
+    	padding-right: 10px; 
+    	white-space: nowrap;
+    }
+    
+    .TableList__table td:nth-of-type(1):before { content: "Id"; }
+    .TableList__table td:nth-of-type(2):before { content: "Nombre"; }
+    .TableList__table td:nth-of-type(3):before { content: "Apellido"; }
+    .TableList__table td:nth-of-type(4):before { content: "Dirección"; }
+    .TableList__table td:nth-of-type(5):before { content: "Celular"; }
+    .TableList__table td:nth-of-type(6):before { content: "Teléfono"; }
+    .TableList__table td:nth-of-type(7):before { content: "Avatar"; }
+
+    
+    .descarto {display:none;}
+    .fontsize {font-size:10px}
+}
+
+.TableList__pagination {
+    display: block;
+    margin: 1rem auto;
+    text-align: center;
+} 
+
+.selectPage{
+    display: inline-block;
+    padding: .3rem;
+    background: #55d65e;
+    color: white;
+    margin: .2rem;
+    cursor: pointer;
+
+}
+
+.selectPage:hover {
+    background: red;
+}
+
+.TableList__search {
+    margin: 1rem auto;
+
+}
+
+.TableList__search #btn_box_search, .TableList__search .btn_change_order {
+    padding: .2rem .7rem;
+    font-size: 16px;
+    color: white;
+    background: #55d65e;
+    border: 0;
+    border-bottom: 4px solid #0f990a;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.TableList__search #btn_box_search:hover , .TableList__search .btn_change_order:hover {
+    background: #42a53e;
+}
+
+.TableList__search #txt_box_search {
+    padding: .2rem;
+    font-size: 16px;
 }
