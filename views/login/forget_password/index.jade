@@ -1,0 +1,23 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Caballeria
+  body
+    header
+      h1 Caballeria
+    section
+      .Login-in__box
+        h3
+          | ¿Olvidades tu Contraseña?
+        .Login-in__form
+          form(action='/get-my-access/send_email/send', method='post')
+            div
+              div
+                input(type='email', name='email', placeholder='Ingresar email')
+              div
+                input(type='number', name='dni', placeholder='Ingresar tu dni')
+              div
+                p #{message}
+            div
+              button Enviar

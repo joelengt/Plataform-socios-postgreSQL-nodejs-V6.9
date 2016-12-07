@@ -86,6 +86,8 @@ var dashboard_get_my_data = require('./routes/send_email/index.js')
 var dashboard_socios_clientes = require('./routes/admin/dashboard/socios_clientes/index.js')
 var dashboard_socios_clientes_filter = require('./routes/admin/dashboard/socios_clientes/filtro_dinamico/index.js')
 
+var dashboard_account_process = require('./routes/forget_password/index.js')
+
 // Export excel
 var dashboard_export_excel = require('./routes/admin/dashboard/excel_export/index.js')
 
@@ -101,7 +103,10 @@ app.use('/dashboard', dashboard)
 app.use('/dashboard/usuarios', dashboard_usurios)
 
 app.use('/dashboard/perfil', dashboard_perfil)
+
+app.use('/account-process', dashboard_account_process)
 app.use('/get-my-access/send_email', dashboard_get_my_data)
+
 app.use('/dashboard/socios-clientes', dashboard_socios_clientes)
 app.use('/dashboard/socios-clientes/filter', dashboard_socios_clientes_filter)
 
