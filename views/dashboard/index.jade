@@ -24,44 +24,18 @@ html(lang='es')
           .TableList__search
             input#txt_box_search(type='text', placeholder='Ingresa nombre del usuario')
             button#btn_box_search  Buscar 
-            button.btn_change_order Ordenar
+            button(class="btn_change_order", style="display: none;") Ordenar
 
           // Table with Items
           .TableList__table
             table.TableList__Item.table.table-bordered.fixed
               thead.header
                 tr.cheader
-                  th.text-center(rowspan='2') Id
-                  th.text-center(rowspan='2') fecha_ingreso
-                  th.text-center(rowspan='2') numero_carnet
-                  th.text-center(rowspan='2') grado
-                  th.text-center(rowspan='2') arma
-                  th.text-center(rowspan='2') nombres
-                  th.text-center(rowspan='2') unidad
-                  th.text-center(rowspan='2') gguu
-                  th.text-center(rowspan='2') region
-                  th.text-center(rowspan='2') guarnicion
-                  th.text-center(rowspan='2') situacion
-                  th.text-center(rowspan='2') filial
-                  th.text-center(rowspan='2') cip
-                  th.text-center(rowspan='2') dni
-                  th.text-center(rowspan='2') email
-                  th.text-center(rowspan='2') celular1
-                  th.text-center(rowspan='2') celular2
-                  th.text-center(rowspan='2') rpm1
-                  th.text-center(rowspan='2') rpm2
-                  th.text-center(rowspan='2') telefono1
-                  th.text-center(rowspan='2') telefono2
-                  th.text-center(rowspan='2') cd_leg
-                  th.text-center(rowspan='2') onomastico
-                  th.text-center(rowspan='2') cd_esp
-                  th.text-center(rowspan='2') ono_esp
-                  th.text-center(rowspan='2') esposa
-                  th.text-center(rowspan='2') domicilio
-                  th.text-center(rowspan='2') diversos
-                  th.text-center(rowspan='2') obs
-                  th.text-center(rowspan='2') campo28
                   th.text-center(rowspan='2') foto
+                  th.text-center(rowspan='2') Nombres y Apellidos
+                  th.text-center(rowspan='2') Situación
+                  th.text-center(rowspan='2') CIP
+                  th.text-center(rowspan='2')
 
               tbody#boxListUsers.Articles_containers
           // Pagination
