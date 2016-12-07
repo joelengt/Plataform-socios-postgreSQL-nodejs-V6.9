@@ -8,8 +8,7 @@ var config = {
 	},
 	mongodb:{
 		local: 'mongodb://localhost/astrum',
-		mlab: 'mongodb://astrum:astrum@ds145395.mlab.com:45395/caballeria',
-		mlab_test: 'mongodb://astrum:astrum@ds139685.mlab.com:39685/caballeria'
+		mlab: 'mongodb://astrum:astrum@ds145395.mlab.com:45395/astrum'
 	},
 	postgresql: {
 	  local: 'postgres://joelengt:kuroyukihime2110@localhost:4002/caballeria', // mac joel
