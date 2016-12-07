@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Caballeria</title>
-</head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta charset="UTF-8"/>
+  <title>Legión Caballeria</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="/style/style.css"/></head>
 <body>
-    <header>
-        <h1>Caballeria</h1>
-    </header>
-    <section>
+    <!-- <section>
         <div class="Login-in__box">
             <h3>
                 Iniciar Sesión
@@ -33,6 +33,45 @@
                 <a href="#">Entrar</a>
             </div>
         </div>
-    </section>
+    </section> -->
+    <div class="container landing">
+      <div class="row not-margin">
+        <div class="col s10 push-s1">
+          <div class="row content-box not-margin">
+            <div class="col m5 hide-on-small-only">
+              <img class="iphone" src="http://www.pngall.com/wp-content/uploads/2016/06/IPhone-PNG-Picture-Transparent.png" alt="iphone"/>
+            </div>
+            <div class="col s12 m7">
+              <div class="row">
+                <div class="signup-box">
+                  <h1 class="title">Legíon Caballería</h1>
+                  <form class="signup-form" action="/auth/dashboard" method="POST">
+                    <div class="section">
+                      <div class="input-field">
+                        <input type="text" name="username" autocomplete="off">
+                        <label for="username">Usuario</label>
+                      </div>
+                      <div class="input-field">
+                        <input type="password" name="password" autocomplete="off">
+                        <label for="password">Contraseña</label>
+                      </div>
+                      <button class="btn waves-effect waves-light btn-signup" type="submit">Iniciar Sesión</button>
+                    </div>
+                  </form> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="login-box">
+                  ¿Has olvidado tu usuario ó contraseña? <a href="/forgetpassword">Entrar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  </script>
 </body>
 </html>

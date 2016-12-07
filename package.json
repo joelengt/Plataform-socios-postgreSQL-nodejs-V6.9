@@ -21,6 +21,7 @@
     "jade": "^1.11.0",
     "jquery": "^2.2.4",
     "jsonwebtoken": "^7.1.9",
+    "materialize-css": "^0.97.8",
     "merge-descriptors": "^1.0.1",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.12",
@@ -42,6 +43,9 @@
     "babel-preset-es2015": "^6.6.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "gulp": "^3.9.1",
+    "gulp-stylus": "^2.6.0",
+    "nib": "^1.1.2",
     "stylus": "^0.54.2"
   },
   "scripts": {
