@@ -2,54 +2,155 @@ doctype html
 html(lang='es')
   head
     meta(charset='UTF-8')
-    title Caballeria
-    meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+    title Legión Caballería
     meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
-    // Esstilos Enlaces CSS
-    link(rel='icon', type='image/png', href='../images/favicon.png')
-    link(rel='stylesheet', type='text/css', href='../css/index.css')
-    link(rel='stylesheet', type='text/css', href='../css/modal/index.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+    //- link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+
+    link(rel='stylesheet', href='/style/style.css')
   body#App_Container
     .App_Container__box
-      // Header Main
-      header.HeaderMain
-        .HeaderMain__box
-          // Title
-          h2 Caballeria
-      // Table List
-      section.TableList
-        .TableList__box
+      //- // Header Main
+      //- header.HeaderMain
+      //-   .HeaderMain__box
+      //-     // Title
+      //-     h2 Caballeria
+      //- // Table List
+      nav.Header
+        .nav-wrapper.Header__container.white
+          a.Header__container--title.Logo.left.black-text(href='/') Legión Caballería
+          div.Header__container--search
+            input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
+            button.grey.darken-2
+              i#btn_box_search.material-icons search
 
-          // Form search
-          .TableList__search
-            input#txt_box_search(type='text', placeholder='Ingresa nombre del usuario')
-            button#btn_box_search  Buscar 
-            button(class="btn_change_order", style="display: none;") Ordenar
+          div.Header__container--avatar.right
+            img.responsive-img.circle(width='40', src='https://scontent.fgig1-1.fna.fbcdn.net/v/t1.0-9/12108090_103718296653093_1645916242899441288_n.jpg?oh=ef7692c8d658ca3d11eacd5cc12ca17b&oe=58F1F6F0', alt='')
+      .main-container
+        .main-container__box
+          nav.SubHeader.grey.darken-2
+            .SubHeader__box
+              .SubHeader__box--list
+                .linkRoute Socios | #usuarios
+                  .fa-chevron-right.right
+                    i.material-icons keyboard_arrow_right
+              .SubHeader__box--icons
+                .Icons
+                  .Icons__item.btn_change_order
+                    i.material-icons filter_list
+                  .Icons__item
+                    .dropdown-button(data-activates='dropdown1')
+                      i.material-icons more_vert
+                    ul#dropdown1.dropdown-content
+                      li
+                        a(href='#!') texto
+          .Content
+            .Filter.grey.lighten-3
+              .Filter__box
+                .Filter__box--title
+                  h3 Filtros
+                .Filter__box--selects
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') Activos
+                      option(value='3') Adherente
+                    label Por tipo de socio
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') Hábil
+                      option(value='3') Inhábil
+                      option(value='3') Renunciante
+                      option(value='3') Fallecido
+                    label Por situación de socio
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') OGECOE
+                      option(value='3') CPMP
+                      option(value='3') Pago Directo
+                    label Por tipo de pago
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') Actividad
+                      option(value='3') Retiro
+                    label Por situación de trabajo
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Si
+                      option(value='2') No
+                    label Carta declaratoria
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Enero
+                      option(value='2') Febrero
+                      option(value='3') Marzo
+                      option(value='3') Abril
+                      option(value='3') Mayo
+                      option(value='3') Junio
+                      option(value='3') Julio
+                      option(value='3') Agosto
+                      option(value='3') Setiembre
+                      option(value='3') Octubre
+                      option(value='3') Noviembre
+                      option(value='3') Diciembre
+                    label Por honomástico
+            .TableList
+              .TableList__box
+                //- Table with Items
+                .TableList__table
+                  table.TableList__Item.table.table-bordered.fixed.highlight
+                    thead.header
+                      tr.cheader
+                        th.text-center(rowspan='2')
+                        th.text-center(rowspan='2') Nombres y Apellidos
+                        th.text-center(rowspan='2') Situación
+                        th.text-center(rowspan='2') CIP
+                        th.text-center(rowspan='2')
 
-          // Table with Items
-          .TableList__table
-            table.TableList__Item.table.table-bordered.fixed
-              thead.header
-                tr.cheader
-                  th.text-center(rowspan='2') foto
-                  th.text-center(rowspan='2') Nombres y Apellidos
-                  th.text-center(rowspan='2') Situación
-                  th.text-center(rowspan='2') CIP
-                  th.text-center(rowspan='2')
+                    tbody#boxListUsers.Articles_containers
+                      tr
+                        td
+                          div.avatar-socio(style="background-image: url(https://scontent.fgig1-1.fna.fbcdn.net/v/t1.0-9/12108090_103718296653093_1645916242899441288_n.jpg?oh=ef7692c8d658ca3d11eacd5cc12ca17b&oe=58F1F6F0)")
+                        td Smith
+                        td 50
+                        td 50
+                        td
+                          i.material-icons.tag(style="color: #f44336") label
+                      tr
+                        td
+                          div.avatar-socio(style="background-image: url(https://scontent.fgig1-1.fna.fbcdn.net/v/t1.0-9/12108090_103718296653093_1645916242899441288_n.jpg?oh=ef7692c8d658ca3d11eacd5cc12ca17b&oe=58F1F6F0)")
+                        td Smith
+                        td 20
+                        td 50
+                        td
+                          i.material-icons.tag(style="color: #26a69a") label
 
-              tbody#boxListUsers.Articles_containers
-          // Pagination
-          .TableList__pagination
-            .Pagination
-              .PaginationContent
-      // The Modal
-      #myModal.modal
+                //- Pagination
+                .TableList__pagination
+                  .Pagination
+                    .PaginationContent
+      //- The Modal
+      //- #myModal.modal
         // The Close Button
         span.close(onclick="document.getElementById('myModal').style.display='none'") ×
         // Modal Content (The Image)
         img#img01.modal-content
         // Modal Caption (Image Text)
         #caption
-      // Enlaces Script JS
-      script(src='https://code.jquery.com/jquery-1.11.3.min.js')
-      script(src='../js/index.js')
+      //- Enlaces Script JS
+      script(src='https://code.jquery.com/jquery-3.1.1.min.js', integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=", crossorigin="anonymous")
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js')
+      //- script(src='../js/index.js')
+      script
+        //- $(document).ready(function() {
+        //-   $('select').material_select();
+        //- })

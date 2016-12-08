@@ -1,0 +1,45 @@
+.Header
+	position relative
+	width 100%
+	z-index 50
+	&__container
+		&--title
+			margin 0 1rem
+		&--search
+			width 50%
+			max-width 400px
+			display inline-block
+			height 64px
+			margin 0 .8rem
+			position relative
+			line-height 0
+			border-radius 4px
+			input
+				box-shadow 0 0 1px #616161
+				height 35px
+				border 0
+				color color_text1
+				padding-right 40px
+				margin 0
+				box-sizing border-box
+				border-radius 4px
+				padding 5px
+				&:focus
+					border 0 !important
+					box-shadow 0 0 1px #424242 !important
+			button
+				height 35px
+				width 35px
+				border-radius 0 4px 4px 0
+				position absolute
+				top 0
+				right 0
+				border 0
+				i
+					font-size 1rem !important
+					height 35px
+					line-height 35px
+		&--avatar
+			height 64px
+			img
+				margin 12px 10px
