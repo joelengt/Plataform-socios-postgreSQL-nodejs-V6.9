@@ -41,7 +41,8 @@
         // Construir Template de Usuario
         buildUserTemplate() {
             // Template de Usuario
-            let template_user_item = `<td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
+            let template_user_item = `<tr class="SocioItem" data-id="${ this.id_item }">
+                                        <td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
                                         <td class="text-center">${ this.nombres }</td>
                                         <td class="text-center">${ this.grado }</td>
                                         <td class="text-center">${ this.cip }</td>
@@ -105,14 +106,15 @@
         $.ajax({
             url: `/dashboard/socios-clientes/item/0/${ user_id }`,
             method: 'get',
-            success: function (usuario) {
+            success: function (info) {
+                console.log(info);
 
-                contentHtml.innerHTML = '';
+                  contentHtml.innerHTML = '';
 
+                  contentHtml.innerHTML = info;
                 // Recorre lista y render Template en html
-                let nuevoUser = getUser(usuario.result);
+                // let nuevoUser = getUser(info);
 
-                contentHtml.innerHTML = nuevoUser.buildUserTemplate();
 
             }
         }) 
@@ -323,7 +325,7 @@
         var $boxConntentHtml = document.querySelector('#boxListUsers');
         var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
         var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
-
+        var $ViewboxRender = $('body')[0]
 
         var $txtBoxSearchByName = document.querySelector('#txt_box_search');
         var $btnBoxSearchByName = document.querySelector('#btn_box_search');
@@ -407,6 +409,17 @@
             })  
 
         })
+
+       // /dashboard/socios-clientes/item/0/1
+
+       $ArticlesContainer.on('click', '.SocioItem', function (ev) {
+            console.log('DATOSS DEL SOCIO POR ID');
+            var socio_id = this.dataset.id
+
+            readUserById(socio_id, $ViewboxRender);
+
+        })
+
 
        // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
        //  console.log('Click');

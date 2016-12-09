@@ -130,13 +130,19 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
                     done()
 
                     if(results.length === 0) {
-                        return res.status(200).json({
+                        return res.status(404).json({
                             status: 'not_found',
                             message: 'El socio cliente no fue encontrado en la base de datos'
                         })
                     } 
 
-                    res.status(200).json({
+                    // res.status(200).json({
+                    //     status: 'ok',
+                    //     result: results[0],
+                    //     message: 'El socio cliente fue encontrado en la base de datos'
+                    // })
+
+                    res.status(200).render('./dashboard/socio/info_perfil/index.jade',{
                         status: 'ok',
                         result: results[0],
                         message: 'El socio cliente fue encontrado en la base de datos'
