@@ -41,11 +41,13 @@
         // Construir Template de Usuario
         buildUserTemplate() {
             // Template de Usuario
-            let template_user_item = `<td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
+            let template_user_item = `<tr class="SocioItem" data-id="${ this.id_item }">
+                                        <td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
                                         <td class="text-center">${ this.nombres }</td>
                                         <td class="text-center">${ this.grado }</td>
                                         <td class="text-center">${ this.cip }</td>
                                         <td class="text-center">${ this.arma }</td>
+                                        <td class="text-center"> ==> </td>
                                       </tr>`;
             return template_user_item
         }
@@ -104,14 +106,15 @@
         $.ajax({
             url: `/dashboard/socios-clientes/item/0/${ user_id }`,
             method: 'get',
-            success: function (usuario) {
+            success: function (info) {
+                console.log(info);
 
-                contentHtml.innerHTML = '';
+                  contentHtml.innerHTML = '';
 
+                  contentHtml.innerHTML = info;
                 // Recorre lista y render Template en html
-                let nuevoUser = getUser(usuario.result);
+                // let nuevoUser = getUser(info);
 
-                contentHtml.innerHTML = nuevoUser.buildUserTemplate();
 
             }
         }) 
@@ -322,7 +325,7 @@
         var $boxConntentHtml = document.querySelector('#boxListUsers');
         var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
         var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
-
+        var $ViewboxRender = $('body')[0]
 
         var $txtBoxSearchByName = document.querySelector('#txt_box_search');
         var $btnBoxSearchByName = document.querySelector('#btn_box_search');
@@ -339,12 +342,16 @@
         // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
        $btnBoxSearchByName.addEventListener('click', function (ev) {
             let nameUser = $txtBoxSearchByName.value;
+            console.log('BUSQUEDA POR NOMBRE O DNI -> click');
+            console.log(nameUser);
             searchByName(nameUser, $boxConntentHtml);
        })
 
        // Filtro por evento key: enter
        $txtBoxSearchByName.addEventListener('keypress', function (event) {
             let nameUser = $txtBoxSearchByName.value;
+            console.log('BUSQUEDA POR NOMBRE O DNI -> keypress enter');
+            console.log(nameUser);
             if(event.charCode === 13) {
                 searchByName(nameUser, $boxConntentHtml);
             }
@@ -352,12 +359,12 @@
        })
 
        // Evento click -> Cambiar Orden
-       $btn_change_order.addEventListener('click', function () {
-            console.log('hi');
+       // $btn_change_order.addEventListener('click', function () {
+       //      console.log('hi');
 
-            changePosition($boxConntentHtml)
+       //      changePosition($boxConntentHtml)
 
-       })
+       // })
 
        // Filter mientras la caja de texto cambia
        $('#txt_box_search').bind('input', function() { 
@@ -367,6 +374,10 @@
            }
 
            nameUserWord = $(this).val()
+
+           console.log('BUSQUEDA POR NOMBRE O DNI -> Input change');
+           console.log(nameUserWord);
+
            searchByName(nameUserWord, $boxConntentHtml);
        });      
        
@@ -399,13 +410,24 @@
 
         })
 
-       $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
-        console.log('Click');
-            var imageUrl = this.src
-            var imageAlt = this.alt
-            showModalImage(imageUrl, imageAlt);
+       // /dashboard/socios-clientes/item/0/1
+
+       $ArticlesContainer.on('click', '.SocioItem', function (ev) {
+            console.log('DATOSS DEL SOCIO POR ID');
+            var socio_id = this.dataset.id
+
+            readUserById(socio_id, $ViewboxRender);
 
         })
+
+
+       // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
+       //  console.log('Click');
+       //      var imageUrl = this.src
+       //      var imageAlt = this.alt
+       //      showModalImage(imageUrl, imageAlt);
+
+       //  })
 
         // goheadfixed('table.fixed')
 

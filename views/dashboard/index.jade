@@ -1,5 +1,6 @@
 doctype html
 html(lang='es')
+<<<<<<< HEAD
   head
     meta(charset='UTF-8')
     title Legión Caballería
@@ -22,17 +23,18 @@ html(lang='es')
           a.Header__container--title.Logo.left.black-text(href='/') Legión Caballería
           div.Header__container--search
             input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
-            button.grey.darken-2
-              i#btn_box_search.material-icons search
+            button.grey.darken-2#btn_box_search
+              i.material-icons search
 
           div.Header__container--avatar.right
-            img.responsive-img.circle(width='40', src='https://scontent.fgig1-1.fna.fbcdn.net/v/t1.0-9/12108090_103718296653093_1645916242899441288_n.jpg?oh=ef7692c8d658ca3d11eacd5cc12ca17b&oe=58F1F6F0', alt='')
+            img.responsive-img.circle(width='40', src='../images/default.jpg', alt='')
       .main-container
         .main-container__box
           nav.SubHeader.grey.darken-2
             .SubHeader__box
               .SubHeader__box--list
-                .linkRoute Socios | #usuarios
+                .linkRoute Socios | 
+                  span #usuarios
                   .fa-chevron-right.right
                     i.material-icons keyboard_arrow_right
               .SubHeader__box--icons
@@ -114,12 +116,13 @@ html(lang='es')
                         th.text-center(rowspan='2') Nombres y Apellidos
                         th.text-center(rowspan='2') Situación
                         th.text-center(rowspan='2') CIP
+                        th.text-center(rowspan='2') Carta Declaratoria
                         th.text-center(rowspan='2')
 
                     tbody#boxListUsers.Articles_containers
                       tr
                         td
-                          div.avatar-socio(style="background-image: url(https://scontent.fgig1-1.fna.fbcdn.net/v/t1.0-9/12108090_103718296653093_1645916242899441288_n.jpg?oh=ef7692c8d658ca3d11eacd5cc12ca17b&oe=58F1F6F0)")
+                          div.avatar-socio(style="background-image: url(../images/default.jpg)")
                         td Smith
                         td 50
                         td 50
@@ -127,7 +130,7 @@ html(lang='es')
                           i.material-icons.tag(style="color: #f44336") label
                       tr
                         td
-                          div.avatar-socio(style="background-image: url(https://scontent.fgig1-1.fna.fbcdn.net/v/t1.0-9/12108090_103718296653093_1645916242899441288_n.jpg?oh=ef7692c8d658ca3d11eacd5cc12ca17b&oe=58F1F6F0)")
+                          div.avatar-socio(style="background-image: url(../images/default.jpg)")
                         td Smith
                         td 20
                         td 50
