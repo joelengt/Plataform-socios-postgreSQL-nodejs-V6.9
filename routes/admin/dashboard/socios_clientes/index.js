@@ -61,10 +61,16 @@ app.get('/list/:value', isLoggedIn, function (req, res) {
                 // After all data is returned, close connection and return results
                 query.on('end', () => {
                     done()
-                    console.log('Largo del arreglo: ' + results.length);
+                    
+                    var r = []
+                    for (var k = 0; k <= 30; k++) {
+                        r.push(results[k])
+                    }
+                    console.log('Largo del arreglo: ' + r.length);
+                    
                     return res.status(200).json({
                         status: 'ok',
-                        result: results
+                        result: r
                     })
                 })
 

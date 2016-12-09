@@ -46,6 +46,7 @@
                                         <td class="text-center">${ this.grado }</td>
                                         <td class="text-center">${ this.cip }</td>
                                         <td class="text-center">${ this.arma }</td>
+                                        <td class="text-center"> ==> </td>
                                       </tr>`;
             return template_user_item
         }
@@ -339,12 +340,16 @@
         // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
        $btnBoxSearchByName.addEventListener('click', function (ev) {
             let nameUser = $txtBoxSearchByName.value;
+            console.log('BUSQUEDA POR NOMBRE O DNI -> click');
+            console.log(nameUser);
             searchByName(nameUser, $boxConntentHtml);
        })
 
        // Filtro por evento key: enter
        $txtBoxSearchByName.addEventListener('keypress', function (event) {
             let nameUser = $txtBoxSearchByName.value;
+            console.log('BUSQUEDA POR NOMBRE O DNI -> keypress enter');
+            console.log(nameUser);
             if(event.charCode === 13) {
                 searchByName(nameUser, $boxConntentHtml);
             }
@@ -352,12 +357,12 @@
        })
 
        // Evento click -> Cambiar Orden
-       $btn_change_order.addEventListener('click', function () {
-            console.log('hi');
+       // $btn_change_order.addEventListener('click', function () {
+       //      console.log('hi');
 
-            changePosition($boxConntentHtml)
+       //      changePosition($boxConntentHtml)
 
-       })
+       // })
 
        // Filter mientras la caja de texto cambia
        $('#txt_box_search').bind('input', function() { 
@@ -367,6 +372,10 @@
            }
 
            nameUserWord = $(this).val()
+
+           console.log('BUSQUEDA POR NOMBRE O DNI -> Input change');
+           console.log(nameUserWord);
+
            searchByName(nameUserWord, $boxConntentHtml);
        });      
        
@@ -399,13 +408,13 @@
 
         })
 
-       $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
-        console.log('Click');
-            var imageUrl = this.src
-            var imageAlt = this.alt
-            showModalImage(imageUrl, imageAlt);
+       // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
+       //  console.log('Click');
+       //      var imageUrl = this.src
+       //      var imageAlt = this.alt
+       //      showModalImage(imageUrl, imageAlt);
 
-        })
+       //  })
 
         // goheadfixed('table.fixed')
 
