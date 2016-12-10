@@ -64,10 +64,13 @@ app.post('/auth/dashboard', function(req, res, next) {
       // 		token_auth: req.user.token_auth
       // })
 
-      res.status(200).render('./dashboard/index.jade', {
-        user: req.user,
-        token_auth: req.user.token_auth
-      })
+      // res.status(200).render('./dashboard/index.jade', {
+      //   user: req.user,
+      //   token_auth: req.user.token_auth
+      // })
+
+      res.redirect('/dashboard');
+    
     });
 
   })(req, res, next);

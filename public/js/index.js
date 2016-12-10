@@ -43,7 +43,7 @@
             // Template de Usuario
             let template_user_item = `<tr class="SocioItem" data-id="${ this.id }">
                                         <td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
-                                        <td class="text-center">${ this.nombres } ${ this.apellidos }</td>
+                                        <td class="text-center"><a href="/dashboard/socios-clientes/item/0/${ this.id }"> ${ this.nombres } ${ this.apellidos } </a></td>
                                         <td class="text-center">${ this.situacion_socio }</td>
                                         <td class="text-center">${ this.cip }</td>
                                         <td class="text-center">${ this.carta_declaratoria }</td>
@@ -417,13 +417,13 @@
 
        // /dashboard/socios-clientes/item/0/1
 
-       $ArticlesContainer.on('click', '.SocioItem', function (ev) {
-            console.log('DATOSS DEL SOCIO POR ID');
-            var socio_id = this.dataset.id
+       // $ArticlesContainer.on('click', '.SocioItem', function (ev) {
+       //      console.log('DATOSS DEL SOCIO POR ID');
+       //      var socio_id = this.dataset.id
 
-            readUserById(socio_id, $ViewboxRender);
+       //      readUserById(socio_id, $ViewboxRender);
 
-        })
+       //  })
 
 
        // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {

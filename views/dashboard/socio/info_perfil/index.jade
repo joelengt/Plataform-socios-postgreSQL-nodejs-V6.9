@@ -49,7 +49,11 @@ html(lang='es')
                     div(class="SocioInfo__perfil__personal")
                       div(class="SocioInfo__perfil__personal--top")
                         div
-                          h3 #{result.nombres}
+                          div
+                            h3 #{result.nombres}
+                          div
+                            from(action='/dashboard/socios-clientes/item/delete/0/#{result.id}?_method=delete', method="post")
+                              button Eliminar
                         div
                           span ==>
                         div

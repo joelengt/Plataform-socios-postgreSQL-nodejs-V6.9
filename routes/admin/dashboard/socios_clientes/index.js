@@ -505,17 +505,20 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
     // }
 })
 
-// // DELETE item from list
+// DELETE item from list
 app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, res) {
-   // if(req.user.permiso === users_type.onwers ||
-   //    req.user.permiso === users_type.admins ||
-   //    req.user.permiso === users_type.officers ||
-   //    req.user.permiso === users_type.viewer) {
+    console.log('ENTRO');
+
+   if(req.user.permiso === users_type.onwers ||
+      req.user.permiso === users_type.admins ||
+      req.user.permiso === users_type.officers ||
+      req.user.permiso === users_type.viewer) {
 
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
 
         var results = [];
+
 
         if(table_select >= 0 && table_select <= 2) {
             // Get a Postgres client from the connection pool
@@ -531,7 +534,7 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
                 }
 
                 // SQL Query > Select Data
-                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id_item = '${ socio_id }';`)
+                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`)
 
                 // Stream results back one row at a time
                 query.on('row', (row) => {
@@ -555,7 +558,7 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
                        console.log(results[0]);
 
                        // SQL Query > Delete Item by id_item
-                       client.query(`DELETE FROM ${ data_value_tablas[table_select] } WHERE id_item = '${ socio_id }';`);
+                       client.query(`DELETE FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`);
 
                        res.status(200).json({
                            status: 'ok',
@@ -573,13 +576,13 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
             message: 'El parametro solicitado no es valida. Rango de consulta: 0 a 5'
           })
         }
-    // } else {
-    //     console.log('El usuario no esta autentificado. Requiere logearse')
-    //     res.status(403).json({
-    //         status: 'not_access',
-    //         message: 'El usuario no esta autentificado. Requiere logearse'
-    //     })
-    // }
+    } else {
+        console.log('El usuario no esta autentificado. Requiere logearse')
+        res.status(403).json({
+            status: 'not_access',
+            message: 'El usuario no esta autentificado. Requiere logearse'
+        })
+    }
 })
 
 // UPDATE item from list
