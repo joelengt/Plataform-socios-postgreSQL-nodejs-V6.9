@@ -1,7 +1,7 @@
 -- Creando base de datos
 
--- DROP DATABASE IF EXISTS caballeria;
-CREATE DATABASE caballeria;
+DROP DATABASE IF EXISTS caballeria_db;
+CREATE DATABASE caballeria_db;
 
 -- cambiando tematica de aceptar ascent
 UPDATE pg_database SET encoding=6 WHERE datname='caballeria';

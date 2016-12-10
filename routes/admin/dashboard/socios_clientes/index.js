@@ -507,7 +507,6 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
 
 // DELETE item from list
 app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, res) {
-    console.log('ENTRO');
 
    if(req.user.permiso === users_type.onwers ||
       req.user.permiso === users_type.admins ||
@@ -559,7 +558,7 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
 
                        // SQL Query > Delete Item by id_item
                        client.query(`DELETE FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`);
-
+                       
                        res.status(200).json({
                            status: 'ok',
                            message: `El socio cliente ${ socio_id } fue eliminado de la base de datos`
