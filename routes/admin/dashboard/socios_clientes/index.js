@@ -9,9 +9,9 @@ var users_type = config.users_access
 var connectionString = config.postgresql.local
 
 var data_value_tablas = [
-  'habiles_lecabpe_2016',   // 0
-  'inhabiles_lecabpe_2016',  // 1
-  'personalidades'  // 2
+  'socios',   // 0
+  'conyuges_socio',  // 1
+  'afiliado_socio'  // 2
 ]
 
 // route middleware to make sure a user is logged in
@@ -61,16 +61,10 @@ app.get('/list/:value', isLoggedIn, function (req, res) {
                 // After all data is returned, close connection and return results
                 query.on('end', () => {
                     done()
-                    
-                    var r = []
-                    for (var k = 0; k <= 30; k++) {
-                        r.push(results[k])
-                    }
-                    console.log('Largo del arreglo: ' + r.length);
-                    
+                       
                     return res.status(200).json({
                         status: 'ok',
-                        result: r
+                        result: results
                     })
                 })
 
@@ -118,7 +112,7 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
                 }
 
                 // SQL Query > Select Data
-                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id_item = '${ socio_id }';`)
+                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`)
 
                 // Stream results back one row at a time
                 query.on('row', (row) => {
@@ -168,7 +162,7 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
     }
 });
 
-// CREATE item from list
+// CREATE item for list
 app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
     // if(req.user.permiso === users_type.onwers ||
     //    req.user.permiso === users_type.admins ||
@@ -181,7 +175,6 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
 
         // Obeteniendo nuevo usuario registrado
         var socioNuevo = {
-            id_item:            '',
             fecha_ingreso:      req.body.fecha_ingreso || '',
             numero_carnet:      req.body.numero_carnet || '',
             foto:               req.body.foto || '',
