@@ -130,16 +130,11 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
                         })
                     } 
 
-                    // res.status(200).json({
-                    //     status: 'ok',
-                    //     result: results[0],
-                    //     message: 'El socio cliente fue encontrado en la base de datos'
-                    // })
-
                     res.status(200).render('./dashboard/socio/info_perfil/index.jade',{
                         status: 'ok',
                         result: results[0],
-                        message: 'El socio cliente fue encontrado en la base de datos'
+                        message: 'El socio cliente fue encontrado en la base de datos',
+                        user: req.user
                     })
 
                 })
@@ -221,7 +216,7 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
                     })
                 }
 
-                console.log('Buscando coincidencia por id');
+                console.log('Buscando coincidencia por dni');
 
                 // Validando existencia en la DB segun dni como campo obligatorio
                 if(socioNuevo.dni !== '' && socioNuevo.dni.length === 8 ) {
@@ -316,7 +311,7 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
                             // El usuario ya se encuentra registrado
                             console.log('El usuario ya se encuentra registrado');
                             res.status(200).json({
-                                status: 'ok',
+                                status: 'not_register',
                                 message: 'El socio cliente fue encontrado en la base de datos',
                                 result: results[0]
                             })
@@ -576,5 +571,29 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
     //     })
     // }
 });
+
+// Viewers
+
+// Viewer: Form Create
+app.get('/form-to-register', isLoggedIn, function (req, res) {
+    if(req.user.permiso === users_type.onwers ||
+       req.user.permiso === users_type.admins ||
+       req.user.permiso === users_type.officers ||
+       req.user.permiso === users_type.viewer) {
+
+        res.status(200).render('./dashboard/socio/create/index.jade', {
+            status: 'ok',
+            user: req.user
+        })
+
+     } else {
+         console.log('El usuario no esta autentificado. Requiere logearse')
+         res.status(403).json({
+             status: 'not_access',
+             message: 'El usuario no esta autentificado. Requiere logearse'
+         })
+     }
+})
+
 
 module.exports = app
