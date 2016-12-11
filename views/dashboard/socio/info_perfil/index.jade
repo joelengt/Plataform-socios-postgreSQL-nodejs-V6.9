@@ -54,6 +54,10 @@ html(lang='es')
                           div
                             form(action='/dashboard/socios-clientes/item/delete/0/#{result.id}?_method=delete', method="post")
                               button Eliminar
+                          div
+                            form(action="/dashboard/socios-clientes/form-to-edit/0/#{result.id}", method="get")
+                              button Actualizar
+                            
                         div
                           span ==>
                         div

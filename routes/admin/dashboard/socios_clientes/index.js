@@ -429,10 +429,10 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
 
 // UPDATE item from list
 app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) {
-    // if(req.user.permiso === users_type.onwers ||
-    //    req.user.permiso === users_type.admins ||
-    //    req.user.permiso === users_type.officers ||
-    //    req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.onwers ||
+       req.user.permiso === users_type.admins ||
+       req.user.permiso === users_type.officers ||
+       req.user.permiso === users_type.viewer) {
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
 
@@ -452,7 +452,7 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                 }
 
                 // SQL Query > Select Data
-                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id_item = '${ socio_id }';`)
+                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`)
 
                 // Stream results back one row at a time
                 query.on('row', (row) => {
@@ -472,41 +472,39 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                       })
 
                    } else {
-                       // Existe, se va a eliminar
+                       // Existe, se va a Actualizar
                        console.log('id_item del item para actualizar');
                        console.log(results[0].dni);
 
                        var socioNuevo = {
-                           fecha_ingreso:      req.body.fecha_ingreso || results[0].fecha_ingreso,
-                           numero_carnet:      req.body.numero_carnet || results[0].numero_carnet,
-                           foto:               req.body.foto || results[0].foto,
-                           grado:              req.body.grado || results[0].grado,
-                           arma:               req.body.arma || results[0].arma,
-                           nombres:            req.body.nombres || results[0].nombres,
-                           unidad:             req.body.unidad || results[0].unidad,
-                           gguu:               req.body.gguu || results[0].gguu,
-                           region:             req.body.region || results[0].region,
-                           guarnicion:         req.body.guarnicion || results[0].guarnicion,
-                           situacion:          req.body.situacion || results[0].situacion,
-                           filial:             req.body.filial || results[0].filial,
-                           cip:                req.body.cip || results[0].cip,
-                           dni:                req.body.dni || results[0].dni,
-                           email:              req.body.email || results[0].email,
-                           celular1:           req.body.celular1 || results[0].celular1,
-                           celular2:           req.body.celular2 || results[0].celular2,
-                           rpm1:               req.body.rpm1 || results[0].rpm1,
-                           rpm2:               req.body.rpm2 || results[0].rpm2,
-                           telefono1:          req.body.telefono1 || results[0].telefono1,
-                           telefono2:          req.body.telefono2 || results[0].telefono2,
-                           cd_leg:             req.body.cd_leg || results[0].cd_leg,
-                           onomastico:         req.body.onomastico || results[0].onomastico,
-                           cd_esp:             req.body.cd_esp || results[0].cd_esp,
-                           ono_esp:            req.body.ono_esp || results[0].ono_esp,
-                           esposa:             req.body.esposa || results[0].esposa,
-                           domicilio:          req.body.domicilio || results[0].domicilio,
-                           diversos:           req.body.diversos || results[0].diversos,
-                           obs:                req.body.obs || results[0].obs,
-                           campo28:            req.body.campo28 || results[0].campo28
+                           fecha_ingreso:                req.body.fecha_ingreso     || results[0].fecha_ingreso,
+                           nombres:                      req.body.nombres           || results[0].nombres,
+                           apellidos:                    req.body.apellidos         || results[0].apellidos,
+                           numero_carnet:                req.body.numero_carnet     || results[0].numero_carnet,
+                           cip:                          req.body.cip               || results[0].cip,
+                           dni:                          req.body.dni               || results[0].dni,
+                           fecha_nacimiento:             req.body.fecha_nacimiento  || results[0].fecha_nacimiento,
+                           organizacion:                 req.body.organizacion      || results[0].organizacion,
+                           grado_profesion:              req.body.grado_profesion   || results[0].grado_profesion,
+                           arma:                         req.body.arma              || results[0].arma,
+                           situacion_trabajo:            req.body.situacion_trabajo || results[0].situacion_trabajo,
+                           unidad:                       req.body.unidad            || results[0].unidad,
+                           gguu:                         req.body.gguu              || results[0].gguu,
+                           region:                       req.body.region            || results[0].region,
+                           guarnicion:                   req.body.guarnicion        || results[0].guarnicion,
+                           filial:                       req.body.filial            || results[0].filial,
+                           direccion:                    req.body.direccion         || results[0].direccion,
+                           email:                        req.body.email             || results[0].email,
+                           celular1:                     req.body.celular1          || results[0].celular1,
+                           celular2:                     req.body.celular2          || results[0].celular2,
+                           telefono1:                    req.body.telefono1         || results[0].telefono1,
+                           telefono2:                    req.body.telefono2         || results[0].telefono2,
+                           carta_declaratoria:           req.body.carta_declaratoria   || results[0].carta_declaratoria,
+                           tipo_socio:                   req.body.tipo_socio        || results[0].tipo_socio,
+                           tipo_pago:                    req.body.tipo_pago         || results[0].tipo_pago,
+                           situacion_socio:              req.body.situacion_socio   || results[0].situacion_socio,
+                           foto:                         req.body.foto              || results[0].foto,
+                           situacion_alerta:             req.body.situacion_alerta  || results[0].situacion_alerta
                        }
 
                        console.log('Datos listos para subirse');
@@ -514,38 +512,37 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
 
                        // SQL Query > Delete Item by id_item
                        client.query(`UPDATE ${ data_value_tablas[table_select] } SET 
-                             fecha_ingreso = '${ socioNuevo.fecha_ingreso }',
-                             numero_carnet = '${ socioNuevo.numero_carnet }',
-                             foto =          '${ socioNuevo.foto }',
-                             grado =         '${ socioNuevo.grado }',
-                             arma =          '${ socioNuevo.arma }',
-                             nombres =       '${ socioNuevo.nombres }',
-                             unidad =        '${ socioNuevo.unidad }',
-                             gguu =          '${ socioNuevo.gguu }',
-                             region =        '${ socioNuevo.region }',
-                             guarnicion =    '${ socioNuevo.guarnicion }',
-                             situacion =     '${ socioNuevo.situacion }',
-                             filial =        '${ socioNuevo.filial }',
-                             cip =           '${ socioNuevo.cip }',
-                             dni =           '${ socioNuevo.dni }',
-                             email =         '${ socioNuevo.email }',
-                             celular1 =      '${ socioNuevo.celular1 }',
-                             celular2 =      '${ socioNuevo.celular2 }',
-                             rpm1 =          '${ socioNuevo.rpm1 }',
-                             rpm2 =          '${ socioNuevo.rpm2 }',
-                             telefono1 =     '${ socioNuevo.telefono1 }',
-                             telefono2 =     '${ socioNuevo.telefono2 }',
-                             cd_leg =        '${ socioNuevo.cd_leg }',
-                             onomastico =    '${ socioNuevo.onomastico }',
-                             cd_esp =        '${ socioNuevo.cd_esp }',
-                             ono_esp =       '${ socioNuevo.ono_esp }',
-                             esposa =        '${ socioNuevo.esposa }',
-                             domicilio =     '${ socioNuevo.domicilio }',
-                             diversos =      '${ socioNuevo.diversos }',
-                             obs =           '${ socioNuevo.obs }',
-                             campo28 =       '${ socioNuevo.campo28 }'
+                               fecha_ingreso =          '${ socioNuevo.fecha_ingreso }',
+                               nombres =                '${ socioNuevo.nombres  }',
+                               apellidos =              '${ socioNuevo.apellidos }',
+                               numero_carnet =          '${ socioNuevo.numero_carnet }',
+                               cip =                    '${ socioNuevo.cip }',
+                               dni =                    '${ socioNuevo.dni }',
+                               fecha_nacimiento =       '${ socioNuevo.fecha_nacimiento }',
+                               organizacion =           '${ socioNuevo.organizacion }',
+                               grado_profesion =        '${ socioNuevo.grado_profesion }',
+                               arma =                   '${ socioNuevo.arma }',
+                               situacion_trabajo =      '${ socioNuevo.situacion_trabajo }',
+                               unidad =                 '${ socioNuevo.unidad }',
+                               gguu =                   '${ socioNuevo.gguu }',
+                               region =                 '${ socioNuevo.region }',
+                               guarnicion =             '${ socioNuevo.guarnicion }',
+                               filial =                 '${ socioNuevo.filial }',
+                               direccion =              '${ socioNuevo.direccion }',
+                               email =                  '${ socioNuevo.email }',
+                               celular1 =               '${ socioNuevo.celular1 }',
+                               celular2 =               '${ socioNuevo.celular2 }',
+                               telefono1 =              '${ socioNuevo.telefono1 }',
+                               telefono2 =              '${ socioNuevo.telefono2 }',
+                               carta_declaratoria =     '${ socioNuevo.carta_declaratoria }',
+                               tipo_socio =             '${ socioNuevo.tipo_socio }',
+                               tipo_pago =              '${ socioNuevo.tipo_pago }',
+                               situacion_socio =        '${ socioNuevo.situacion_socio }',
+                               foto =                   '${ socioNuevo.foto }',
+                               situacion_alerta =       '${ socioNuevo.situacion_alerta }'
                              WHERE 
-                             id_item = '${ socio_id }';`);
+                               id = '${ socio_id }';
+                             `);
 
                        res.status(200).json({
                            status: 'ok',
@@ -563,13 +560,13 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
             message: 'El parametro solicitado no es valida. Rango de consulta: 0 a 5'
           })
         }
-    // } else {
-    //     console.log('El usuario no esta autentificado. Requiere logearse')
-    //     res.status(403).json({
-    //         status: 'not_access',
-    //         message: 'El usuario no esta autentificado. Requiere logearse'
-    //     })
-    // }
+    } else {
+        console.log('El usuario no esta autentificado. Requiere logearse')
+        res.status(403).json({
+            status: 'not_access',
+            message: 'El usuario no esta autentificado. Requiere logearse'
+        })
+    }
 });
 
 // Viewers
@@ -585,6 +582,76 @@ app.get('/form-to-register', isLoggedIn, function (req, res) {
             status: 'ok',
             user: req.user
         })
+
+     } else {
+         console.log('El usuario no esta autentificado. Requiere logearse')
+         res.status(403).json({
+             status: 'not_access',
+             message: 'El usuario no esta autentificado. Requiere logearse'
+         })
+     }
+})
+
+// Viewer: From Edit
+app.get('/form-to-edit/:table_select/:socio_id', isLoggedIn, function (req, res) {
+    if(req.user.permiso === users_type.onwers ||
+       req.user.permiso === users_type.admins ||
+       req.user.permiso === users_type.officers ||
+       req.user.permiso === users_type.viewer) {
+
+        var socio_id = Number(req.params.socio_id);
+        var table_select = Number(req.params.table_select);
+
+        var results = [];
+
+        if(table_select >= 0 && table_select <= 2) {
+            // Get a Postgres client from the connection pool
+            pg.connect(connectionString, (err, client, done) => {
+                // Handle connection errors
+                if(err) {
+                    done();
+                    console.log(err);
+                    return res.status(500).json({
+                        success: false,
+                        data: err
+                    })
+                }
+
+                // SQL Query > Select Data
+                const query = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`)
+
+                // Stream results back one row at a time
+                query.on('row', (row) => {
+                    results.push(row)
+                })
+
+                // After all data is returned, close connection and return results
+                query.on('end', () => {
+                    done()
+
+                    if(results.length === 0) {
+                        return res.status(404).json({
+                            status: 'not_found',
+                            message: 'El socio cliente no fue encontrado en la base de datos'
+                        })
+                    }
+
+                    res.status(200).render('./dashboard/socio/edit/index.jade', {
+                        status: 'ok',
+                        user: req.user,
+                        socio: results[0]
+                    })
+
+                })
+
+            })
+
+        } else {
+          res.status(200).json({
+            status: 'not_found',
+            message: 'El parametro solicitado no es valida. Rango de consulta: 0 a 5'
+          })
+        }
 
      } else {
          console.log('El usuario no esta autentificado. Requiere logearse')
