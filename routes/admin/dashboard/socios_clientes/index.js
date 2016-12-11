@@ -164,10 +164,10 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
 
 // CREATE item for list
 app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
-    // if(req.user.permiso === users_type.onwers ||
-    //    req.user.permiso === users_type.admins ||
-    //    req.user.permiso === users_type.officers ||
-    //    req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.onwers ||
+       req.user.permiso === users_type.admins ||
+       req.user.permiso === users_type.officers ||
+       req.user.permiso === users_type.viewer) {
         var table_select = Number(req.params.table_select);
 
         var results = [];
@@ -175,36 +175,34 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
 
         // Obeteniendo nuevo usuario registrado
         var socioNuevo = {
-            fecha_ingreso:      req.body.fecha_ingreso || '',
-            numero_carnet:      req.body.numero_carnet || '',
-            foto:               req.body.foto || '',
-            grado:              req.body.grado || '',
-            arma:               req.body.arma || '',
-            nombres:            req.body.nombres || '',
-            unidad:             req.body.unidad || '',
-            gguu:               req.body.gguu || '',
-            region:             req.body.region || '',
-            guarnicion:         req.body.guarnicion || '',
-            situacion:          req.body.situacion || '',
-            filial:             req.body.filial || '',
-            cip:                req.body.cip || '',
-            dni:                req.body.dni || '',
-            email:              req.body.email || '',
-            celular1:           req.body.celular1 || '',
-            celular2:           req.body.celular2 || '',
-            rpm1:               req.body.rpm1 || '',
-            rpm2:               req.body.rpm2 || '',
-            telefono1:          req.body.telefono1 || '',
-            telefono2:          req.body.telefono2 || '',
-            cd_leg:             req.body.cd_leg || '',
-            onomastico:         req.body.onomastico || '',
-            cd_esp:             req.body.cd_esp || '',
-            ono_esp:            req.body.ono_esp || '',
-            esposa:             req.body.esposa || '',
-            domicilio:          req.body.domicilio || '',
-            diversos:           req.body.diversos || '',
-            obs:                req.body.obs || '',
-            campo28:            req.body.campo28 || ''
+            fecha_ingreso:                req.body.fecha_ingreso  || '',
+            nombres:                      req.body.nombres  || '',
+            apellidos:                    req.body.apellidos  || '',
+            numero_carnet:                req.body.numero_carnet  || '',
+            cip:                          req.body.cip  || '',
+            dni:                          req.body.dni  || '',
+            fecha_nacimiento:             req.body.fecha_nacimiento  || '',
+            organizacion:                 req.body.organizacion  || '',
+            grado_profesion:              req.body.grado_profesion  || '',
+            arma:                         req.body.arma  || '',
+            situacion_trabajo:            req.body.situacion_trabajo  || '',
+            unidad:                       req.body.unidad  || '',
+            gguu:                         req.body.gguu  || '',
+            region:                       req.body.region  || '',
+            guarnicion:                   req.body.guarnicion  || '',
+            filial:                       req.body.filial  || '',
+            direccion:                    req.body.direccion  || '',
+            email:                        req.body.email  || '',
+            celular1:                     req.body.celular1  || '',
+            celular2:                     req.body.celular2  || '',
+            telefono1:                    req.body.telefono1  || '',
+            telefono2:                    req.body.telefono2  || '',
+            carta_declaratoria:           req.body.carta_declaratoria  || '',
+            tipo_socio:                   req.body.tipo_socio  || '',
+            tipo_pago:                    req.body.tipo_pago  || '',
+            situacion_socio:              req.body.situacion_socio  || '',
+            foto:                         req.body.foto  || '',
+            situacion_alerta:             req.body.situacion_alerta  || ''
         }
 
         console.log('Datos que obtengo de la subida');
@@ -246,116 +244,73 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
                            // El usuario es nuevo -> Registrar
                            console.log('El usuario es nuevo, y esta listo para guarda en la base de datos');
 
-                           // Obteniendo nuevo id
-                            const query2 = client.query(`SELECT * FROM ${ data_value_tablas[table_select] };`);
+                          // Almacenando en la DB
+                          client.query(`INSERT INTO ${ data_value_tablas[table_select] }
+                                       (fecha_ingreso,
+                                       nombres,
+                                       apellidos,
+                                       numero_carnet,
+                                       cip,
+                                       dni,
+                                       fecha_nacimiento,
+                                       organizacion,
+                                       grado_profesion,
+                                       arma,
+                                       situacion_trabajo,
+                                       unidad,
+                                       gguu,
+                                       region,
+                                       guarnicion,
+                                       filial,
+                                       direccion,
+                                       email,
+                                       celular1,
+                                       celular2,
+                                       telefono1,
+                                       telefono2,
+                                       carta_declaratoria,
+                                       tipo_socio,
+                                       tipo_pago,
+                                       situacion_socio,
+                                       foto,
+                                       situacion_alerta
+                                       ) VALUES (
+                                       '${ socioNuevo.fecha_ingreso }',
+                                       '${ socioNuevo.nombres }',
+                                       '${ socioNuevo.apellidos }',
+                                       '${ socioNuevo.numero_carnet }',
+                                       '${ socioNuevo.cip }',
+                                       '${ socioNuevo.dni }',
+                                       '${ socioNuevo.fecha_nacimiento }',
+                                       '${ socioNuevo.organizacion }',
+                                       '${ socioNuevo.grado_profesion }',
+                                       '${ socioNuevo.arma }',
+                                       '${ socioNuevo.situacion_trabajo }',
+                                       '${ socioNuevo.unidad }',
+                                       '${ socioNuevo.gguu }',
+                                       '${ socioNuevo.region }',
+                                       '${ socioNuevo.guarnicion }',
+                                       '${ socioNuevo.filial }',
+                                       '${ socioNuevo.direccion }',
+                                       '${ socioNuevo.email }',
+                                       '${ socioNuevo.celular1 }',
+                                       '${ socioNuevo.celular2 }',
+                                       '${ socioNuevo.telefono1 }',
+                                       '${ socioNuevo.telefono2 }',
+                                       '${ socioNuevo.carta_declaratoria }',
+                                       '${ socioNuevo.tipo_socio }',
+                                       '${ socioNuevo.tipo_pago }',
+                                       '${ socioNuevo.situacion_socio }',
+                                       '${ socioNuevo.foto }',
+                                       '${ socioNuevo.situacion_alerta }');`);
 
-                            // Stream results back one row at a time
-                            query2.on('row', (row) => {
-                                lista_table.push(row)
-                            })
+                          console.log('El socio se registro efectivamente en la DB');
 
-                            // After all data is returned, close connection and return results
-                            query2.on('end', function() {
-                                done();
-                                // Buscando al numero mayor
-                                var mayor = 0;
-
-                                for(var i = 0; i <= lista_table.length - 1; i++) {
-                                    var lista_table_element = Number(lista_table[i].id_item);
-                                    
-                                    if(lista_table_element > mayor ) {
-                                        mayor = lista_table_element;
-                                    }
-
-                                }
-
-                                console.log('Numero mayor');
-                                console.log(mayor);
-
-                                // Asignando nuevo id
-                                console.log('Asignando nuevo id al item')
-                                socioNuevo.id_item = mayor + 1;
-                                
-                                // Almacenando en la DB
-                                //INSERT INTO md_country (country_id, country_name) VALUES (1,'Perú');
-                                client.query(`INSERT INTO ${ data_value_tablas[table_select] }
-                                             (id_item, 
-                                             fecha_ingreso,
-                                             numero_carnet,
-                                             foto,
-                                             grado,
-                                             arma,
-                                             nombres,
-                                             unidad,
-                                             gguu,
-                                             region,
-                                             guarnicion,
-                                             situacion,
-                                             filial,
-                                             cip,
-                                             dni,
-                                             email,
-                                             celular1,
-                                             celular2,
-                                             rpm1,
-                                             rpm2,
-                                             telefono1,
-                                             telefono2,
-                                             cd_leg,
-                                             onomastico,
-                                             cd_esp,
-                                             ono_esp,
-                                             esposa,
-                                             domicilio,
-                                             diversos,
-                                             obs,
-                                             campo28
-                                             ) VALUES (
-                                             '${ socioNuevo.id_item }',
-                                             '${ socioNuevo.fecha_ingreso }',
-                                             '${ socioNuevo.numero_carnet }',
-                                             '${ socioNuevo.foto }',
-                                             '${ socioNuevo.grado }',
-                                             '${ socioNuevo.arma }',
-                                             '${ socioNuevo.nombres }',
-                                             '${ socioNuevo.unidad }',
-                                             '${ socioNuevo.gguu }',
-                                             '${ socioNuevo.region }',
-                                             '${ socioNuevo.guarnicion }',
-                                             '${ socioNuevo.situacion }',
-                                             '${ socioNuevo.filial }',
-                                             '${ socioNuevo.cip }',
-                                             '${ socioNuevo.dni }',
-                                             '${ socioNuevo.email }',
-                                             '${ socioNuevo.celular1 }',
-                                             '${ socioNuevo.celular2 }',
-                                             '${ socioNuevo.rpm1 }',
-                                             '${ socioNuevo.rpm2 }',
-                                             '${ socioNuevo.telefono1 }',
-                                             '${ socioNuevo.telefono2 }',
-                                             '${ socioNuevo.cd_leg }',
-                                             '${ socioNuevo.onomastico }',
-                                             '${ socioNuevo.cd_esp }',
-                                             '${ socioNuevo.ono_esp }',
-                                             '${ socioNuevo.esposa }',
-                                             '${ socioNuevo.domicilio }',
-                                             '${ socioNuevo.diversos }',
-                                             '${ socioNuevo.obs }',
-                                             '${ socioNuevo.campo28 }');`);
-
-                                // Insertando en la base de datos
-                                lista_table.push(socioNuevo);
-
-                                console.log('El socio se registro efectivamente en la DB');
-                                console.log(lista_table[lista_table.length - 1]);
-
-                                res.status(200).json({
-                                    status: 'ok',
-                                    result: lista_table[lista_table.length - 1],
-                                    message: 'El socio se registro efectivamente en la DB'
-                                })
-
-                            });
+                          res.status(200).json({
+                              status: 'ok',
+                              result: socioNuevo,
+                              message: 'El socio se registro efectivamente en la DB'
+                          })
 
                         } else {
                             // El usuario ya se encuentra registrado
@@ -371,119 +326,12 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
 
                 } else {
 
-                    // El usuario es nuevo -> Registrar
-                    console.log('El usuario se va aguardar sin importar repeticion, y esta listo para guarda en la base de datos');
+                    console.log('El campo dni ingresado, es requerido con 8 digitos');
 
-                    // Obteniendo nuevo id
-                     const query2 = client.query(`SELECT * FROM ${ data_value_tablas[table_select] };`);
-
-                     // Stream results back one row at a time
-                     query2.on('row', (row) => {
-                         lista_table.push(row)
-                     })
-
-                     // After all data is returned, close connection and return results
-                     query2.on('end', function() {
-                         done();
-                         // Buscando al numero mayor
-                         var mayor = 0;
-
-                         for(var i = 0; i <= lista_table.length - 1; i++) {
-                             var lista_table_element = Number(lista_table[i].id_item);
-                             
-                             if(lista_table_element > mayor ) {
-                                 mayor = lista_table_element;
-                             }
-
-                         }
-
-                         console.log('Numero mayor');
-                         console.log(mayor);
-
-                         // Asignando nuevo id
-                         console.log('Asignando nuevo id al item')
-                         socioNuevo.id_item = mayor + 1;
-                         
-                         // Almacenando en la DB
-                         //INSERT INTO md_country (country_id, country_name) VALUES (1,'Perú');
-                         client.query(`INSERT INTO ${ data_value_tablas[table_select] }
-                                      (id_item, 
-                                      fecha_ingreso,
-                                      numero_carnet,
-                                      foto,
-                                      grado,
-                                      arma,
-                                      nombres,
-                                      unidad,
-                                      gguu,
-                                      region,
-                                      guarnicion,
-                                      situacion,
-                                      filial,
-                                      cip,
-                                      dni,
-                                      email,
-                                      celular1,
-                                      celular2,
-                                      rpm1,
-                                      rpm2,
-                                      telefono1,
-                                      telefono2,
-                                      cd_leg,
-                                      onomastico,
-                                      cd_esp,
-                                      ono_esp,
-                                      esposa,
-                                      domicilio,
-                                      diversos,
-                                      obs,
-                                      campo28
-                                      ) VALUES (
-                                      '${ socioNuevo.id_item }',
-                                      '${ socioNuevo.fecha_ingreso }',
-                                      '${ socioNuevo.numero_carnet }',
-                                      '${ socioNuevo.foto }',
-                                      '${ socioNuevo.grado }',
-                                      '${ socioNuevo.arma }',
-                                      '${ socioNuevo.nombres }',
-                                      '${ socioNuevo.unidad }',
-                                      '${ socioNuevo.gguu }',
-                                      '${ socioNuevo.region }',
-                                      '${ socioNuevo.guarnicion }',
-                                      '${ socioNuevo.situacion }',
-                                      '${ socioNuevo.filial }',
-                                      '${ socioNuevo.cip }',
-                                      '${ socioNuevo.dni }',
-                                      '${ socioNuevo.email }',
-                                      '${ socioNuevo.celular1 }',
-                                      '${ socioNuevo.celular2 }',
-                                      '${ socioNuevo.rpm1 }',
-                                      '${ socioNuevo.rpm2 }',
-                                      '${ socioNuevo.telefono1 }',
-                                      '${ socioNuevo.telefono2 }',
-                                      '${ socioNuevo.cd_leg }',
-                                      '${ socioNuevo.onomastico }',
-                                      '${ socioNuevo.cd_esp }',
-                                      '${ socioNuevo.ono_esp }',
-                                      '${ socioNuevo.esposa }',
-                                      '${ socioNuevo.domicilio }',
-                                      '${ socioNuevo.diversos }',
-                                      '${ socioNuevo.obs }',
-                                      '${ socioNuevo.campo28 }');`);
-
-                         // Insertando en la base de datos
-                         lista_table.push(socioNuevo);
-
-                         console.log('El socio se registro efectivamente en la DB');
-                         console.log(lista_table[lista_table.length - 1]);
-
-                         res.status(200).json({
-                             status: 'ok',
-                             result: lista_table[lista_table.length - 1],
-                             message: 'El socio se registro efectivamente en la DB'
-                         })
-
-                     });
+                    res.status(200).json({
+                        status: 'not_register',
+                        message: 'El campo dni ingresado, es requerido con 8 digitos'
+                    })
 
                 }
 
@@ -496,13 +344,13 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
           })
         }
 
-    // } else {
-    //     console.log('El usuario no esta autentificado. Requiere logearse')
-    //     res.status(403).json({
-    //         status: 'not_access',
-    //         message: 'El usuario no esta autentificado. Requiere logearse'
-    //     })
-    // }
+    } else {
+        console.log('El usuario no esta autentificado. Requiere logearse')
+        res.status(403).json({
+            status: 'not_access',
+            message: 'El usuario no esta autentificado. Requiere logearse'
+        })
+    }
 })
 
 // DELETE item from list
@@ -558,7 +406,7 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
 
                        // SQL Query > Delete Item by id_item
                        client.query(`DELETE FROM ${ data_value_tablas[table_select] } WHERE id = '${ socio_id }';`);
-                       
+
                        res.status(200).json({
                            status: 'ok',
                            message: `El socio cliente ${ socio_id } fue eliminado de la base de datos`
