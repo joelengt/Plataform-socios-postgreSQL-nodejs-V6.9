@@ -27,7 +27,7 @@ html(lang='es')
             .SubHeader__box
               .SubHeader__box--list
                 .linkRoute Socios | 
-                  span #usuarios
+                  span.HeaderMain__breadgruns__left--variable-route #usuarios
                   .fa-chevron-right.right
                     i.material-icons keyboard_arrow_right
               .SubHeader__box--icons
@@ -136,8 +136,9 @@ html(lang='es')
                 .TableList__pagination
                   .Pagination
                     .PaginationContent
-          .btn-open-modal-crearSocio
-            a(href="/dashboard/socios-clientes/form-to-register") Agregar(+)
+          .fixed-action-btn.horizontal
+            a.btn-open-modal-crearSocio.btn-floating.btn-large.grey.darken-3(href="/dashboard/socios-clientes/form-to-register")
+              i.material-icons add
       //- The Modal
       //- #myModal.modal
         // The Close Button
