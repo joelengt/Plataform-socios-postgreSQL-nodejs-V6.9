@@ -101,7 +101,7 @@ html(lang='es')
             .TableList
               .TableList__box
                 //- Table with Items
-                .TableList__table
+                .TableList__box--table
                   table.TableList__Item.table.table-bordered.fixed.highlight
                     thead.header
                       tr.cheader
@@ -113,29 +113,29 @@ html(lang='es')
                         th.text-center(rowspan='2')
 
                     tbody#boxListUsers.Articles_containers
-                      tr
-                        td
-                          div.avatar-socio(style="background-image: url(../images/default.jpg)")
-                        td Smith
-                        td 50
-                        td 50
-                        td 50
-                        td
-                          i.material-icons.tag(style="color: #f44336") label
-                      tr
-                        td
-                          div.avatar-socio(style="background-image: url(../images/default.jpg)")
-                        td Smith
-                        td 20
-                        td 50
-                        td 50
-                        td
-                          i.material-icons.tag(style="color: #26a69a") label
+                      //- tr
+                      //-   td
+                      //-     div.avatar-socio(style="background-image: url(../images/default.jpg)")
+                      //-   td Smith
+                      //-   td 50
+                      //-   td 50
+                      //-   td 50
+                      //-   td
+                      //-     i.material-icons.tag(style="color: #f44336") label
+                      //- tr
+                      //-   td
+                      //-     div.avatar-socio(style="background-image: url(../images/default.jpg)")
+                      //-   td Smith
+                      //-   td 20
+                      //-   td 50
+                      //-   td 50
+                      //-   td
+                      //-     i.material-icons.tag(style="color: #26a69a") label
 
                 //- Pagination
-                .TableList__pagination
+                .TableList__box--pagination
                   .Pagination
-                    .PaginationContent
+                    ul.PaginationContent.pagination
           .fixed-action-btn.horizontal
             a.btn-open-modal-crearSocio.btn-floating.btn-large.grey.darken-3(href="/dashboard/socios-clientes/form-to-register")
               i.material-icons add
@@ -149,5 +149,5 @@ html(lang='es')
         #caption
       //- Enlaces Script JS
       script(src='../js/vendor/jquery.min.js')
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js')
+      script(src='../js/vendor/materialize.min.js')
       script(src='../js/index.js')

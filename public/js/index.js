@@ -42,12 +42,12 @@
         buildUserTemplate() {
             // Template de Usuario
             let template_user_item = `<tr class="SocioItem" data-id="${ this.id }">
-                                        <td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
-                                        <td class="text-center"><a href="/dashboard/socios-clientes/item/0/${ this.id }"> ${ this.nombres } ${ this.apellidos } </a></td>
+                                        <td class="text-center"><div class="avatar-socio" style="background-image: url(../images/default.jpg)"></div></td>
+                                        <td class="text-center"><a class="grey-text text-darken-4" href="/dashboard/socios-clientes/item/0/${ this.id }"> ${ this.nombres } ${ this.apellidos } </a></td>
                                         <td class="text-center">${ this.situacion_socio }</td>
                                         <td class="text-center">${ this.cip }</td>
                                         <td class="text-center">${ this.carta_declaratoria }</td>
-                                        <td class="text-center"> ${ this.situacion_alerta } </td>
+                                        <td class="text-center"><i class="material-icons tag" style="color:${ this.situacion_alerta }">label</i></td>
                                       </tr>`;
             return template_user_item
         }
@@ -223,7 +223,8 @@
                 listCantidad = listCantidad - residuo;
             }
 
-            $boxPagination.innerHTML += `<li class="selectPage" data-init="${ value_init }" data-end="${ value_end }">${ g }</li>`
+            $boxPagination.innerHTML += `<li class="selectPage waves-effect grey lighten-3" data-init="${ value_init }" data-end="${ value_end }"><a>${ g }</a></li>`
+
         }
 
 
@@ -338,7 +339,7 @@
 
         var $btn_change_order = document.querySelector('.btn_change_order');
 
-         // Paginacion
+        // Paginacion
         var limitePage = 10;
 
         // Lectura de Usuarios
@@ -362,6 +363,9 @@
             }
 
        })
+
+       //Activando estilo de caja de Filtros lateral
+       $('select').material_select();
 
        // Evento click -> Cambiar Orden
        // $btn_change_order.addEventListener('click', function () {
