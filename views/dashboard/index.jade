@@ -1,124 +1,153 @@
 doctype html
 html(lang='es')
-    head
-        meta(charset='UTF-8')
-        title Caballeria
-        meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
-        meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
-        // Esstilos Enlaces CSS
-        link(rel='icon', type='image/png', href='../images/favicon.png')
-        link(rel='stylesheet', type='text/css', href='../css/index.css')
-        link(rel='stylesheet', type='text/css', href='../css/modal/index.css')
-    
-    body#App_Container
-        div(class="App_Container__box")
+  head
+    meta(charset='UTF-8')
+    title Legión Caballería
+    meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+    //- link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
 
-            // Header Main
-            header(clasS="HeaderMain")
-                div(class="HeaderMain__box")
+    link(rel='stylesheet', href='/style/style.css')
+  body#App_Container
+    .App_Container__box
+      nav.Header
+        .nav-wrapper.Header__container.white
+          a.Header__container--title.Logo.left.black-text(href='/') Legión Caballería
+          div.Header__container--search
+            input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
+            button.grey.darken-2#btn_box_search
+              i.material-icons search
 
-                    // Header Main Top
-                    div(class="HeaderMain__top")
-                        div(class="HeaderMain__top__left")
-                          div(class="HeaderMain__top__left--logo")
-                              h2 Caballeria
+          div.Header__container--avatar.right
+            img.responsive-img.circle(width='40', src='../images/default.jpg', alt='')
+      .main-container
+        .main-container__box
+          nav.SubHeader.grey.darken-2
+            .SubHeader__box
+              .SubHeader__box--list
+                .linkRoute Socios | 
+                  span.HeaderMain__breadgruns__left--variable-route #usuarios
+                  .fa-chevron-right.right
+                    i.material-icons keyboard_arrow_right
+              .SubHeader__box--icons
+                .Icons
+                  .Icons__item.btn_change_order
+                    i.material-icons filter_list
+                  .Icons__item
+                    .dropdown-button(data-activates='dropdown1')
+                      i.material-icons more_vert
+                    ul#dropdown1.dropdown-content
+                      li
+                        a(href='#!') texto
+          .Content
+            .Filter.grey.lighten-3
+              .Filter__box
+                .Filter__box--title
+                  h3 Filtros
+                .Filter__box--selects
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') Activos
+                      option(value='3') Adherente
+                    label Por tipo de socio
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') Hábil
+                      option(value='3') Inhábil
+                      option(value='3') Renunciante
+                      option(value='3') Fallecido
+                    label Por situación de socio
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') OGECOE
+                      option(value='3') CPMP
+                      option(value='3') Pago Directo
+                    label Por tipo de pago
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Todos
+                      option(value='2') Actividad
+                      option(value='3') Retiro
+                    label Por situación de trabajo
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Si
+                      option(value='2') No
+                    label Carta declaratoria
+                  .line-divider
+                  .input-field
+                    select
+                      option(value='1') Enero
+                      option(value='2') Febrero
+                      option(value='3') Marzo
+                      option(value='3') Abril
+                      option(value='3') Mayo
+                      option(value='3') Junio
+                      option(value='3') Julio
+                      option(value='3') Agosto
+                      option(value='3') Setiembre
+                      option(value='3') Octubre
+                      option(value='3') Noviembre
+                      option(value='3') Diciembre
+                    label Por honomástico
+            .TableList
+              .TableList__box
+                //- Table with Items
+                .TableList__box--table
+                  table.TableList__Item.table.table-bordered.fixed.highlight
+                    thead.header
+                      tr.cheader
+                        th.text-center(rowspan='2')
+                        th.text-center(rowspan='2') Nombres y Apellidos
+                        th.text-center(rowspan='2') Situación
+                        th.text-center(rowspan='2') CIP
+                        th.text-center(rowspan='2') Carta Declaratoria
+                        th.text-center(rowspan='2')
 
-                          div(class="HeaderMain__top__left--search")
-                              input(id="txt_box_search", type='text', placeholder='Buscar socio por nombre o DNI')
-                              button#btn_box_search  Buscar
+                    tbody#boxListUsers.Articles_containers
+                      //- tr
+                      //-   td
+                      //-     div.avatar-socio(style="background-image: url(../images/default.jpg)")
+                      //-   td Smith
+                      //-   td 50
+                      //-   td 50
+                      //-   td 50
+                      //-   td
+                      //-     i.material-icons.tag(style="color: #f44336") label
+                      //- tr
+                      //-   td
+                      //-     div.avatar-socio(style="background-image: url(../images/default.jpg)")
+                      //-   td Smith
+                      //-   td 20
+                      //-   td 50
+                      //-   td 50
+                      //-   td
+                      //-     i.material-icons.tag(style="color: #26a69a") label
 
-                      div(class="HeaderMain__top__right")
-                          div(class="HeaderMain__top__right--avatar")
-                              img(src="../images/default.jpg", width="30")
-
-                    // Header Main Breadgrunps
-                    div(class="HeaderMain__breadgruns")
-                       div(class="HeaderMain__breadgruns__left")
-                           div(class="HeaderMain__breadgruns__left--sub-title")
-                               span Socios
-                           div(class="HeaderMain__breadgruns__left--variable-route")
-                               span 12 Usuarios
-
-                       div(class="HeaderMain__breadgruns__right")
-                           div(class="HeaderMain__breadgruns__right--btn-filter")
-                               span F
-                           div(class="HeaderMain__breadgruns__right--btn-options")
-                               span O
-
-            section(class="TableFilterbox")
-                article(class="TableFilterbox__Filter")
-                    div(class="TableFilterbox__Filter__title")
-                        p Filtros
-                    div(class="TableFilterbox__Filter__content")
-                        div(class="TableFilterbox__Filter__content--socio-type")
-                            label Por Tipo de Socio
-                            select
-                              option(value="volvo") Usuarios Activos
-                              option(value="saab") Saab
-                              option(value="mercedes") Mercedes
-                              option(value="audi") Audi
-                        div(class="TableFilterbox__Filter__content--socio-situation")
-                            label Por situacion de Socio
-                            select
-                              option(value="volvo") Todos
-                              option(value="saab") Saab
-                              option(value="mercedes") Mercedes
-                              option(value="audi") Audi
-                        div(class="TableFilterbox__Filter__content--socio-pago")
-                            label Por tipo de pago
-                            select
-                              option(value="volvo") Todos
-                              option(value="saab") Saab
-                              option(value="mercedes") Mercedes
-                              option(value="audi") Audi
-                        div(class="TableFilterbox__Filter__content--socio-trabajo")
-                            label Por situacion de trabajo
-                            select
-                              option(value="volvo") Todos
-                              option(value="saab") Saab
-                              option(value="mercedes") Mercedes
-                              option(value="audi") Audi
-                        div(class="TableFilterbox__Filter__content--carta-declaratoria")
-                            label Carta Declaratoria
-                            select
-                              option(value="volvo") Si
-                              option(value="saab") Saab
-                              option(value="mercedes") Mercedes
-                              option(value="audi") Audi
-                        div(class="TableFilterbox__Filter__content--socio-honomastico")
-                            label Por honomastico
-                            select
-                              option(value="volvo") Mes
-                              option(value="saab") Saab
-                              option(value="mercedes") Mercedes
-                              option(value="audi") Audi
-
-
-
-                article(class="TableFilterbox__TableSocios")
-                    // Table List
-                    section(class="TableList")
-                      div(class="TableList__box")
-
-                      // Table with Items
-                      div(class="TableList__table")
-                        table(class="TableList__Item  table  table-bordered  fixed")
-                          thead(class="header")
-                            tr(class="cheader")
-                              th.text-center(rowspan='2')
-                              th.text-center(rowspan='2') Nombres y Apellidos
-                              th.text-center(rowspan='2') Situación
-                              th.text-center(rowspan='2') CIP
-                              th.text-center(rowspan='2') Carta Declaratoria
-                              th.text-center(rowspan='2')
-                          tbody#boxListUsers.Articles_containers
-                      // Pagination
-                      .TableList__pagination
-                        .Pagination
-                          .PaginationContent
-
-
-            
-        // Enlaces Script JS
-        script(src='../js/vendor/jquery.min.js')
-        script(src='../js/index.js')
+                //- Pagination
+                .TableList__box--pagination
+                  .Pagination
+                    ul.PaginationContent.pagination
+          .fixed-action-btn.horizontal
+            a.btn-open-modal-crearSocio.btn-floating.btn-large.grey.darken-3(href="/dashboard/socios-clientes/form-to-register")
+              i.material-icons add
+      //- The Modal
+      //- #myModal.modal
+        // The Close Button
+        span.close(onclick="document.getElementById('myModal').style.display='none'") ×
+        // Modal Content (The Image)
+        img#img01.modal-content
+        // Modal Caption (Image Text)
+        #caption
+      //- Enlaces Script JS
+      script(src='../js/vendor/jquery.min.js')
+      script(src='../js/vendor/materialize.min.js')
+      script(src='../js/index.js')

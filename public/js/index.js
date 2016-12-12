@@ -4,18 +4,19 @@
     class Usuario {
         // Atributos
         constructor(socio) {
-            this.id_item = socio.id_item;
+            this.id = socio.id;
             this.fecha_ingreso = socio.fecha_ingreso;
             this.numero_carnet = socio.numero_carnet;
             this.foto = socio.foto;
             this.grado = socio.grado;
             this.arma = socio.arma;
             this.nombres = socio.nombres;
+            this.apellidos = socio.apellidos;
             this.unidad = socio.unidad;
             this.gguu = socio.gguu;
             this.region = socio.region;
             this.guarnicion = socio.guarnicion;
-            this.situacion = socio.situacion;
+            this.situacion_socio = socio.situacion_socio;
             this.filial = socio.situacion;
             this.cip = socio.cip;
             this.dni = socio.dni;
@@ -31,9 +32,8 @@
             this.cd_esp = socio.cd_esp;
             this.esposa = socio.esposa;
             this.domicilio = socio.domicilio;
-            this.diversos = socio.diversos;
-            this.obs = socio.obs;
-            this.campo28 = socio.campo28;
+            this.carta_declaratoria = socio.carta_declaratoria;
+            this.situacion_alerta = socio.situacion_alerta;
         }
 
         // Metodos
@@ -41,12 +41,13 @@
         // Construir Template de Usuario
         buildUserTemplate() {
             // Template de Usuario
-            let template_user_item = `<td class="text-center"><img class="imagenAvatar" src='../images/default.jpg' height="40"></td>
-                                        <td class="text-center">${ this.nombres }</td>
-                                        <td class="text-center">${ this.grado }</td>
+            let template_user_item = `<tr class="SocioItem" data-id="${ this.id }">
+                                        <td class="text-center"><div class="avatar-socio" style="background-image: url(../images/default.jpg)"></div></td>
+                                        <td class="text-center"><a class="grey-text text-darken-4" href="/dashboard/socios-clientes/item/0/${ this.id }"> ${ this.nombres } ${ this.apellidos } </a></td>
+                                        <td class="text-center">${ this.situacion_socio }</td>
                                         <td class="text-center">${ this.cip }</td>
-                                        <td class="text-center">${ this.arma }</td>
-                                        <td class="text-center"> ==> </td>
+                                        <td class="text-center">${ this.carta_declaratoria }</td>
+                                        <td class="text-center"><i class="material-icons tag" style="color:${ this.situacion_alerta }">label</i></td>
                                       </tr>`;
             return template_user_item
         }
@@ -60,6 +61,7 @@
     // Obtener usuario como objeto
     function getUser (element){
         let nuevoUsuario = new Usuario(element);
+        console.log(nuevoUsuario);
         return nuevoUsuario
     }
 
@@ -105,14 +107,15 @@
         $.ajax({
             url: `/dashboard/socios-clientes/item/0/${ user_id }`,
             method: 'get',
-            success: function (usuario) {
+            success: function (info) {
+                console.log(info);
 
-                contentHtml.innerHTML = '';
+                  contentHtml.innerHTML = '';
 
+                  contentHtml.innerHTML = info;
                 // Recorre lista y render Template en html
-                let nuevoUser = getUser(usuario.result);
+                // let nuevoUser = getUser(info);
 
-                contentHtml.innerHTML = nuevoUser.buildUserTemplate();
 
             }
         }) 
@@ -134,8 +137,12 @@
 
                 // Recorre lista y render Template en html
                 for(var j = 0; j <= listUsuarios.result.length - 1; j++) {
+                    console.log(j);
                     var elementoUser = listUsuarios.result[j]
-                    var wordSolicitada = elementoUser.nombres.toLowerCase();
+
+                    var fullName = elementoUser.nombres + ' ' + elementoUser.apellidos;
+
+                    var wordSolicitada = fullName.toLowerCase();
                     nameUser = nameUser.toLowerCase()
                     var coincidenciaMinima = 0;
 
@@ -216,7 +223,8 @@
                 listCantidad = listCantidad - residuo;
             }
 
-            $boxPagination.innerHTML += `<li class="selectPage" data-init="${ value_init }" data-end="${ value_end }">${ g }</li>`
+            $boxPagination.innerHTML += `<li class="selectPage waves-effect grey lighten-3" data-init="${ value_init }" data-end="${ value_end }"><a>${ g }</a></li>`
+
         }
 
 
@@ -323,7 +331,7 @@
         var $boxConntentHtml = document.querySelector('#boxListUsers');
         var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
         var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
-
+        var $ViewboxRender = $('body')[0]
 
         var $txtBoxSearchByName = document.querySelector('#txt_box_search');
         var $btnBoxSearchByName = document.querySelector('#btn_box_search');
@@ -331,7 +339,7 @@
 
         var $btn_change_order = document.querySelector('.btn_change_order');
 
-         // Paginacion
+        // Paginacion
         var limitePage = 10;
 
         // Lectura de Usuarios
@@ -355,6 +363,9 @@
             }
 
        })
+
+       //Activando estilo de caja de Filtros lateral
+       $('select').material_select();
 
        // Evento click -> Cambiar Orden
        // $btn_change_order.addEventListener('click', function () {
@@ -407,6 +418,17 @@
             })  
 
         })
+
+       // /dashboard/socios-clientes/item/0/1
+
+       // $ArticlesContainer.on('click', '.SocioItem', function (ev) {
+       //      console.log('DATOSS DEL SOCIO POR ID');
+       //      var socio_id = this.dataset.id
+
+       //      readUserById(socio_id, $ViewboxRender);
+
+       //  })
+
 
        // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
        //  console.log('Click');

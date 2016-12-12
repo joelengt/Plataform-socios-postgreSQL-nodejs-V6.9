@@ -1,0 +1,57 @@
+
+* SOCIOS
+> READ All
+/dashboard/socios-clientes/list/0
+
+
+
+* SOCIO CRUD
+
+> READ
+/dashboard/socios-clientes/item/0/{id_number}
+
+> CREATE
+/dashboard/socios-clientes/item/socio/add/0
+
+	body:
+
+		fecha_ingreso:              req.body.fecha_ingreso,
+		nombres:                    req.body.nombres,
+		apellidos:                  req.body.apellidos,
+		numero_carnet:              req.body.numero_carnet,
+		cip:                        req.body.cip,
+		dni:                        req.body.dni,
+		fecha_nacimiento:           req.body.fecha_nacimiento,
+		organizacion:               req.body.organizacion,
+		grado_profesion:            req.body.grado_profesion,
+		arma:                       req.body.arma,
+		situacion_trabajo:          req.body.situacion_trabajo,
+		unidad:                     req.body.unidad,
+		gguu:                       req.body.gguu,
+		region:                     req.body.region,
+		guarnicion:                 req.body.guarnicion,
+		filial:                     req.body.filial,
+		direccion:                  req.body.direccion,
+		email:                      req.body.email,
+		celular1:                   req.body.celular1,
+		celular2:                   req.body.celular2,
+		telefono1:                  req.body.telefono1,
+		telefono2:                  req.body.telefono2,
+		carta_declaratoria:         req.body.carta_declaratoria,
+		tipo_socio:                 req.body.tipo_socio,
+		tipo_pago:                  req.body.tipo_pago,
+		situacion_socio:            req.body.situacion_socio,
+		foto:                       req.body.foto,
+		situacion_alerta:           req.body.situacion_alerta
+
+> DELETE 
+/dashboard/socios-clientes/item/delete/0/{id_number}?_method=delete
+
+
+> UPDATE
+
+
+
+* SOCIO FILTER
+
+

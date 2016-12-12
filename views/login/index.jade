@@ -2,25 +2,55 @@ doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
-    title Caballeria
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+    meta(charset='UTF-8')
+    title Legión Caballeria
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(rel='stylesheet', href='/style/style.css')
   body
-    header
-      h1 Caballeria
-    section
-      .Login-in__box
-        h3
-          | Iniciar Sesión
-        .Login-in__form
-          form(action='/auth/dashboard', method='post')
-            div
-              div
-                input(type='text', name='username', placeholder='Ingresar tu nombre de usuario')
-              div
-                input(type='password', name='password', placeholder='Ingresar tu contraseña')
-              div
-                p #{message}
-            div
-              button Ingresar
-        .Login-in__get-Account
-          p ¿Has olvidado tu usuario ó contraseña?
-          a(href='/account-process/forget-password') Entrar
+    //- header
+    //-   h1 Caballeria
+    //- section
+    //-   .Login-in__box
+    //-     h3
+    //-       | Iniciar Sesión
+    //-     .Login-in__form
+    //-       form(action='/auth/dashboard', method='post')
+    //-         div
+    //-           div
+    //-             input(type='text', name='username', placeholder='Ingresar tu nombre de usuario')
+    //-           div
+    //-             input(type='password', name='password', placeholder='Ingresar tu contraseña')
+    //-           div
+    //-             p #{message}
+    //-         div
+    //-           button Ingresar
+    //-     .Login-in__get-Account
+    //-       p ¿Has olvidado tu usuario ó contraseña?
+    //-       a(href='#') Entrar
+    .main-container
+      .container.landing
+        .row.not-margin
+          .col.s10.push-s1
+            .row.content-box.not-margin
+              .col.m5.hide-on-small-only
+                img.iphone(src='http://www.pngall.com/wp-content/uploads/2016/06/IPhone-PNG-Picture-Transparent.png', alt='iphone')
+              .col.s12.m7
+                .row
+                  .signup-box
+                    h1.title Legíon Caballería
+                    form.signup-form(action='/auth/dashboard', method='post')
+                      .section
+                       .input-field
+                         input(type='text', name='username', autocomplete='off')
+                         label(for='username') Usuario
+                       .input-field
+                         input(type='password', name='password', autocomplete='off')
+                         label(for='password') Contraseña
+                        button.btn.waves-effect.waves-light.btn-signup(type='submit') Iniciar Sesión
+                .row
+                  .login-box
+                    | ¿Has olvidado tu usuario ó contraseña? 
+                    a(href='/forgetpassword') Entrar
+    script(src='../js/vendor/jquery.min.js')
+    script(src='../js/vendor/materialize.min.js')

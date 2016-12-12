@@ -1,0 +1,50 @@
+.SubHeader
+	position relative
+	width 100%
+	z-index 50
+	&__box
+		position relative
+		margin 0 1rem
+		box-sizing border-box
+		&--list
+			height 64px
+			width 100%
+			padding-right 100px
+			box-sizing border-box
+			.linkRoute
+				margin-right 10px
+				width auto
+				display inline-block
+				cursor pointer
+				&:last-child
+					.fa-chevron-right
+						display none
+				.fa-chevron-right
+					line-height 64px
+					height 64px
+					margin-left 10px
+					display inline-block
+					i
+						line-height 64px
+		&--icons
+			position absolute
+			right 0
+			width 100px
+			height 64px
+			top 0
+			.Icons
+				height 64px
+				width 100%
+				&__item
+					display inline-block
+					margin 17px 10px
+					width 30px
+					height 30px
+					cursor pointer
+					i
+						text-align center
+						line-height 30px
+						height 30px
+					&:hover
+						background-color #424242
+						border-radius 4px
