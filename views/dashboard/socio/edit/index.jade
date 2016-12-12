@@ -1,0 +1,140 @@
+doctype html
+html(lang='es')
+    head
+        meta(charset='UTF-8')
+        title Caballeria
+        meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
+        meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
+        // Esstilos Enlaces CSS
+        link(rel='icon', type='image/png', href='../images/favicon.png')
+        link(rel='stylesheet', type='text/css', href='../css/index.css')
+        link(rel='stylesheet', type='text/css', href='../css/modal/index.css')
+    
+    body#App_Container
+        div(class="App_Container__box")
+
+            // Header Main
+            header(clasS="HeaderMain")
+                div(class="HeaderMain__box")
+
+                    // Header Main Top
+                    div(class="HeaderMain__top")
+                        div(class="HeaderMain__top__left")
+                          div(class="HeaderMain__top__left--logo")
+                              h2 Caballeria
+
+                          div(class="HeaderMain__top__left--search")
+                              input(id="txt_box_search", type='text', placeholder='Buscar socio por nombre o DNI')
+                              button#btn_box_search  Buscar
+
+                      div(class="HeaderMain__top__right")
+                          div(class="HeaderMain__top__right--avatar")
+                              img(src="../../../../images/default.jpg", width="30")
+
+                    // Header Main Breadgrunps
+                    div(class="HeaderMain__breadgruns")
+                       div(class="HeaderMain__breadgruns__left")
+                           div(class="HeaderMain__breadgruns__left--sub-title")
+                               span Socios
+                           div(class="HeaderMain__breadgruns__left--variable-route")
+                               span > #{user.full_name}
+
+
+
+            section(class="SocioInfo")
+                strong Editar nuevo Socio
+                form(action="/dashboard/socios-clientes/item/update/0/#{ socio.id }?_method=put", method="post")
+                  div
+                    label Fecha ingreso
+                    input(type="text", name="fecha_ingreso", value="#{ socio.fecha_ingreso }")
+                  div
+                    label Nombres
+                    input(type="text", name="nombres", value="#{ socio.nombres }")
+                  div
+                    label Apellidos
+                    input(type="text", name="apellidos", value="#{ socio.apellidos }")
+                  div
+                    label Numero de Carnet
+                    input(type="text", name="numero_carnet", value="#{ socio.numero_carnet }")
+                  div
+                    label CIP
+                    input(type="text", name="cip", value="#{ socio.cip }")
+                   div
+                    label DNI
+                    input(type="text", name="dni", value="#{ socio.dni }")
+                   div
+                    label Fecha de Nacimiento
+                    input(type="text", name="fecha_nacimiento", value="#{ socio.fecha_nacimiento }")
+                   div
+                    label Organizacion
+                    input(type="text", name="organizacion", value="#{ socio.organizacion }")
+                   div
+                    label Grado Profesion
+                    input(type="text", name="grado_profesion", value="#{ socio.grado_profesion }")
+                   div
+                    label Arma
+                    input(type="text", name="arma", value="#{ socio.arma }")
+                   div
+                    label Situacion de Trabajo
+                    input(type="text", name="situacion_trabajo", value="#{ socio.situacion_trabajo }")
+                   div
+                    label Unidad
+                    input(type="text", name="unidad", value="#{ socio.unidad }")
+                   div
+                    label GGUU
+                    input(type="text", name="gguu", value="#{ socio.gguu }")
+                   div
+                    label Region
+                    input(type="text", name="region", value="#{ socio.region }")
+                   div
+                    label Guarnicion
+                    input(type="text", name="guarnicion", value="#{ socio.guarnicion }")
+                   div
+                    label Filial
+                    input(type="text", name="filial", value="#{ socio.filial }")
+                   div
+                    label Dirección
+                    input(type="text", name="direccion", value="#{ socio.direccion }")
+                   div
+                    label Email
+                    input(type="text", name="email", value="#{ socio.email }")
+                   div
+                    label Celular1
+                    input(type="text", name="celular1", value="#{ socio.celular1 }")
+                   div
+                    label Celular2
+                    input(type="text", name="celular2", value="#{ socio.celular2 }")
+                   div
+                    label Telefono1
+                    input(type="text", name="telefono1", value="#{ socio.telefono1 }")
+                   div
+                    label Telefono2
+                    input(type="text", name="telefono2", value="#{ socio.telefono2 }")
+                   div
+                    label Carta Declaratoria
+                    input(type="text", name="carta_declaratoria", value="#{ socio.carta_declaratoria }")
+                   div
+                    label Tipo Socio
+                    input(type="text", name="tipo_socio", value="#{ socio.tipo_socio }")
+                   div
+                    label Tipo Pago
+                    input(type="text", name="tipo_pago", value="#{ socio.tipo_pago }")
+                   div
+                    label Situacion socio
+                    input(type="text", name="situacion_socio", value="#{ socio.situacion_socio }")
+                   div
+                    label Situacion Alerta
+                    input(type="text", name="situacion_alerta", value="#{ socio.situacion_alerta }")
+                  div
+                    label Foto (inserta url)
+                    input(type="text", name="foto", value="#{ socio.foto }")
+                  div
+                    button Save
+
+
+
+                    
+
+            
+        // Enlaces Script JS
+        script(src='../js/vendor/jquery.min.js')

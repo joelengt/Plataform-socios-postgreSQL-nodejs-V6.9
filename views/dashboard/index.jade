@@ -11,12 +11,6 @@ html(lang='es')
     link(rel='stylesheet', href='/style/style.css')
   body#App_Container
     .App_Container__box
-      //- // Header Main
-      //- header.HeaderMain
-      //-   .HeaderMain__box
-      //-     // Title
-      //-     h2 Caballeria
-      //- // Table List
       nav.Header
         .nav-wrapper.Header__container.white
           a.Header__container--title.Logo.left.black-text(href='/') Legión Caballería
@@ -142,6 +136,8 @@ html(lang='es')
                 .TableList__pagination
                   .Pagination
                     .PaginationContent
+          .btn-open-modal-crearSocio
+            a(href="/dashboard/socios-clientes/form-to-register") Agregar(+)
       //- The Modal
       //- #myModal.modal
         // The Close Button
