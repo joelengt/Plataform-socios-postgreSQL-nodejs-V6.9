@@ -12,8 +12,8 @@ html(lang='es')
   body#App_Container
     .App_Container__box
       nav.Header
-        .nav-wrapper.Header__container.white
-          a.Header__container--title.Logo.left.black-text(href='/') Legión Caballería
+        .nav-wrapper.Header__container
+          a.Header__container--title.Logo.left(href='/') Legión Caballería
           div.Header__container--search
             input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
             button.grey.darken-2#btn_box_search
@@ -23,7 +23,7 @@ html(lang='es')
             img.responsive-img.circle(width='40', src='../images/default.jpg', alt='')
       .main-container
         .main-container__box
-          nav.SubHeader.grey.darken-2
+          nav.SubHeader
             .SubHeader__box
               .SubHeader__box--list
                 .linkRoute Socios | 
@@ -137,7 +137,7 @@ html(lang='es')
                   .Pagination
                     ul.PaginationContent.pagination
           .fixed-action-btn.horizontal
-            a.btn-open-modal-crearSocio.btn-floating.btn-large.grey.darken-3(href="/dashboard/socios-clientes/form-to-register")
+            a.btn-open-modal-crearSocio.btn-floating.btn-large(href="/dashboard/socios-clientes/form-to-register")
               i.material-icons add
       //- The Modal
       //- #myModal.modal

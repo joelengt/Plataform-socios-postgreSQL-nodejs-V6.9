@@ -3,6 +3,8 @@
   position relative
   flex 1 1 auto
   display flex
+  overflow auto
+  background-color GrisGoogle
   .Filter
     width 300px
     height 100%
@@ -14,14 +16,14 @@
       height 100%
       flex-direction column
       &--title
-        height 55px
-        line-height 55px
+        height 60px
+        line-height 60px
         border-bottom 1px solid #d4d4d4
         h3
           font-size 1.2rem
           font-weight bold
           text-align center
-          line-height 55px
+          line-height 60px
           margin 0
       &--selects
         overflow-y auto
@@ -45,6 +47,15 @@
         flex 1 auto
       &--table
         overflow-y auto
+        .TableList__Item
+          .header
+            height 60px
+            .cheader
+              height 60px
+          .Articles_containers
+            .SocioItem
+              td
+                padding 10px 5px
       &--pagination
         margin 0 auto
         height 70px

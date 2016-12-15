@@ -1,0 +1,84 @@
+.UserContent
+	width 100%
+	// background-color GrisGoogle
+	padding-top 40px
+	&__box
+		max-width 800px
+		margin 0 auto
+		.ShowUserInfo
+			&__box
+				margin 0 24px
+				background-color ColorCardUser
+				padding 32px 42px 32px 0
+				box-shadow 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
+				border-bottom 1px solid #ddd
+				&--avatar
+					float left
+					width 212px
+					height 124px
+					img
+						margin-left 50px
+						width 124px
+						height 124px
+				&--info
+					margin-left 212px
+					.Info
+						&__title
+							h3
+								margin 0
+								font-size 34px
+						&__ShowMoreInfo
+							padding-top 20px
+							display flex
+							flex-wrap wrap
+							&--left, &--right
+								width 50%
+								min-width 230px
+								.Data
+									&__left
+										font-weight bold
+									&__right
+										font-weight normal
+										margin-left 5px
+		.MoreInfoUser
+			margin-top 0
+			&__box
+				&--title
+					background-color ColorCardUser
+					font-size 14px
+					padding 15px 30px
+					font-weight bold
+					.icon-edit
+						display none
+						i
+							margin 0
+					&:hover
+						background-color #efefef
+				.active
+					font-size 20px
+					padding 15px 20px 15px 14px
+					.icon-edit
+						display block
+					&:hover
+						background-color ColorCardUser
+				&--content
+					background-color ColorCardUser
+					display flex
+					flex-wrap wrap
+					.Midle
+						width 50%
+					.Data
+						width 100%
+						padding 15px 0px 18px 46px
+						&__left
+							padding 0
+							font-weight bold
+						&__right
+							font-weight normal
+							margin-left 5px
+			// .Active
+			// 	.MoreInfoUser__box--title
+			// 		font-size 20px
+			// 		padding 15px 20px 15px 14px
+						
+						
