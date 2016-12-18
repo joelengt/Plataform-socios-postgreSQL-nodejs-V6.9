@@ -1,110 +1,98 @@
 doctype html
 html(lang='es')
     head
-        meta(charset='UTF-8')
-        title Caballeria
-        meta(name='viewport', content='width=device-width, minimum-scale=1, maximum-scale=1')
-        meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
-        // Esstilos Enlaces CSS
-        link(rel='icon', type='image/png', href='../images/favicon.png')
-        link(rel='stylesheet', type='text/css', href='../css/index.css')
-        link(rel='stylesheet', type='text/css', href='../css/modal/index.css')
+      meta(charset='UTF-8')
+      title Legión Caballería
+      meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
+      meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+      //- link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+      link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+      link(rel='stylesheet', href='/style/style.css')
     
     body#App_Container
-        div(class="App_Container__box")
+      .App_Container__box
+        nav.Header
+          .nav-wrapper.Header__container
+            a.Header__container--title.Logo.left(href='/') Legión Caballería
+            div.Header__container--search
+              input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
+              button.grey.darken-2#btn_box_search
+                i.material-icons search
 
-            // Header Main
-            header(clasS="HeaderMain")
-                div(class="HeaderMain__box")
+            div.Header__container--avatar.right
+              img.responsive-img.circle(width='40', src='/images/default.jpg', alt='')
+        .main-container
+          .main-container__box
+            nav.SubHeader
+              .SubHeader__box
+                .SubHeader__box--list
+                  .linkRoute Socios | 
+                    span.HeaderMain__breadgruns__left--variable-route #usuarios
+                    .fa-chevron-right.right
+                      i.material-icons keyboard_arrow_right
+                  .linkRoute #{result.nombres}
+                    .fa-chevron-right.right
+                      i.material-icons keyboard_arrow_right
+                .SubHeader__box--icons
+                  .Icons
+                    .Icons__item.btn_change_order
+                      i.material-icons filter_list
+                    .Icons__item
+                      .dropdown-button(data-activates='dropdown1')
+                        i.material-icons more_vert
+                      ul#dropdown1.dropdown-content
+                        li
+                          a(href='#!') texto
 
-                    // Header Main Top
-                    div(class="HeaderMain__top")
-                        div(class="HeaderMain__top__left")
-                          div(class="HeaderMain__top__left--logo")
-                              h2 Caballeria
+            //- section(class="SocioInfo")
+            //-     article(class="SocioInfo__perfil")
+            //-         div(class="SocioInfo__perfil__avatar")
+            //-           img(src="../../../../images/default.jpg")
 
-                          div(class="HeaderMain__top__left--search")
-                              input(id="txt_box_search", type='text', placeholder='Buscar socio por nombre o DNI')
-                              button#btn_box_search  Buscar
+            //-         div(class="SocioInfo__perfil__personal")
 
-                      div(class="HeaderMain__top__right")
-                          div(class="HeaderMain__top__right--avatar")
-                              img(src="../../../../images/default.jpg", width="30")
+            //-           div(class="SocioInfo__perfil__personal--bottom")
+            //-             div(class="SocioInfo__perfil__personal--bottom__left")
+            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
+            //-                   label Fecha de Ingreso:
+            //-                   p #{result.fecha_ingreso}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
+            //-                   label DNI:
+            //-                   p #{result.dni}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
+            //-                   label Profesión:
+            //-                   p #{result.arma}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
+            //-                   label Organización:
+            //-                   p #{result.dni}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
+            //-                   label Situación de Trabajo:
+            //-                   p #{result.arma}
 
-                    // Header Main Breadgrunps
-                    div(class="HeaderMain__breadgruns")
-                       div(class="HeaderMain__breadgruns__left")
-                           div(class="HeaderMain__breadgruns__left--sub-title")
-                               span Socios
-                           div(class="HeaderMain__breadgruns__left--variable-route")
-                               span > #{result.nombres}
+            //-             div(class="SocioInfo__perfil__personal--bottom__right")
+            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
+            //-                   label Tipo de Socio:
+            //-                   p #{result.cip}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
+            //-                   label Fecha de Nacimiento:
+            //-                   p #{result.onomastico}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
+            //-                   label Carta Declaratoria:
+            //-                   p #{result.email}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
+            //-                   label Tipo de Pago:
+            //-                   p #{result.cip}
+            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
+            //-                   label Carta Declaratoria:
+            //-                   p #{result.arma}
 
+            //-     article(class="SocioInfo__datos")
 
+            //-       div(class="SocioInfo__datos--Datos-de-Contacto")
+            //-         div(class="SocioInfo__datos--Datos-de-Contacto--title")
+            //-           h4 Datos de Contacto
 
-            section(class="SocioInfo")
-                article(class="SocioInfo__perfil")
-                    div(class="SocioInfo__perfil__avatar")
-                      img(src="../../../../images/default.jpg")
-
-                    div(class="SocioInfo__perfil__personal")
-                      div(class="SocioInfo__perfil__personal--top")
-                        div
-                          div
-                            h3 #{result.nombres}
-                          div
-                            form(action='/dashboard/socios-clientes/item/delete/0/#{result.id}?_method=delete', method="post")
-                              button Eliminar
-                          div
-                            form(action="/dashboard/socios-clientes/form-to-edit/0/#{result.id}", method="get")
-                              button Actualizar
-                            
-                        div
-                          span ==>
-                        div
-                          p situacion
-
-                      div(class="SocioInfo__perfil__personal--bottom")
-                        div(class="SocioInfo__perfil__personal--bottom__left")
-                            div(class="SocioInfo__perfil__personal--bottom__left--item")
-                              label Fecha de Ingreso:
-                              p #{result.fecha_ingreso}
-                            div(class="SocioInfo__perfil__personal--bottom__left--item")
-                              label DNI:
-                              p #{result.dni}
-                            div(class="SocioInfo__perfil__personal--bottom__left--item")
-                              label Profesión:
-                              p #{result.arma}
-                            div(class="SocioInfo__perfil__personal--bottom__left--item")
-                              label Organización:
-                              p #{result.dni}
-                            div(class="SocioInfo__perfil__personal--bottom__left--item")
-                              label Situación de Trabajo:
-                              p #{result.arma}
-
-                        div(class="SocioInfo__perfil__personal--bottom__right")
-                            div(class="SocioInfo__perfil__personal--bottom__right--item")
-                              label Tipo de Socio:
-                              p #{result.cip}
-                            div(class="SocioInfo__perfil__personal--bottom__right--item")
-                              label Fecha de Nacimiento:
-                              p #{result.onomastico}
-                            div(class="SocioInfo__perfil__personal--bottom__right--item")
-                              label Carta Declaratoria:
-                              p #{result.email}
-                            div(class="SocioInfo__perfil__personal--bottom__right--item")
-                              label Tipo de Pago:
-                              p #{result.cip}
-                            div(class="SocioInfo__perfil__personal--bottom__right--item")
-                              label Carta Declaratoria:
-                              p #{result.arma}
-
-                article(class="SocioInfo__datos")
-
-                  div(class="SocioInfo__datos--Datos-de-Contacto")
-                    div(class="SocioInfo__datos--Datos-de-Contacto--title")
-                      h4 Datos de Contacto
-
-                    div(class="SocioInfo__datos--Datos-de-Contacto--content")
+            //-         div(class="SocioInfo__datos--Datos-de-Contacto--content")
                           div(class="SocioInfo__datos--Datos-de-Contacto--content--item")
                             label Tipo de Socio:
                             p #{result.cip}
@@ -121,11 +109,11 @@ html(lang='es')
                             label Carta Declaratoria:
                             p #{result.arma}
 
-                  div(class="SocioInfo__datos--Datos-del-Conyuge")
-                      div(class="SocioInfo__datos--Datos-del-Conyuge--title")
-                        h4 Datos del Conyuge
+            //-       div(class="SocioInfo__datos--Datos-del-Conyuge")
+            //-           div(class="SocioInfo__datos--Datos-del-Conyuge--title")
+            //-             h4 Datos del Conyuge
 
-                      div(class="SocioInfo__datos--Datos-del-Conyuge--content")
+            //-           div(class="SocioInfo__datos--Datos-del-Conyuge--content")
                             div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
                               label Tipo de Socio:
                               p #{result.cip}
@@ -139,51 +127,187 @@ html(lang='es')
                               label Tipo de Pago:
                               p #{result.cip}
                             div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
-                              label Carta Declaratoria:
-                              p #{result.arma}
-  
-                  div(class="SocioInfo__datos--Datos-del-Afiliado")
-                    div(class="SocioInfo__datos--Datos-del-Afiliado--title")
-                       h4 Datos del Afiliado
-                        
-                      div(class="SocioInfo__datos--Datos-del-Afiliado--content")
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Tipo de Socio:
-                              p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Fecha de Nacimiento:
-                              p #{result.onomastico}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Carta Declaratoria:
-                              p #{result.email}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Tipo de Pago:
-                              p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
                               label Carta Declaratoria:
                               p #{result.arma}
 
-                  div(class="SocioInfo__datos--Datos-de-Pagos")
-                    div(class="SocioInfo__datos--Datos-de-Pagos--title")
-                       h4 Datos de Pagos
+            //-       div(class="SocioInfo__datos--Datos-del-Afiliado")
+            //-         div(class="SocioInfo__datos--Datos-del-Afiliado--title")
+            //-            h4 Datos del Afiliado
                         
-                      div(class="SocioInfo__datos--Datos-de-Pagos--content")
-                            div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+            //-           div(class="SocioInfo__datos--Datos-del-Afiliado--content")
+                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
                               label Tipo de Socio:
                               p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
                               label Fecha de Nacimiento:
                               p #{result.onomastico}
-                            div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
                               label Carta Declaratoria:
                               p #{result.email}
-                            div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
                               label Tipo de Pago:
                               p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
                               label Carta Declaratoria:
                               p #{result.arma}
+
+            //-       div(class="SocioInfo__datos--Datos-de-Pagos")
+            //-         div(class="SocioInfo__datos--Datos-de-Pagos--title")
+            //-            h4 Datos de Pagos
+                        
+            //-            div(class="SocioInfo__datos--Datos-de-Pagos--content")
+            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+            //-                   label Tipo de Socio:
+            //-                   p #{result.cip}
+            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+            //-                   label Fecha de Nacimiento:
+            //-                   p #{result.onomastico}
+            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+            //-                   label Carta Declaratoria:
+            //-                   p #{result.email}
+            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+            //-                   label Tipo de Pago:
+            //-                   p #{result.cip}
+            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
+            //-                   label Carta Declaratoria:
+            //-                   p #{result.arma}
+            .Content
+              .UserContent
+                .UserContent__box
+                  .ShowUserInfo
+                    .ShowUserInfo__box
+                      .ShowUserInfo__box--avatar
+                        img.responsive-img.circle(src="/images/default.jpg", width="100")
+                      .ShowUserInfo__box--info
+                        .Info
+                          .Info__title
+                            h3 #{result.nombres}
+                          .Info__tag
+                            span
+                              i.material-icons.tag label
+                          .Info__situation 
+                            .btn.grey.lighten-2.grey-text.text-darken-4 Situacion
+                          .Info__ShowMoreInfo
+                            .Info__ShowMoreInfo--left
+                              .Data
+                                p.Data__left Fecha de Ingreso:
+                                  span.Data__right #{result.fecha_ingreso}
+                              .Data
+                                p.Data__left DNI:
+                                  span.Data__right #{result.dni}
+                              .Data
+                                p.Data__left Profesión:
+                                  span.Data__right #{result.arma}
+                              .Data
+                                p.Data__left Organización:
+                                  span.Data__right #{result.dni}
+                              .Data
+                                p.Data__left Situación de Trabajo:
+                                  span.Data__right #{result.arma}
+                            .Info__ShowMoreInfo--right
+                              .Data
+                                p.Data__left Tipo de Socio:
+                                  span.Data__right #{result.cip}
+                              .Data
+                                p.Data__left Fecha de Nacimiento:
+                                  span.Data__right #{result.onomastico}
+                              .Data
+                                p.Data__left Carta Declaratoria:
+                                  span.Data__right #{result.email}
+                              .Data
+                                p.Data__left Tipo de Pago:
+                                  span.Data__right #{result.cip}
+                              .Data
+                                p.Data__left Carta Declaratoria:
+                                  span.Data__right #{result.arma}
+                  ul.MoreInfoUser.collapsible.popout(data-collapsible='accordion')
+                    li.MoreInfoUser__box
+                      .MoreInfoUser__box--title.collapsible-header
+                        | Datos de Contacto
+                        .icon-edit.right#editDataContact.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                          i.material-icons mode_edit
+                      .MoreInfoUser__box--content.collapsible-body
+                        .Data
+                          p.Data__left Tipo de Socio:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Fecha de Nacimiento:
+                            span.Data__right #{result.onomastico}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.email}
+                        .Data
+                          p.Data__left Tipo de Pago:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.arma}
+                    li.MoreInfoUser__box
+                      .MoreInfoUser__box--title.collapsible-header
+                        | Datos de Cónyugue
+                        .icon-edit.right#editDataSpouse.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                          i.material-icons mode_edit
+                      .MoreInfoUser__box--content.collapsible-body
+                        .Data
+                          p.Data__left Tipo de Socio:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Fecha de Nacimiento:
+                            span.Data__right #{result.onomastico}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.email}
+                        .Data
+                          p.Data__left Tipo de Pago:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.arma}
+                    li.MoreInfoUser__box
+                      .MoreInfoUser__box--title.collapsible-header
+                        | Datos de Afiliados
+                        .icon-edit.right#editDataAffiliate.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                          i.material-icons mode_edit
+                      .MoreInfoUser__box--content.collapsible-body
+                        .Data
+                          p.Data__left Tipo de Socio:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Fecha de Nacimiento:
+                            span.Data__right #{result.onomastico}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.email}
+                        .Data
+                          p.Data__left Tipo de Pago:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.arma}
+                    li.MoreInfoUser__box
+                      .MoreInfoUser__box--title.collapsible-header
+                        | Historial de Pagos
+                        .icon-edit.right#editDataPayment.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                          i.material-icons mode_edit
+                      .MoreInfoUser__box--content.collapsible-body
+                        .Data
+                          p.Data__left Tipo de Socio:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Fecha de Nacimiento:
+                            span.Data__right #{result.onomastico}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.email}
+                        .Data
+                          p.Data__left Tipo de Pago:
+                            span.Data__right #{result.cip}
+                        .Data
+                          p.Data__left Carta Declaratoria:
+                            span.Data__right #{result.arma}
 
             
-        // Enlaces Script JS
-        script(src='../js/vendor/jquery.min.js')
+        //- Enlaces Script JS
+      script(src='/js/vendor/jquery.min.js')
+      script(src='/js/vendor/materialize.min.js')
+      script(src='/js/index.js')
