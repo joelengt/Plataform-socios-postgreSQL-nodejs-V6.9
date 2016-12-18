@@ -47,56 +47,58 @@ html(lang='es')
                   h3 Filtros
                 .Filter__box--selects
                   .input-field
-                    select
-                      option(value='1') Todos
-                      option(value='2') Activos
-                      option(value='3') Adherente
+                    select#type_partner
+                      option(value='Todos') Todos
+                      option(value='Activos') Activos
+                      option(value='Adherentes') Adherente
                     label Por tipo de socio
                   .line-divider
                   .input-field
-                    select
-                      option(value='1') Todos
-                      option(value='2') Hábil
-                      option(value='3') Inhábil
-                      option(value='3') Renunciante
-                      option(value='3') Fallecido
+                    select#situation_partner
+                      option(value='Todos') Todos
+                      option(value='Habil') Hábil
+                      option(value='Inhabil') Inhábil
+                      option(value='Renunciante') Renunciante
+                      option(value='Fallecido') Fallecido
                     label Por situación de socio
                   .line-divider
                   .input-field
-                    select
-                      option(value='1') Todos
-                      option(value='2') OGECOE
-                      option(value='3') CPMP
-                      option(value='3') Pago Directo
+                    select#type_payment
+                      option(value='Todos') Todos
+                      option(value='OGECOE') OGECOE
+                      option(value='CPMP') CPMP
+                      option(value='Pago Directo') Pago Directo
                     label Por tipo de pago
                   .line-divider
                   .input-field
-                    select
-                      option(value='1') Todos
-                      option(value='2') Actividad
-                      option(value='3') Retiro
+                    select#situation_work
+                      option(value='Todos') Todos
+                      option(value='Actividad') Actividad
+                      option(value='Retiro') Retiro
                     label Por situación de trabajo
                   .line-divider
                   .input-field
-                    select
-                      option(value='1') Si
-                      option(value='2') No
+                    select#letter_declaration
+                      option(value='Todos') Todos
+                      option(value='Si') Si
+                      option(value='No') No
                     label Carta declaratoria
                   .line-divider
                   .input-field
-                    select
-                      option(value='1') Enero
-                      option(value='2') Febrero
-                      option(value='3') Marzo
-                      option(value='3') Abril
-                      option(value='3') Mayo
-                      option(value='3') Junio
-                      option(value='3') Julio
-                      option(value='3') Agosto
-                      option(value='3') Setiembre
-                      option(value='3') Octubre
-                      option(value='3') Noviembre
-                      option(value='3') Diciembre
+                    select#onomastic
+                      option(value='Todos') Todos
+                      option(value='Enero') Enero
+                      option(value='Febrero') Febrero
+                      option(value='Marzo') Marzo
+                      option(value='Abril') Abril
+                      option(value='Mayo') Mayo
+                      option(value='Junio') Junio
+                      option(value='Julio') Julio
+                      option(value='Agosto') Agosto
+                      option(value='Setiembre') Setiembre
+                      option(value='Octubre') Octubre
+                      option(value='Noviembre') Noviembre
+                      option(value='Diciembre') Diciembre
                     label Por honomástico
             .TableList
               .TableList__box
@@ -137,7 +139,7 @@ html(lang='es')
                   .Pagination
                     ul.PaginationContent.pagination
           .fixed-action-btn.horizontal
-            a.btn-open-modal-crearSocio.btn-floating.btn-large(href="/dashboard/socios-clientes/form-to-register")
+            a.btn-open-modal-crearSocio.btn-floating.btn-large.tooltipped(href="/dashboard/socios-clientes/form-to-register", data-tooltip="Agregar nuevo socio", data-delay="50", data-position="left")
               i.material-icons add
       //- The Modal
       //- #myModal.modal

@@ -325,6 +325,37 @@
     $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
   }
 
+  function workFilter(limitEachPage, contentHtml, type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic){
+
+    // console.log(type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic)
+    let listUserFound = [];
+    // let limitEachPage = limitEachPage;
+
+    $.ajax({
+      url: `/dashboard/socios-clientes/filter/table/0/columns/params?tipo_socio=${type_partner}&situacion_socio=${situation_partner}&tipo_pago=${type_payment}&situacion_trabajo=${situation_work}&carta_declaratoria=${letter_declaration}&onomastico=${onomastic}`,
+      method: 'get',
+      success: function(listUsuarios){
+        console.log(listUsuarios)
+        contentHtml.innerHTML = '';
+
+        if (listUsuarios.status !== 'not_found') {
+          getPaginationTemplate(limitEachPage, listUsuarios.result.length);
+          var valueInit = 0;
+          var valueEnd = 9;
+
+          // Recorre lista y render Template en html
+          runList(listUsuarios.result, valueInit, valueEnd, contentHtml);
+        } else {
+          contentHtml.innerHTML = '<tr>No se encontraron elementos con ese nombre</tr>';
+        }
+      },
+      err: function(err){
+        console.log(err)
+      }
+    })
+
+  }
+
   // Funcion Principal
   function main() {
     // Obteniendo Contenedo html
@@ -339,6 +370,13 @@
 
     var $btn_change_order = document.querySelector('.btn_change_order');
 
+    var $type_partner = $('#type_partner');
+    var $situation_partner = $('#situation_partner');
+    var $type_payment = $('#type_payment');
+    var $situation_work = $('#situation_work');
+    var $letter_declaration = $('#letter_declaration');
+    var $onomastic = $('#onomastic');
+
     // Paginacion
     var limitePage = 10;
 
@@ -346,26 +384,25 @@
     readUsers(limitePage, $boxConntentHtml);
 
     // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
-     $btnBoxSearchByName.addEventListener('click', function (ev) {
+    $btnBoxSearchByName.addEventListener('click', function (ev) {
       let nameUser = $txtBoxSearchByName.value;
       console.log('BUSQUEDA POR NOMBRE O DNI -> click');
       console.log(nameUser);
       searchByName(nameUser, $boxConntentHtml);
-     })
+    })
 
      // Filtro por evento key: enter
-     $txtBoxSearchByName.addEventListener('keypress', function (event) {
+    $txtBoxSearchByName.addEventListener('keypress', function (event) {
       let nameUser = $txtBoxSearchByName.value;
       console.log('BUSQUEDA POR NOMBRE O DNI -> keypress enter');
       console.log(nameUser);
       if(event.charCode === 13) {
         searchByName(nameUser, $boxConntentHtml);
       }
-
-     })
+    })
 
      //Activando estilo de caja de Filtros lateral
-     $('select').material_select();
+    $('select').material_select();
 
      // Evento click -> Cambiar Orden
      // $btn_change_order.addEventListener('click', function () {
@@ -376,22 +413,22 @@
      // })
 
      // Filter mientras la caja de texto cambia
-     $('#txt_box_search').bind('input', function() { 
+    $('#txt_box_search').bind('input', function() { 
       if($(this).val() === '') {
-         nameUserWord = '';
-         readUsers($boxConntentHtml)
-       }
+        nameUserWord = '';
+        readUsers($boxConntentHtml)
+      }
 
-       nameUserWord = $(this).val()
+      nameUserWord = $(this).val()
 
-       console.log('BUSQUEDA POR NOMBRE O DNI -> Input change');
-       console.log(nameUserWord);
+      console.log('BUSQUEDA POR NOMBRE O DNI -> Input change');
+      console.log(nameUserWord);
 
-       searchByName(nameUserWord, $boxConntentHtml);
-     });      
+      searchByName(nameUserWord, $boxConntentHtml);
+    });      
      
      // Filtro por evento key: enter
-     $ArticlesContainerPages.on('click', '.selectPage', function (ev) {
+    $ArticlesContainerPages.on('click', '.selectPage', function (ev) {
       let $this = $(this)
       console.log(this);
 
@@ -428,6 +465,19 @@
      //      readUserById(socio_id, $ViewboxRender);
 
      //  })
+
+
+    // Busqueda por Filtro
+    function searchFilter(){
+      workFilter(limitePage, $boxConntentHtml, $type_partner.val(), $situation_partner.val(), $type_payment.val(), $situation_work.val(), $letter_declaration.val(), $onomastic.val())
+    }
+
+    $type_partner.on('change', searchFilter)
+    $situation_partner.on('change', searchFilter)
+    $type_payment.on('change', searchFilter)
+    $situation_work.on('change', searchFilter)
+    $letter_declaration.on('change', searchFilter)
+    $onomastic.on('change', searchFilter)
 
 
      // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
