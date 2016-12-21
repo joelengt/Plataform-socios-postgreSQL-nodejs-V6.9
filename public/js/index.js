@@ -325,7 +325,7 @@
     $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
   }
 
-  function workFilter(limitEachPage, contentHtml, type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic){
+  function workFilter(limitEachPage, contentHtml, type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic) {
 
     // console.log(type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic)
     let listUserFound = [];
@@ -356,9 +356,555 @@
 
   }
 
+  function saveData(data){
+    // var storage = sessionStorage.getItem('CS')
+    var dataForm = JSON.parse(sessionStorage.getItem('CS'))
+    console.log(data)
+    // console.log(new_Data)
+    data = data.split('&')
+    for (var i = 0; i < data.length; i++) {
+      data[i] = data[i].split('=')
+    }
+    console.log(data)
+    for (var i = 0; i < data.length; i++) {
+      dataForm[data[i][0]] = data[i][1] || ''
+    }
+    var dataForm = JSON.stringify(dataForm)
+    // console.log(dataForm)
+    sessionStorage.setItem('CS', dataForm)
+    console.log(JSON.parse(sessionStorage.getItem('CS')))
+  }
+
+  function meSerialize(form){
+    var contentsOptions = form.find('.row')
+    console.log(contentsOptions.length)
+    var data = ''
+
+    for (var i = 0; i < contentsOptions.length; i++) {
+      var options =  contentsOptions[i]
+      $options = $(options)
+      var inputs = $options.find('input')
+      var selects = $options.find('select')
+      for (var o = 0; o < inputs.length; o++) {
+        if (inputs[o].getAttribute('class') !== 'select-dropdown') {
+          if (data === '') {
+            data = data + inputs[o].getAttribute('name') + '=' + inputs[o].value
+          } else {
+            data = data + '&' + inputs[o].getAttribute('name') + '=' + inputs[o].value
+          }
+        }
+      }
+
+      for (var u = 0; u < selects.length; u++) {
+        if (data === '') {
+          data = data + selects[u].getAttribute('name') + '=' + selects[u].value
+        } else {
+          data = data + '&' + selects[u].getAttribute('name') + '=' + selects[u].value
+        }
+      }
+    }
+    console.log(data)
+    return data
+  }
+
+  function actionBtnPrev(form, dataBtn, modal_body, btnMore, btnPrev, btnNext) {
+    form.remove()
+    if (dataBtn === 'tpl_data_civil') {
+      tpl_create_partner(modal_body)
+      btnMore.css('display', 'block')
+      btnPrev.css('display', 'none')
+      btnNext.css('display', 'none')
+    } else if(dataBtn === 'tpl_data_pnp'){
+      tpl_create_partner(modal_body)
+      btnMore.css('display', 'block')
+      btnPrev.css('display', 'none')
+      btnNext.css('display', 'none')
+    } else if(dataBtn === 'tpl_data_work'){
+      tpl_data_pnp(modal_body)
+      btnPrev.css('display', 'block')
+      btnNext.css('display', 'block')
+    } else if(dataBtn === 'tpl_data_contact'){
+      var dataForm = JSON.parse(sessionStorage.getItem('CS'))
+      if (dataForm.organizacion === 'Civil') {
+        tpl_data_civil(modal_body)
+      } else {
+        tpl_data_work(modal_body)        
+      }
+      btnPrev.css('display', 'block')
+      btnNext.css('display', 'block')
+    } else {
+      tpl_data_contact(modal_body)
+      btnPrev.css('display', 'block')
+      btnNext.css('display', 'block')
+    }
+
+  }
+
+  function actionBtnNext(form, data, modal_body, btnPrev, btnNext, btnSave){
+    form.remove()
+    console.log(form, data, modal_body, btnPrev, btnNext)
+    if (data === 'tpl_data_pnp') {
+      tpl_data_work(modal_body)
+      btnPrev.css('display', 'block')
+      btnNext.css('display', 'block')
+    } else if(data === 'tpl_data_work'){
+      tpl_data_contact(modal_body)
+      btnPrev.css('display', 'block')
+      btnNext.css('display', 'block')
+    } else if(data === 'tpl_data_contact'){
+      tpl_data_spouse(modal_body)
+      btnPrev.css('display', 'block')
+      btnNext.css('display', 'block')
+    } else if(data === 'tpl_data_spouse'){
+      tpl_create_partner(modal_body)
+      btnPrev.css('display', 'none')
+      btnNext.css('display', 'none')
+      btnSave.removeClass('disabled')
+    }
+  }
+
+  function moreInfo(){
+    var btnMore = $(this)
+    var parent = $(this).parents('#modalForm')
+    var modal_body = parent.find('.ModalForm__content')
+    var form = parent.find('[data-form-part="tpl_create_partner"]')
+    var btnNext = parent.find('.btn-next')
+    var btnPrev = parent.find('.btn-prev')
+
+    var data = meSerialize(form)
+    saveData(data)
+
+    btnMore.css('display', 'none')
+    form.remove()
+
+    var dataForm = JSON.parse(sessionStorage.getItem('CS'))
+
+    if (dataForm.organizacion === 'Civil') {
+      tpl_data_civil(modal_body, 'tpl_create_partner')      
+    } else {
+      if (dataForm.organizacion === 'P.N.P'){
+        tpl_data_pnp(modal_body, 'tpl_create_partner', 'PNP')
+      } else{
+        tpl_data_pnp(modal_body, 'tpl_create_partner', 'Fuerzas')
+      }
+    }
+
+    btnNext.css('display', 'block')
+    btnPrev.css('display', 'block')
+
+  }
+
+  function btnPrev() {
+    // var btn = $(this)
+    var parent = $(this).parents('#modalForm')
+    var modal_body = parent.find('.ModalForm__content')
+    console.log(modal_body)
+    var form = parent.find('.ModalForm__content--part')
+    var dataPart = form.attr('data-form-part')
+    var btnMore = parent.find('.bt-aditional')
+    var btnNext = parent.find('.btn-next')
+    var btnPrev = parent.find('.btn-prev')
+
+    var data = meSerialize(form)
+    saveData(data)
+
+    actionBtnPrev(form, dataPart, modal_body, btnMore, btnPrev, btnNext)
+  }
+
+  function btnNext() {
+    // var btn = $(this)
+    var parent = $(this).parents('#modalForm')
+    var modal_body = parent.find('.ModalForm__content')
+    var form = parent.find('.ModalForm__content--part')
+    var dataPart = form.attr('data-form-part')
+    var btnNext = parent.find('.btn-next')
+    var btnPrev = parent.find('.btn-prev')
+    var btnSave = parent.find('.btn-save')
+
+    var data = meSerialize(form)
+    saveData(data)
+
+    actionBtnNext(form, dataPart, modal_body, btnPrev, btnNext, btnSave)
+  }
+
+  function btnSave() {
+    var parent = $(this).parents('#modalForm')
+    var modal_body = parent.find('.ModalForm__content')
+    var modalFooter = parent.find('.ModalContent__footer')
+    var form = parent.find('.ModalForm__content--part')
+
+    var updateData = meSerialize(form)
+    saveData(updateData)
+    
+    var data = JSON.parse(sessionStorage.getItem('CS'))
+    var preloader = document.createElement('div')
+    preloader.setAttribute('class', 'progress')
+    tpl = `<div class="indeterminate"></div>`
+    preloader.innerHTML = tpl
+    // console.log(parent[0], modalFooter[0])
+    modalFooter.append(preloader)
+
+    $.ajax({
+      type: 'POST',
+      url: '/dashboard/socios-clientes/item/socio/add/0',
+      data: data,
+      success: function(res){
+        console.log(res)
+        $('#modalForm').modal('close')
+        sessionStorage.removeItem('CS')
+      },
+      err: function(err){
+        console.log(err)
+      }
+    })
+  }
+
+  function plt_fource(typeFource, params) {
+    var tpl
+    if (typeFource === 'PNP') {
+      tpl = `<option ${params.tipo_pago==='Directo' ? 'selected' :''} value="Directo">Directo</option>`
+    } else {
+      tpl = `<option ${params.tipo_pago==='OGCOE' ? 'selected' :''} value="OGCOE">OGCOE</option>
+      <option ${params.tipo_pago==='CPMP' ? 'selected' :''} value="CPMP">CPMP</option>
+      <option ${params.tipo_pago==='Pago Directo' ? 'selected' :''} value="Pago Directo">Pago Directo</option>`
+    }
+    return tpl
+  }
+
+  function tpl_create_partner(modal_body, params){
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_create_partner')
+    var tpl = `<h5 class="Title">Crear Socio</h5>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.nombres || ''}" name="nombres" id="nombres" type="text" class="validate">
+              <label for="nombres">Nombre</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.apellidos || ''}" name="apellidos" id="apellidos" type="text" class="validate">
+              <label for="apellidos">Apellido</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <select name="organizacion" class="selectForm">
+                <option ${data.organizacion==='Ejercito' ? 'selected' : ''} value="Ejercito">Ejercito</option>
+                <option ${data.organizacion==='F.A.P' ? 'selected' : ''} value="F.A.P">F.A.P</option>
+                <option ${data.organizacion==='Marina' ? 'selected' : ''} value="Marina">Marina</option>
+                <option ${data.organizacion==='P.N.P' ? 'selected' : ''} value="P.N.P">P.N.P</option>
+                <option ${data.organizacion==='Civil' ? 'selected' : ''} value="Civil">Civil</option>
+              </select>
+              <label>Organización</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.dni || ''}" name="dni" id="dni" type="text" class="validate">
+              <label for="dni">DNI</label>
+            </div>
+            <div class="input-field col s5">
+              <label class="date" for="fecha_nacimiento">Fecha de Nacimiento</label>
+              <input value="${data.fecha_nacimiento || ''}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.numero_carnet || ''}" name="numero_carnet" id="numero_carnet" type="text" class="validate">
+              <label for="numero_carnet">N° Carnet</label>
+            </div>
+          </div>`
+
+    content.innerHTML = tpl
+    modal_body.append(content)
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+
+  function tpl_data_civil(modal_body, prev, params){
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_data_civil')
+    content.setAttribute('data-form-prev', prev)
+    var tpl = `<h5 class="Title">Crear Socio</h5>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.grado_profesion || ''}" name="grado_profesion" id="grado_profesion" type="text" class="validate">
+              <label for="grado_profesion">Profesión</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <select name="situacion_trabajo" class="selectForm">
+                <option ${data.situacion_trabajo==='Actividad' ? 'selected' : ''} value="Actividad">Actividad</option>
+                <option ${data.situacion_trabajo==='Retiro' ? 'selected' : ''} value="Retiro">Retiro</option>
+              </select>
+              <label>Situacion de Trabajo</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <select name="tipo_pago" class="selectForm">
+                <option ${data.tipo_pago==='Directo' ? 'selected' : ''} value="Directo">Directo</option>
+              </select>
+              <label>Tipo de Pago</label>
+            </div>
+            <div class="input-field col s5">
+              <select name="carta_declaratoria" class="selectForm">
+                <option ${data.carta_declaratoria==='Si' ? 'selected' : ''} value="Si">Si</option>
+                <option ${data.carta_declaratoria==='No' ? 'selected' : ''} value="No">No</option>
+              </select>
+              <label>Carta Declaratoria</label>
+            </div>
+          </div>`
+
+    content.innerHTML = tpl
+    modal_body.append(content)
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+  function tpl_data_pnp(modal_body, prev, typeFource, params){
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    console.log(typeFource)
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_data_pnp')
+    content.setAttribute('data-form-prev', prev)
+    var tpl = `<h5 class="Title">Crear Socio</h5>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.cip || ''}" name="cip" id="cip" type="text" class="validate">
+              <label for="cip">CIP</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.grado_profesion || ''}" name="grado_profesion" id="grado_profesion" type="text" class="validate">
+              <label for="grado_profesion">Grado</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.arma || ''}" name="arma" id="arma" type="text" class="validate">
+              <label for="arma">Arma</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.situacion_trabajo || ''}" name="situacion_trabajo" id="situacion_trabajo" type="text" class="validate">
+              <label for="situacion_trabajo">Situacion de Trabajo</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <select name="tipo_pago" class="selectForm">
+                ${plt_fource(typeFource, data)}
+              </select>
+              <label>Tipo de Pago</label>
+            </div>
+            <div class="input-field col s5">
+              <select name="carta_declaratoria" class="selectForm">
+                <option ${data.carta_declaratoria==='Si' ? 'selected' :''} value="Si">Si</option>
+                <option ${data.carta_declaratoria==='No' ? 'selected' :''} value="No">No</option>
+              </select>
+              <label>Carta Declaratoria</label>
+            </div>
+          </div>`
+
+    content.innerHTML = tpl
+    modal_body.append(content)
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+  function tpl_data_work(modal_body, prev, params){
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_data_work')
+    content.setAttribute('data-form-prev', prev)
+    var tpl = `<h5 class="Title">Crear Socio</h5>
+          <h6 class="Subtitle">DATOS DEL TRABAJO</h6>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.unidad || ''}" name="unidad" id="unidad" type="text" class="validate">
+              <label for="unidad">Unidad</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.gguu || ''}" name="gguu" id="gguu" type="text" class="validate">
+              <label for="gguu">Gran Unidad</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.region || ''}" name="region" id="region" type="text" class="validate">
+              <label for="region">Región</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.guarnicion || ''}" name="guarnicion" id="guarnicion" type="text" class="validate">
+              <label name="guarnicion" for="guarnicion">Guarnición</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.filial || ''}" name="filial" id="filial" type="text" class="validate">
+              <label for="filial">Filial</label>
+            </div>
+          </div>`
+    
+    content.innerHTML = tpl
+    modal_body.append(content)
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+  function tpl_data_contact(modal_body, prev, params){
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_data_contact')
+    content.setAttribute('data-form-prev', prev)
+    var tpl = `<h5 class="Title">Crear Socio</h5>
+          <h6 class="Subtitle">DATOS DE CONTACTO</h6>
+          <div class="row">
+            <div class="input-field col s10">
+              <input value="${data.direccion || ''}" name="direccion" id="direccion" type="text" class="validate">
+              <label for="direccion">Dirección</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.email || ''}" name="email" id="email" type="text" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.celular1 || ''}" name="celular1" id="celular1" type="text" class="validate">
+              <label for="celular1">Celular 1</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.celular2 || ''}" name="celular2" id="celular2" type="text" class="validate">
+              <label for="celular2">Celular 2</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.telefono1 || ''}" name="telefono1" id="telefono1" type="text" class="validate">
+              <label for="telefono1">Telefono 1</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.telefono2 || ''}" name="telefono2" id="telefono2" type="text" class="validate">
+              <label for="telefono2">Telefono 2</label>
+            </div>
+          </div>`
+    
+    content.innerHTML = tpl
+    modal_body.append(content)
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+  function tpl_data_spouse(modal_body, prev, params){
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_data_spouse')
+    content.setAttribute('data-form-prev', prev)
+    var tpl = `<h5 class="Title">Crear Socio</h5>
+          <h6 class="Subtitle">DATOS DE CÓNYUGUE</h6>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.nombre_conyuge || ''}" name="nombre_conyuge" id="nombre_conyuge" type="text" class="validate">
+              <label for="nombre_conyuge">Nombre</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.apellido_conyugue || ''}" name="apellido_conyugue" id="apellido_conyugue" type="text" class="validate">
+              <label for="apellido_conyugue">Apellido</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.dni_conyugue || ''}" name="dni_conyugue" id="dni_conyugue" type="text" class="validate">
+              <label for="dni_conyugue">DNI</label>
+            </div>
+            <div class="input-field col s5">
+              <label value="${data.fecha_nacimiento_conyugue || new Date()}" class="date" for="fecha_nacimiento_conyugue">Fecha de Nacimiento</label>
+              <input name="fecha_nacimiento_conyugue" id="fecha_nacimiento_conyugue" type="date" placeholder="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.email_conyugue || ''}" name="email_conyugue" id="email_conyugue" type="text" class="validate">
+              <label for="email_conyugue">Email</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.celular_conyugue || ''}" name="celular_conyugue" id="celular_conyugue" type="number">
+              <label class="number" for="celular_conyugue">Celular</label>
+            </div>
+          </div>`
+    
+    content.innerHTML = tpl
+    modal_body.append(content)
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+
+  function CreateFormSocio(contentHtml, params) {
+    sessionStorage.setItem('CS', JSON.stringify({}))
+    var modal = document.createElement('div')
+    modal.setAttribute('class', 'ModalForm modal modal-fixed-footer')
+    modal.setAttribute('id', 'modalForm')
+    var template = `<div class="ModalForm__content modal-content">       
+      </div>
+      <div class="ModalContent__footer modal-footer">
+        <div class="btns left">
+          <a class=" modal-action waves-effect waves-green btn-flat btn-next">Siguiente</a>
+          <a class=" modal-action waves-effect waves-green btn-flat btn-prev">Anterior</a>
+          <a class=" modal-action waves-effect waves-green btn-flat bt-aditional">Información Adicional</a>
+        </div>
+        <div class="btns right">
+          <a class=" modal-action waves-effect waves-green btn-flat btn-save disabled">Guardar</a>
+          <a class=" modal-action modal-close waves-effect waves-green btn-flat btn-cancel">Cancelar</a>
+        </div>
+      </div>`
+
+    modal.innerHTML = template
+    contentHtml.append(modal)
+
+    $('.ModalForm').modal({
+      complete: function(ev){
+        ev.remove()
+      }
+    })
+
+    $('#modalForm').modal('open');
+
+    var $modal_body = $('.ModalForm__content')
+
+    tpl_create_partner($modal_body)
+    // $('.selectForm').material_select();
+
+    var $btn_next = $('.btn-next')
+    var $btn_prev = $('.btn-prev')
+    var $btn_moreInfo = $('.bt-aditional')
+    var $btn_save = $('.btn-save')
+
+    // $btn_prev.on('click', prevForm)
+    $btn_moreInfo.on('click', moreInfo)
+    $btn_prev.on('click', btnPrev)
+    $btn_next.on('click', btnNext)
+    $btn_save.on('click', btnSave)
+
+  }
+
   // Funcion Principal
   function main() {
     // Obteniendo Contenedo html
+    var $boxConntentPage = $('.App_Container__box')
     var $boxConntentHtml = document.querySelector('#boxListUsers');
     var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
     var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
@@ -376,6 +922,7 @@
     var $situation_work = $('#situation_work');
     var $letter_declaration = $('#letter_declaration');
     var $onomastic = $('#onomastic');
+    var $newSocio = $('#newSocio');
 
     // Paginacion
     var limitePage = 10;
@@ -478,6 +1025,16 @@
     $situation_work.on('change', searchFilter)
     $letter_declaration.on('change', searchFilter)
     $onomastic.on('change', searchFilter)
+
+    //Creacion de Modal (crear socio)
+    function createModal(){
+      console.log('asasa')
+      CreateFormSocio($boxConntentPage)
+    }
+
+    $newSocio.on('click', createModal)
+
+
 
 
      // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {

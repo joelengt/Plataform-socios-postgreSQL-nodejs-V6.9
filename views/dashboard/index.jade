@@ -139,7 +139,7 @@ html(lang='es')
                   .Pagination
                     ul.PaginationContent.pagination
           .fixed-action-btn.horizontal
-            a.btn-open-modal-crearSocio.btn-floating.btn-large.tooltipped(href="/dashboard/socios-clientes/form-to-register", data-tooltip="Agregar nuevo socio", data-delay="50", data-position="left")
+            a#newSocio.btn-open-modal-crearSocio.btn-floating.btn-large.tooltipped(data-tooltip="Agregar nuevo socio", data-delay="50", data-position="left")
               i.material-icons add
       //- The Modal
       //- #myModal.modal
@@ -150,6 +150,6 @@ html(lang='es')
         // Modal Caption (Image Text)
         #caption
       //- Enlaces Script JS
-      script(src='../js/vendor/jquery.min.js')
-      script(src='../js/vendor/materialize.min.js')
-      script(src='../js/index.js')
+    script(src='../js/vendor/jquery.min.js')
+    script(src='../js/vendor/materialize.min.js')
+    script(src='../js/index.js')
