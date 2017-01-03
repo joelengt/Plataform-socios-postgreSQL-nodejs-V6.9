@@ -325,6 +325,7 @@
     $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
   }
 
+  // Paramtros de filtro
   function workFilter(limitEachPage, contentHtml, type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic) {
 
     // console.log(type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic)
@@ -356,6 +357,7 @@
 
   }
 
+  //Almacenamiento de data de nuevo socio
   function saveData(data){
     // var storage = sessionStorage.getItem('CS')
     var dataForm = JSON.parse(sessionStorage.getItem('CS'))
@@ -375,6 +377,7 @@
     console.log(JSON.parse(sessionStorage.getItem('CS')))
   }
 
+  // Extraccion de data de formulario
   function meSerialize(form){
     var contentsOptions = form.find('.row')
     console.log(contentsOptions.length)
@@ -407,6 +410,7 @@
     return data
   }
 
+  // Accion de boton anterior para template de formulario
   function actionBtnPrev(form, dataBtn, modal_body, btnMore, btnPrev, btnNext) {
     form.remove()
     if (dataBtn === 'tpl_data_civil') {
@@ -440,6 +444,7 @@
 
   }
 
+  // Accion de boton Siguiente para template de formulario
   function actionBtnNext(form, data, modal_body, btnPrev, btnNext, btnSave){
     form.remove()
     console.log(form, data, modal_body, btnPrev, btnNext)
@@ -463,6 +468,7 @@
     }
   }
 
+  // Accion de boton mas infomacion para template de formulario
   function moreInfo(){
     var btnMore = $(this)
     var parent = $(this).parents('#modalForm')
@@ -494,6 +500,7 @@
 
   }
 
+  // Accion de boton en formulario
   function btnPrev() {
     // var btn = $(this)
     var parent = $(this).parents('#modalForm')
@@ -510,7 +517,7 @@
 
     actionBtnPrev(form, dataPart, modal_body, btnMore, btnPrev, btnNext)
   }
-
+  // Accion de boton en formulario
   function btnNext() {
     // var btn = $(this)
     var parent = $(this).parents('#modalForm')
@@ -526,7 +533,7 @@
 
     actionBtnNext(form, dataPart, modal_body, btnPrev, btnNext, btnSave)
   }
-
+  // Accion de boton en formulario
   function btnSave() {
     var parent = $(this).parents('#modalForm')
     var modal_body = parent.find('.ModalForm__content')
@@ -559,6 +566,7 @@
     })
   }
 
+  // Pequeño template para formulario segun tipo de fuerza
   function plt_fource(typeFource, params) {
     var tpl
     if (typeFource === 'PNP') {
@@ -571,6 +579,7 @@
     return tpl
   }
 
+  // Template para llenado de datos de nuevo socio
   function tpl_create_partner(modal_body, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
@@ -623,6 +632,7 @@
     Materialize.updateTextFields()
   }
 
+  // Template para datos de socio civil
   function tpl_data_civil(modal_body, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
@@ -667,6 +677,8 @@
     $('.selectForm').material_select()
     Materialize.updateTextFields()
   }
+
+  // Template para datos de socio PNP
   function tpl_data_pnp(modal_body, prev, typeFource, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     console.log(typeFource)
@@ -719,6 +731,8 @@
     $('.selectForm').material_select()
     Materialize.updateTextFields()
   }
+
+  // Template para datos de trabajo 
   function tpl_data_work(modal_body, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
@@ -760,6 +774,8 @@
     $('.selectForm').material_select()
     Materialize.updateTextFields()
   }
+
+  // Template para datos de contacto
   function tpl_data_contact(modal_body, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
@@ -807,6 +823,8 @@
     $('.selectForm').material_select()
     Materialize.updateTextFields()
   }
+
+  //Template para datos de conyugue de socio
   function tpl_data_spouse(modal_body, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
@@ -853,6 +871,7 @@
     Materialize.updateTextFields()
   }
 
+  // Modal para creacion de nuevo socio
   function CreateFormSocio(contentHtml, params) {
     sessionStorage.setItem('CS', JSON.stringify({}))
     var modal = document.createElement('div')
@@ -878,6 +897,7 @@
     $('.ModalForm').modal({
       complete: function(ev){
         ev.remove()
+        sessionStorage.removeItem('CS')
       }
     })
 
@@ -1028,7 +1048,6 @@
 
     //Creacion de Modal (crear socio)
     function createModal(){
-      console.log('asasa')
       CreateFormSocio($boxConntentPage)
     }
 
