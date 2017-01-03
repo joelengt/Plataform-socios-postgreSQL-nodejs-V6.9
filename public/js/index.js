@@ -252,6 +252,7 @@
     console.log('--------------------');
 
   }
+  
   // Modal de image
   function showModalImage(imagePath, imageAlt) {
     console.log('Imagen path');
