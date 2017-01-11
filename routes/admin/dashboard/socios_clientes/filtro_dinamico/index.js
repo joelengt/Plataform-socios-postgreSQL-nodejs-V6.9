@@ -39,11 +39,9 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
         var param_tipo_socio = req.query.tipo_socio                   || 'todos';
         var param_situacion_socio = req.query.situacion_socio         || 'todos';
         var param_tipo_pago = req.query.tipo_pago                     || 'todos';
-        var param_situacion_trabajo = req.query.situacion_trabajo     || 'todos'
-        var param_carta_declaratoria = req.query.carta_declaratoria   || 'todos'
-        var param_onomastico = req.query.onomastico                   || 'todos'
-
-
+        var param_situacion_trabajo = req.query.situacion_trabajo     || 'todos';
+        var param_carta_declaratoria = req.query.carta_declaratoria   || 'todos';
+        var param_onomastico = req.query.onomastico                   || 'todos';
 
         // var socio_filter_params = {
         //     tipo_socio:           param_tipo_socio.toLowerCase(),

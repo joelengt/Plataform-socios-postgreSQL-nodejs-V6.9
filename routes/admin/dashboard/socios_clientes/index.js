@@ -664,7 +664,7 @@ app.get('/form-to-register', isLoggedIn, function (req, res) {
      }
 })
 
-// Viewer: From Edit
+// Viewer: Form Edit
 app.get('/form-to-edit/:table_select/:socio_id', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.onwers ||
        req.user.permiso === users_type.admins ||
