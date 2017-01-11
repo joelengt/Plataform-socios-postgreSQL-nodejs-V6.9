@@ -7,12 +7,12 @@ var config = {
 		pass : '12345678'
 	},
 	mongodb:{
-		local: 'mongodb://localhost/astrum',
-		mlab: 'mongodb://astrum:astrum@ds145395.mlab.com:45395/astrum'
+		//local: 'mongodb://localhost/astrum',
+		local: 'mongodb://astrum:astrum@ds145395.mlab.com:45395/astrum'
 	},
 	postgresql: {
-	  //local: 'postgres://postgres:kuroyukihime2110@localhost:4002/caballeria_db', // mac joel
-	  local: 'postgres://postgres:postgres@localhost:5432/caballeria_db',         // servidor
+	  local: 'postgres://postgres:kuroyukihime2110@localhost:4002/caballeria_db', // mac joel
+	  //local: 'postgres://postgres:postgres@localhost:5432/caballeria_db',         // servidor
 	  //local: 'postgres://postgres:gatogato@localhost:5432/caballeria_db', // windows maycon
 	  data_connect: {
 	  	user: 'joelengt', //env var: PGUSER

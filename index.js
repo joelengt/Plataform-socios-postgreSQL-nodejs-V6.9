@@ -25,7 +25,7 @@ process.on('uncaughtException', function(err) {
 })
 
 //Conexión con Mongodb
-mongoose.connect(config.mongodb.mlab , function (err) {
+mongoose.connect(config.mongodb.local, function (err) {
 	if(err) {
 		return console.log('Error al connectar database: ' + err)
 	}
