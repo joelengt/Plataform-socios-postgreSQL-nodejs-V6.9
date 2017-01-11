@@ -28,11 +28,11 @@ function isLoggedIn(req, res, next) {
 }
 
 // READ One item by id from list
-app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+app.get('/table/:table_select/columns/params', function (req, res) {
+    // if(req.user.permiso === users_type.onwers ||
+    //    req.user.permiso === users_type.admins ||
+    //    req.user.permiso === users_type.officers ||
+    //    req.user.permiso === users_type.viewer) {
 
         var table_select = Number(req.params.table_select);
 
@@ -68,12 +68,12 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
         if(table_select >= 0 && table_select <= 2) {
 
             // Options Filter
-            if(socio_filter_params.tipo_socio ===          'todos' &&
-               socio_filter_params.situacion_socio ===     'todos' &&
-               socio_filter_params.tipo_pago ===           'todos' &&
-               socio_filter_params.situacion_trabajo ===   'todos' &&
-               socio_filter_params.carta_declaratoria ===  'todos' &&
-               socio_filter_params.onomastico ===          'todos') {
+            if(socio_filter_params.tipo_socio ===          'Todos' &&
+               socio_filter_params.situacion_socio ===     'Todos' &&
+               socio_filter_params.tipo_pago ===           'Todos' &&
+               socio_filter_params.situacion_trabajo ===   'Todos' &&
+               socio_filter_params.carta_declaratoria ===  'Todos' &&
+               socio_filter_params.onomastico ===          'Todos') {
 
                queryFiler = `SELECT * FROM ${ data_value_tablas[table_select] };`;
 
@@ -230,6 +230,7 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                         break;
                 }
 
+                // Validante each option 
                 if(filtro_tipo_socio          !== '' ||
                    filtro_situacion_socio     !== '' ||
                    filtro_tipo_pago           !== '' ||
@@ -237,15 +238,43 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                    filtro_carta_declaratoria  !== '' ||
                    filtro_onomastico          !== '') {
 
+                   var query_string = '';
+                   var final_query = [filtro_tipo_socio, 
+                                      filtro_situacion_socio,
+                                      filtro_tipo_pago,
+                                      filtro_situacion_trabajo, 
+                                      filtro_carta_declaratoria, 
+                                      filtro_onomastico]; 
+
+                    for(var e = 0; e <= final_query.length - 1; e++) {
+                        var element = final_query[e];
+
+                        if(element !== '' && e < final_query.length - 2) {
+                            query_string += element + ' AND ';
+                        }
+
+                        if(e === final_query.length - 1) {
+                            query_string += element;
+                            query_string += ' AND ';
+                        }
+
+                    }
+
+                    // Validate if not blank
+
                     // Si tienen almenos un campo lleno
                     queryFiler = `SELECT * FROM ${ data_value_tablas[table_select] }
-                                  WHERE  
-                                  ${ filtro_tipo_socio }
-                                  ${ filtro_situacion_socio }
-                                  ${ filtro_tipo_pago }
-                                  ${ filtro_situacion_trabajo }
-                                  ${ filtro_carta_declaratoria }
-                                  ${ filtro_onomastico };`;
+                                  WHERE
+                                  ${ query_string };`;
+
+                    // queryFiler = `SELECT * FROM ${ data_value_tablas[table_select] }
+                    //               WHERE
+                    //               ${ filtro_tipo_socio }
+                    //               ${ filtro_situacion_socio }
+                    //               ${ filtro_tipo_pago }
+                    //               ${ filtro_situacion_trabajo }
+                    //               ${ filtro_carta_declaratoria }
+                    //               ${ filtro_onomastico };`;
 
                 } else {
 
@@ -310,13 +339,13 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
           })
         }
 
-    } else {
-        console.log('El usuario no esta autentificado. Requiere logearse')
-        res.status(403).json({
-            status: 'not_access',
-            message: 'El usuario no esta autentificado. Requiere logearse'
-        })
-    }
+    // } else {
+    //     console.log('El usuario no esta autentificado. Requiere logearse')
+    //     res.status(403).json({
+    //         status: 'not_access',
+    //         message: 'El usuario no esta autentificado. Requiere logearse'
+    //     })
+    // }
 });
 
 module.exports = app
