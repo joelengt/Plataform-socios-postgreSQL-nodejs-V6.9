@@ -1,5 +1,8 @@
 var config = {
-	owner: {
+	server: {
+        port: 5000
+    },
+    owner: {
 		name: 'Caballeria'
 	},
 	admin:{
