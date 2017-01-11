@@ -734,5 +734,4 @@ app.get('/form-to-edit/:table_select/:socio_id', isLoggedIn, function (req, res)
      }
 })
 
-
 module.exports = app
