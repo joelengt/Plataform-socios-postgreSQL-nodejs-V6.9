@@ -86,7 +86,7 @@ app.post('/send', function (req, res) {
                         password: response.user_found.password
                     }
                 }
-
+                
                 console.log('Datos del usuario a recibir')
                 console.log(user_data_send)
                 
