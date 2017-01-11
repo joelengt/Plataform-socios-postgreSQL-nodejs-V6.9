@@ -12,6 +12,7 @@
     "async": "^2.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
+    "chai": "^3.5.0",
     "client-request": "^1.0.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.1",
@@ -24,6 +25,7 @@
     "materialize-css": "^0.97.8",
     "merge-descriptors": "^1.0.1",
     "method-override": "^2.3.5",
+    "mocha": "^3.2.0",
     "mongoose": "^4.4.12",
     "morgan": "^1.7.0",
     "msexcel-builder": "0.0.2",
@@ -49,7 +51,7 @@
     "stylus": "^0.54.2"
   },
   "scripts": {
-    "test": "tape ./test/index.js",
+    "test": "mocha ./test/test.js",
     "build-css": "stylus -u nib -w ./lib/style.styl -o ./public/css/style.css",
     "build-js": "browserify -t [ babelify --presets [ es2015 ] ] lib/index.js > ./public/js/main.js",
     "start": "node index.js"
