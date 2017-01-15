@@ -19,6 +19,7 @@
     "crypto": "0.0.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "hogan.js": "^3.0.2",
     "jade": "^1.11.0",
     "jquery": "^2.2.4",
     "jsonwebtoken": "^7.1.9",

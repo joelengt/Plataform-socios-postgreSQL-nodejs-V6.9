@@ -21,15 +21,15 @@ var config = require('./config')
 
 // Prevenir error y mostrar primero en la consola
 process.on('uncaughtException', function(err) {
-	console.log(err)
+    console.log(err)
 })
 
 //Conexión con Mongodb
 mongoose.connect(config.mongodb.local, function (err) {
-	if(err) {
-		return console.log('Error al connectar database: ' + err)
-	}
-	console.log('Exito base de datos connectada')
+    if(err) {
+        return console.log('Error al connectar database: ' + err)
+    }
+    console.log('Exito base de datos connectada')
 })
 
 // middlawares
@@ -115,20 +115,20 @@ app.use('/dashboard/try-build-pdf', dashboard_export_pdf)
 
 // Error 404
 app.use(function (req, res) {
-	res.statusCode = 404
-	res.send('Error 404: Pagina No Encontrada')
+    res.statusCode = 404
+    res.send('Error 404: Pagina No Encontrada')
 })
 
 // Error 500
 app.use(function (req, res) {
-	res.statusCode = 500
-	res.send('Error 500: Error del Servidor, Porfavor intentelo más tarde')
+    res.statusCode = 500
+    res.send('Error 500: Error del Servidor, Porfavor intentelo más tarde')
 })
 
 //Start server
 server.listen(app.set('port'), function (err) {
-	if(err) {
-		return console.log('Error al iniciar server en el puerto: ' + err)
-	}
-	console.log('Server iniciado en el puerto: ' + app.set('port'))
+    if(err) {
+        return console.log('Error al iniciar server en el puerto: ' + err)
+    }
+    console.log('Server iniciado en el puerto: ' + app.set('port'))
 })
