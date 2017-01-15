@@ -4,10 +4,6 @@ var jwt = require('jsonwebtoken')
 var app = express.Router()
 
 var Users = require('../../../../models/usuarios/index.js')
-
-var Contratista = require('../../../../models/usuarios/contratistas/index.js')
-var Empresas_Cliente = require('../../../../models/usuarios/empresas_clientes/index.js')
-
 var FindUserData = require('../../../../controllers/find_user_data/index.js')
 
 var config = require('../../../../config.js')
@@ -26,20 +22,17 @@ function isLoggedIn(req, res, next) {
         })
 }
 
-// API: READ Lista de usuarios segun el tipo pasado
+// API: READ Lista de usuarios segun el tipo
 app.get('/list/:type_user', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var type_user = req.params.type_user
 
-        if(type_user === config.users_access.onwers ||
-           type_user === config.users_access.admins ||
-           type_user === config.users_access.officers ||
-           type_user === config.users_access.users_campo ||
-           type_user === config.users_access.viewer) {
+        if(req.user.permiso === users_type.super_admin ||
+           req.user.permiso === users_type.administrador ||
+           req.user.permiso === users_type.tesorero) {
 
             // Lectura de base de datos segun el listo de usuario para la lista
             Users.find(function (err, users) {
@@ -52,19 +45,49 @@ app.get('/list/:type_user', isLoggedIn, function (req, res) {
                 }
 
                 // filtrando usuarios segun el parametro solicitado
-                var usuarios_filter = users.filter(function (element) {
-                    return element.permiso === type_user
-                })
-                
-                // Filtrando segun la empresa
-                var usuarios_empresa = usuarios_filter.filter(function(element) {
-                    return element.empresa_admin === req.user.empresa_admin
-                })          
+                var usuarios_nivel_access = [];
+
+                // Si el parametro es user super_admin
+                if(type_user === users_type.super_admin) {
+                    console.log('Usuarios Super Admins')
+                    // FIltro por Nivel defeco de permiso
+                    usuarios_nivel_access = users.filter(function (element) {
+                        return element.permiso === users_type.super_admin
+                    })
+
+                // Si el parametro es administrador
+                } else if(type_user === users_type.administrador){
+                    console.log('Usuarios Administradores')
+
+                    // FIltro por Nivel defeco de permiso
+                    usuarios_nivel_access = users.filter(function (element) {
+                        return element.permiso === users_type.administrador
+                    })
+
+                // Si el parametro es de tesorero
+                } else if(type_user === users_type.tesorero) {
+                    console.log('Usuarios Tesoreros')
+
+                    // FIltro por Nivel defeco de permiso
+                    usuarios_nivel_access = users.filter(function (element) {
+                        return element.permiso === users_type.tesorero
+                    })
+
+                } else if(type_user === 'todos'){
+                    console.log('Todos')
+                    // FIltro por Nivel defeco de permiso  ''Todos''
+                    usuarios_nivel_access = users
+
+                } else {
+                    console.log('El parametro de seleccion de usuario no es correcto')
+                    usuarios_nivel_access = []
+
+                }
 
                 res.status(200).json({
                     user: req.user,
                     type_user: type_user,
-                    usuarios: usuarios_empresa
+                    usuarios: usuarios_nivel_access
                 })
 
             })
@@ -91,13 +114,13 @@ app.get('/list/:type_user', isLoggedIn, function (req, res) {
 
 // API: CREATE - Registrando nuevo usuario
 app.post('/:type_user/register', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-      req.user.permiso === users_type.admins ||
-      req.user.permiso === users_type.officers) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var type_user = req.params.type_user
 
-        if( req.body.password === req.body.re_password ) {
+        if(req.body.password === req.body.re_password ) {
             var contratista = ''
             var empresa_admin = ''
             var permiso = ''
@@ -113,58 +136,36 @@ app.post('/:type_user/register', isLoggedIn, function (req, res) {
                 email:          req.body.email || '',
                 username:       req.body.username || 'anonymous',
                 password:       req.body.password,
-                empresa_admin:  '',
-                contratista:    '',
                 permiso:        ''
             })
 
-            console.log('NIVEL DE OWNER NOMBRE PARA TODO')
-            console.log(config.owner.name)
-            
             // Validando pertenencia del usuario en el registro
-            if(type_user === users_type.onwers) {
-                console.log('El usuario creado se va para : ' + users_type.onwers)
+            if(type_user === users_type.super_admin) {
+                console.log('El usuario creado sera: ' + users_type.super_admin)
                 // El usuario es owner
-                empresa_admin =  config.owner.name
-                contratista =    '57eaacc4dcc91fb00aceae32'  // Owners
-                permiso =        users_type.onwers
+                permiso =        users_type.super_admin
 
-            } else if (type_user === users_type.admins) {
-                console.log('El usuario creado se va para : ' + users_type.admins)
+            } else if (type_user === users_type.administrador) {
+                console.log('El usuario creado sera: ' + users_type.administrador)
 
                 // El usuario es admin
-                empresa_admin =  req.body.empresa_admin
-                contratista =    '57eaacc4dcc91fb00aceae32'  // Admins
-                permiso =        users_type.admins
+                permiso =        users_type.administrador
 
-            } else if (type_user === users_type.officers) {
-                console.log('El usuario creado se va para : ' + users_type.officers)
+            } else if (type_user === users_type.tesorero) {
+                console.log('El usuario creado seera: ' + users_type.tesorero)
 
                 // El usuario es de oficina
-                empresa_admin =  req.user.empresa_admin
-                contratista =    '57eaacc9dcc91fb00aceae33'  // Officers
-                permiso =        users_type.officers
-
-            } else if(type_user === users_type.viewer) {
-                console.log('El usuario creado se va para : ' + users_type.viewer)
-
-                // El usuario es de oficina
-                empresa_admin =  req.user.empresa_admin
-                contratista =    '57eaacd0dcc91fb00aceae34'  // Viewers
-                permiso =        users_type.viewer
-
+                permiso =        users_type.tesorero
+            
             } else {
-                console.log('El usuario creado se va para : ' + users_type.users_campo)
-
-                // El usuario es de campo
-                empresa_admin =  req.user.empresa_admin 
-                contratista =    req.body.contratista || '57eaacd4dcc91fb00aceae35'  // Campo
-                permiso =        users_type.users_campo
+                return res.status(400).json({
+                    status: 'Bad Request',
+                    message: `The param ${ users_type } is not valid`
+                })
+                
             }
 
             // Asignando valores de seleccion
-            new_user.empresa_admin = empresa_admin
-            new_user.contratista = contratista
             new_user.permiso = permiso
 
             new_user.save(function (err, user_saved) {
@@ -195,15 +196,8 @@ app.post('/:type_user/register', isLoggedIn, function (req, res) {
                     console.log(msg)
                     console.log(new_user)
 
-                    if(type_user === users_type.onwers) {
+                    if(type_user === users_type.super_admin) {
                         // Form para owner
-                        /*res.render('./admin/dashboard/usuarios/new_user/owner/index.jade', {
-                            user: req.user,
-                            type_user: type_user,
-                            new_user: new_user,
-                            msg: msg
-                        })*/
-
                         res.status(200).json({
                             user: req.user,
                             type_user: type_user,
@@ -211,74 +205,29 @@ app.post('/:type_user/register', isLoggedIn, function (req, res) {
                             msg: msg
                         })
 
-                    } else if(type_user === users_type.admins) {
+                    } else if(type_user === users_type.administrador) {
                         // Form para admin
-                        Empresas_Cliente.find(function (err, empresas) {
-                            /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                                user: req.user,
-                                type_user: type_user,
-                                empresas: empresas,
-                                new_user: new_user,
-                                msg: msg
-                            })*/
-
-                            res.status(200).json({
-                                user: req.user,
-                                type_user: type_user,
-                                empresas: empresas,
-                                new_user: new_user,
-                                msg: msg
-                            })
+                        res.status(200).json({
+                            user: req.user,
+                            type_user: type_user,
+                            new_user: new_user,
+                            msg: msg
                         })
 
-                    } else if(type_user === users_type.officers || type_user === users_type.viewer) {
+                    } else if(type_user === users_type.tesorero) {
                         // Form para officer
-                        Empresas_Cliente.find(function (err, empresas) {
-                            /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                                user: req.user,
-                                type_user: type_user,
-                                empresas: empresas,
-                                new_user: new_user,
-                                msg: msg
-                            })*/
-
-                            res.status(200).json({
-                                user: req.user,
-                                type_user: type_user,
-                                empresas: empresas,
-                                new_user: new_user,
-                                msg: msg
-                            })
+                        res.status(200).json({
+                            user: req.user,
+                            type_user: type_user,
+                            new_user: new_user,
+                            msg: msg
                         })
-
-                    } else if (type_user === users_type.users_campo) {
-                        // Buscando lista de contratista en la base de datos
-                        Contratista.find(function (err, contratistas) {
-
-                            // Mostrando lista de nuevos contratistas
-                            /*res.render('./admin/dashboard/usuarios/new_user/campo/index.jade', {
-                                user: req.user,
-                                type_user: type_user,
-                                contratistas: contratistas,
-                                new_user: new_user,
-                                msg: msg
-                            })*/
-
-                            res.status(200).json({
-                                user: req.user,
-                                type_user: type_user,
-                                contratistas: contratistas,
-                                new_user: new_user,
-                                msg: msg
-                            })
-                        })      
 
                     } else {
                         res.status(200).json({
                             status: 'not_permition',
                             msg: 'Error, al ingregrar, ud. no tiene permiso'
                         })
-                        
                     }
 
 
@@ -290,93 +239,42 @@ app.post('/:type_user/register', isLoggedIn, function (req, res) {
 
             msg = 'La contraseñas no coincide'
 
-            if(type_user === users_type.onwers) {
-                // Form para owner
-                /*res.render('./admin/dashboard/usuarios/new_user/owner/index.jade', {
-                    user: req.user,
-                    type_user: type_user,
-                    msg: msg
-                })*/
-
+            if(type_user === users_type.super_admin) {
                 res.status(200).json({
                     user: req.user,
                     type_user: type_user,
                     msg: msg
                 })
 
-            } else if(type_user === users_type.admins) {
-                // Form para admin
-                Empresas_Cliente.find(function (err, empresas) {
-                    /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                        user: req.user,
-                        type_user: type_user,
-                        empresas: empresas,
-                        msg: msg
-                    })*/
-
-                    res.status(200).json({
-                        user: req.user,
-                        type_user: type_user,
-                        empresas: empresas,
-                        msg: msg
-                    })
+            } else if(type_user === users_type.administrador) {
+                res.status(200).json({
+                    user: req.user,
+                    type_user: type_user,
+                    msg: msg
                 })
 
-            } else if(type_user === users_type.officers) {
-                // Form para officer
-                Empresas_Cliente.find(function (err, empresas) {
-                    /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                        user: req.user,
-                        type_user: type_user,
-                        empresas: empresas,
-                        msg: msg
-                    })*/
-
-                    res.status(200).json({
-                        user: req.user,
-                        type_user: type_user,
-                        empresas: empresas,
-                        msg: msg
-                    })
+            } else if(type_user === users_type.tesorero) {
+                res.status(200).json({
+                    user: req.user,
+                    type_user: type_user,
+                    msg: msg
                 })
 
             } else if(type_user === users_type.viewer) {
-                // Form para officer
-                Empresas_Cliente.find(function (err, empresas) {
-                    /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                        user: req.user,
-                        type_user: type_user,
-                        empresas: empresas,
-                        msg: msg
-                    })*/
-
-                    res.status(200).json({
-                        user: req.user,
-                        type_user: type_user,
-                        empresas: empresas,
-                        msg: msg
-                    })
+                res.status(200).json({
+                    user: req.user,
+                    type_user: type_user,
+                    msg: msg
                 })
 
             } else if (type_user === users_type.users_campo) {
                 // Buscando lista de contratista en la base de datos
-                Contratista.find(function (err, contratistas) {
-
-                    // Mostrando lista de nuevos contratistas
-                    /*res.render('./admin/dashboard/usuarios/new_user/campo/index.jade', {
-                        user: req.user,
-                        type_user: type_user,
-                        contratistas: contratistas,
-                        msg: msg
-                    })*/
-
-                    res.status(200).json({
-                        user: req.user,
-                        type_user: type_user,
-                        contratistas: contratistas,
-                        msg: msg
-                    })
-                })      
+                res.status(200).json({
+                    user: req.user,
+                    type_user: type_user,
+                    contratistas: contratistas,
+                    msg: msg
+                })
 
             } else {
                 res.status(200).json({
@@ -402,10 +300,9 @@ app.post('/:type_user/register', isLoggedIn, function (req, res) {
 
 // API: READ - Obteniendo usuario por id
 app.get('/:user_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var user_id = req.params.user_id
         
@@ -446,9 +343,9 @@ app.get('/:user_id', isLoggedIn, function (req, res) {
 
 // API: DELETE - Eliminando usuario 
 app.delete('/delete/:user_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
        var user_id = req.params.user_id
 
@@ -483,9 +380,9 @@ app.delete('/delete/:user_id', isLoggedIn, function (req, res) {
 
 // API: UPDATE - Edit usuario
 app.put('/edit/:user_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
        var user_id = req.params.user_id
 
@@ -499,8 +396,6 @@ app.put('/edit/:user_id', isLoggedIn, function (req, res) {
             }
 
             var data = {
-                empresa_admin: req.body.empresa_admin || user_found1.empresa_admin, 
-                contratista:   req.body.contratista || user_found1.contratista,  
                 names:         req.body.names || user_found1.names,
                 last_names:    req.body.last_names || user_found1.last_names,
                 full_name:     req.body.names + ' ' + req.body.last_names || user_found1.full_name,
@@ -563,18 +458,6 @@ app.put('/edit/:user_id', isLoggedIn, function (req, res) {
                             })
                         }
 
-                        // Relogin session passport
-                        /*
-                        req.login(user_found1, function (err) {
-                            if(err) {
-                                return res.status(500).json({
-                                    status: 'error_server',
-                                    message: 'Error al encontrar relogear',
-                                    error: err
-                                })
-                            }
-                        })*/
-
                         res.status(200).json({
                             status: 'uset_update',
                             message: 'Datos de usuario actualizado',
@@ -609,19 +492,6 @@ app.put('/edit/:user_id', isLoggedIn, function (req, res) {
                         }
                         console.log('Usuario a punto de realogear')
 
-                        /*
-                        // Relogin session passport
-                        req.login(user_found1, function (err) {
-                            if(err) {
-                                return res.status(500).json({
-                                    status: 'error_server',
-                                    message: 'Error al encontrar relogear',
-                                    error: err
-                                })
-                            }
-                            console.log('Usuario relogeado')
-                        })*/
-
                         console.log('Usuario data de entrega')
 
                         res.status(200).json({
@@ -649,11 +519,10 @@ app.put('/edit/:user_id', isLoggedIn, function (req, res) {
 })
 
 // Render select de opciones y todos los usuarios
-app.get('/', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+app.get('/get-list', isLoggedIn, function (req, res) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
        
        // obteniendo lista de todos los usuarios
         Users.find(function (err, usuarios) {
@@ -668,222 +537,12 @@ app.get('/', isLoggedIn, function (req, res) {
             console.log('Lista de usuarios encontrados')
 
             console.log(usuarios)
-            /*
-            res.render('./admin/dashboard/usuarios/index.jade', {
-                user: req.user,
-                list_usuarios: usuarios
-            })*/
 
             res.status(200).json({
                 user: req.user,
                 list_usuarios: usuarios
             })
 
-        })
-
-    } else {
-        console.log('El usuario no esta autentificado. Requiere logearse')
-         res.status(403).json({
-            status: 'not_access',
-            message: 'El usuario no esta autentificado. Requiere logearse'
-         })
-    }
-})
-
-// Render nuevo formulario, con lista de contratista
-app.get('/:type_user/new', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-      req.user.permiso === users_type.admins ||
-      req.user.permiso === users_type.officers ||
-      req.user.permiso === users_type.viewer) {
-
-        console.log('YOU CALL ME')
-        var type_user = req.params.type_user
-
-        if(type_user === users_type.onwers) {
-            // Form para owner
-            /*res.render('./admin/dashboard/usuarios/new_user/owner/index.jade', {
-                user: req.user,
-                type_user: type_user
-            })*/
-
-            res.status(200).json({
-                user: req.user,
-                type_user: type_user
-            })
-
-        } else if(type_user === users_type.admins) {
-            // Form para admin
-            Empresas_Cliente.find(function (err, empresas) {
-                /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                    user: req.user,
-                    type_user: type_user,
-                    empresas: empresas
-                })*/
-
-                res.status(200).json({
-                    user: req.user,
-                    type_user: type_user,
-                    empresas: empresas
-                })
-            })
-
-        } else if(type_user === users_type.officers ||
-                  type_user === users_type.viewer) {
-
-            // Form para officer
-            Empresas_Cliente.find(function (err, empresas) {
-                /*res.render('./admin/dashboard/usuarios/new_user/admin/index.jade', {
-                    user: req.user,
-                    type_user: type_user,
-                    empresas: empresas
-                })*/
-
-                res.status(200).json({
-                    user: req.user,
-                    type_user: type_user,
-                    empresas: empresas
-                })
-            })
-
-        } else if (type_user === users_type.users_campo) {
-            // Buscando lista de contratista en la base de datos
-            Contratista.find(function (err, contratistas) {
-                // Mostrando lista de nuevos contratistas
-                
-                /*res.render('./admin/dashboard/usuarios/new_user/campo/index.jade', {
-                    user: req.user,
-                    type_user: type_user,
-                    contratistas: contratistas
-                })*/
-
-                var new_contratistas = []
-
-                // Validando envio. Filtrando:
-                for(var m = 0; m <= contratistas.length - 1; m++) {
-                    var element_contratista = contratistas[m]
-
-                    if(element_contratista.name === 'Owners' ||
-                       element_contratista.name === 'Officers' ||
-                       element_contratista.name === 'Viewers' ||
-                       element_contratista.name === 'Campo') {
-
-                        continue;
-
-                    } else {
-
-                        new_contratistas.push(element_contratista)
-
-                    }
-
-                }
-                
-                console.log('CONTRATISTA')
-                console.log(new_contratistas)
-
-                res.status(200).json({
-                    user: req.user,
-                    type_user: type_user,
-                    contratistas: new_contratistas
-                })
-            })
-            
-
-        } else {
-            res.status(200).json({
-                status: 'not_permition',
-                message: 'Error, al ingregrar, ud. no tiene permiso'
-            })
-            
-        }
-
-        
-    } else {
-        console.log('El usuario no esta autentificado. Requiere logearse')
-         res.status(403).json({
-            status: 'not_access',
-            message: 'El usuario no esta autentificado. Requiere logearse'
-         })
-    }
-})
-
-// API: CREATE - Agregando nuevo contratista
-app.post('/contratista-name/add', isLoggedIn , function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers) {
-        
-        // Obteniendo datos de la creación
-        var data = {
-            contratista: req.body.contratista
-        }
-
-        // Almacenando al nuevo contratista
-        var new_contratista = new Contratista({
-            name: data.contratista  || '',
-            empresa: req.user.empresa_admin ||  ''
-        })
-
-        console.log('Nueva empresa contratista agregando')
-        console.log(new_contratista)
-        
-        // Guardando al nuevo contratista en la base de datos
-        new_contratista.save(function (err) {
-            if(err) {
-                return res.status(500).json({
-                    status: 'error_server',
-                    message: 'Error al almancenar nuevo contratista',
-                    error: err
-                })
-            }
-            console.log('EL nuevo contratista se guardo en la base de datos')
-            // Respuesta nombre contratista
-            res.status(200).json({
-                user: req.user,
-                contratista: new_contratista
-            })
-        })
-
-    } else {
-        console.log('El usuario no esta autentificado. Requiere logearse')
-         res.status(403).json({
-            status: 'not_access',
-            message: 'El usuario no esta autentificado. Requiere logearse'
-         })
-    }
-})
-
-// API: CREATE - Agregando nuevo contratista
-app.post('/empresa-cliente-name/add', isLoggedIn , function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-      req.user.permiso === users_type.admins ||
-      req.user.permiso === users_type.officers) {
-        
-        // Obteniendo datos de la creación
-        var data = {
-            empresa: req.body.empresa || ''
-        }
-
-        // Almacenando al nuevo contratista
-        var new_empresa_client = new Empresas_Cliente({
-            name: data.empresa
-        })
-
-        // Guardando al nuevo contratista en la base de datos
-        new_empresa_client.save(function (err) {
-            if(err) {
-                return res.status(500).json({
-                    status: 'error_server',
-                    message: 'Error al almancenar nuevo contratista',
-                    error: err
-                })
-            }
-            console.log('EL nuevo contratista se guardo en la base de datos')
-            // Respuesta nombre contratista
-            res.status(200).json({
-                user: req.user,
-                empresa: new_empresa_client
-            })
         })
 
     } else {
@@ -897,13 +556,10 @@ app.post('/empresa-cliente-name/add', isLoggedIn , function (req, res) {
 
 //  Filtro: Busqueda dinamica
 app.get('/dynamic-filter/:user_type/:estado', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-      req.user.permiso === users_type.admins ||
-      req.user.permiso === users_type.officers) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
         
-        // estado  -> todos, activos, inactivos
-        // user type -> todos, officers, officer-viewer, users-campo
-
         var estado = req.params.estado
         var user_type = req.params.user_type
                 
@@ -937,34 +593,34 @@ app.get('/dynamic-filter/:user_type/:estado', isLoggedIn, function (req, res) {
                 var usuarios_nivel_access = []
 
                 // Si es admin : Permitir obtener todos los usuarios y clasificarlos
-                if(req.user.permiso === users_type.onwers || 
-                   req.user.permiso === users_type.admins ||
-                   req.user.permiso === users_type.officers) {
+                if(req.user.permiso === users_type.super_admin ||
+                   req.user.permiso === users_type.administrador ||
+                   req.user.permiso === users_type.tesorero) {
 
-                    // Si el parametro es user campo
-                    if(user_type === users_type.users_campo) {
-                        console.log('Usuarios campo')
+                    // Si el parametro es user super_admin
+                    if(user_type === users_type.super_admin) {
+                        console.log('Usuarios Super Admins')
                         // FIltro por Nivel defeco de permiso
                         usuarios_nivel_access = usuarios_empresa_filter.filter(function (element) {
-                            return element.permiso === users_type.users_campo
+                            return element.permiso === users_type.super_admin
                         })
 
-                    // Si el parametro es officers
-                    } else if(user_type === users_type.officers){
-                        console.log('Usuarios officer')
+                    // Si el parametro es administrador
+                    } else if(user_type === users_type.administrador){
+                        console.log('Usuarios Administradores')
 
                         // FIltro por Nivel defeco de permiso
                         usuarios_nivel_access = usuarios_empresa_filter.filter(function (element) {
-                            return element.permiso === users_type.officers
+                            return element.permiso === users_type.administrador
                         })
 
-                    // Si el parametro es de viewer
-                    } else if(user_type === users_type.viewer) {
-                        console.log('Usuarios viewers')
+                    // Si el parametro es de tesorero
+                    } else if(user_type === users_type.tesorero) {
+                        console.log('Usuarios Tesoreros')
 
                         // FIltro por Nivel defeco de permiso
                         usuarios_nivel_access = usuarios_empresa_filter.filter(function (element) {
-                            return element.permiso === users_type.viewer
+                            return element.permiso === users_type.tesorero
                         })
 
                     } else if(user_type === 'todos'){
@@ -984,7 +640,7 @@ app.get('/dynamic-filter/:user_type/:estado', isLoggedIn, function (req, res) {
                     console.log('TODOS SON USUARIOS de CAMPO')
                     // FIltro por Nivel defeco de permiso: user campo
                     usuarios_nivel_access = usuarios_empresa_filter.filter(function (element) {
-                        return element.permiso === users_type.users_campo
+                        return element.permiso === users_type.administrador
                     })
                 
                 }

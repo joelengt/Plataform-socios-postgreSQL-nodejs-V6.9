@@ -19,10 +19,9 @@ function isLoggedIn(req, res, next) {
 }
 
 app.get('/', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         console.log('El usuario tiene acceso a la plataforma')
         res.render('./dashboard/index.jade', {

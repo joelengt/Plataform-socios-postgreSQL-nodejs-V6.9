@@ -9,29 +9,17 @@ var config = require('../../config')
 var Users = require('../../models/usuarios')
 
 // Dashboard Plataforma Admin
+
 // Permiso de acceso usuario
-
 var config = require('../../config')
-var permiso = config.users_access
-
-// Login access - user admin 
-// app.get('/login', function (req, res) {
-//  res.render('./admin/login', {
-//      msg: 'Necesitas Logearte Primero'
-//  })
-// })
+var users_type = config.users_access
 
 app.get('/', function (req, res) {
 
-    if(req.user.permiso === users_type.onwers || 
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
         
-        // res.render('./admin/dashboard', {
-        //  user: req.user
-        // })
-
         res.status(200).json({
             status: 'ok'
             user: req.user
@@ -47,6 +35,5 @@ app.get('/', function (req, res) {
     }
 
 })
-
 
 module.exports = app

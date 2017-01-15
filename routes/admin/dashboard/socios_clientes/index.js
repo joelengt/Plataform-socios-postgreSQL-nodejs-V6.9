@@ -28,10 +28,9 @@ function isLoggedIn(req, res, next) {
 
 // READ list all
 app.get('/list/:value', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var value_select = Number(req.params.value)
 
@@ -88,10 +87,9 @@ app.get('/list/:value', isLoggedIn, function (req, res) {
 
 // READ One item by id from list
 app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
@@ -159,10 +157,9 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
 
 // CREATE item for list
 app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
         var table_select = Number(req.params.table_select);
 
         var results = [];
@@ -351,10 +348,9 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
 // DELETE item from list
 app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, res) {
 
-   if(req.user.permiso === users_type.onwers ||
-      req.user.permiso === users_type.admins ||
-      req.user.permiso === users_type.officers ||
-      req.user.permiso === users_type.viewer) {
+   if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
@@ -429,10 +425,10 @@ app.delete('/item/delete/:table_select/:socio_id', isLoggedIn, function (req, re
 
 // UPDATE item from list
 app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
+      
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
 
@@ -574,10 +570,9 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
 // Viewer: Socio by id
 // READ One item by id from list
 app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
@@ -645,10 +640,9 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
 
 // Viewer: Form Create
 app.get('/form-to-register', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         res.status(200).render('./dashboard/socio/create/index.jade', {
             status: 'ok',
@@ -666,10 +660,9 @@ app.get('/form-to-register', isLoggedIn, function (req, res) {
 
 // Viewer: Form Edit
 app.get('/form-to-edit/:table_select/:socio_id', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var socio_id = Number(req.params.socio_id);
         var table_select = Number(req.params.table_select);
