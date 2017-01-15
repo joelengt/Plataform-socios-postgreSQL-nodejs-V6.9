@@ -37,18 +37,6 @@ app.get('/', isLoggedIn, function (req, res) {
     }
 })
 
-// Use controller from json module
-var TestController = require('../../../controllers/test/index.js');
-
-app.get('/test', TestController.data);
-
-
-// Use controller from  class module
-var Test2ClassController = require('../../../controllers/test2/index.js');
-var Test2Controller = new Test2ClassController();
-
-app.get('/test-2', Test2Controller.info);
-app.get('/test-2/:id', Test2Controller.item);
 
 
 module.exports = app
