@@ -8,10 +8,13 @@ var Hogan = require('hogan.js')
 var fs = require('fs')
 
 // get file
-var template = fs.readFileSync('../../views/mail/template_mail_forgot_password.hjs','utf-8')
+// var template = fs.readFileSync('../../views/mail/template_mail_forgot_password.hjs')
+
+// console.log('Template email');
+// console.log(template);
 
 // compile template
-var compiledTemplate = Hogan.compile(template)
+// var compiledTemplate = Hogan.compile(template)
 
 function handleSayHello(user_data_send, callback) {
     // var fn = jade.compile('')
@@ -25,52 +28,52 @@ function handleSayHello(user_data_send, callback) {
         })
     )
 
-    // var template_html_get_data_account = `<html>
-    //                     <table width="600" border="0">
-    //                        <tr>
-    //                             <td>
-    //                                 <h3>Hola ${user_data_send.name}</h3>
-    //                             </td>
-    //                        </tr>
-    //                        <tr>
-    //                             <td>
-    //                                 <p> Sabemos que olvidaste tu usuario y contraseña, pero no te preocupes, aqui estan: </p>
-    //                             </td>
-    //                        </tr>
-    //                        <tr>
-    //                             <td>
-    //                                 <table width="100%">
-    //                                     <tr>
-    //                                        <td>
-    //                                             <div>
-    //                                                 <p>usuario: ${user_data_send.data.username}</p>
-    //                                             </div>
-    //                                             <div>
-    //                                                 <p>usuario: ${user_data_send.data.password}</p>
-    //                                             </div> 
-    //                                        </td>
-    //                                     </tr>
-    //                                     <tr>
-    //                                         <td>
-    //                                             <p> * Si, el usuario y contraseña, te son dificil de recordar, contacta con un usuario de oficina para cambiar tus datos</p>
-    //                                             <p> * No compartas tus datos de usuario con otras personas, por seguridad</p>
-    //                                         </td>
-    //                                     </tr>
-    //                                 </table>
-    //                             </td>
-    //                        </tr>
-    //                     </table>
-    //                 </html>`
+    var template_html_get_data_account = `<html>
+                        <table width="600" border="0">
+                           <tr>
+                                <td>
+                                    <h3>Hola ${user_data_send.name}</h3>
+                                </td>
+                           </tr>
+                           <tr>
+                                <td>
+                                    <p> Sabemos que olvidaste tu usuario y contraseña, pero no te preocupes, aqui estan: </p>
+                                </td>
+                           </tr>
+                           <tr>
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                           <td>
+                                                <div>
+                                                    <p>usuario: ${user_data_send.data.username}</p>
+                                                </div>
+                                                <div>
+                                                    <p>usuario: ${user_data_send.data.password}</p>
+                                                </div> 
+                                           </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p> * Si, el usuario y contraseña, te son dificil de recordar, contacta con un usuario de oficina para cambiar tus datos</p>
+                                                <p> * No compartas tus datos de usuario con otras personas, por seguridad</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                           </tr>
+                        </table>
+                    </html>`
 
     var mailOptions = {
         from: 'Joel  <joelengt@gmail.com>', // sender address
         to: user_data_send.email + ', ' +'joelengt@gmail.com', // list of receivers
         subject: 'Caballeria: Recuperar tu cuenta', // Subject line
         text: 'Caballeria: Recuperar tu cuenta',
-        // html: template_html_get_data_account
-        html: compiledTemplate.render({
-            name : user_data_send,
-        })
+        html: template_html_get_data_account
+        // html: compiledTemplate.render({
+        //     name : user_data_send,
+        // })
         // render templte
     }
 
