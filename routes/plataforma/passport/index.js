@@ -4,6 +4,9 @@ var jwt = require('jsonwebtoken')
 
 var app = express.Router()
 
+var config = require('../../../config.js')
+var users_type = config.users_access
+
 // passport config
 app.get('/logout', function(req, res) {
   req.logout()
@@ -51,8 +54,26 @@ app.post('/auth/dashboard', function(req, res, next) {
       	return next(err);
       }
 
-      res.redirect('/dashboard');
-    
+      // Validando tipo de usuario
+      if(user.permiso === users_type.super_admin) {
+        console.log('INGRESO => SUPER ADMIN');
+        // Si es Super Admin
+        res.redirect('/dashboard');
+
+      } else if(user.permiso === users_type.tesorero) {
+        console.log('INGRESO => TESORERO');
+
+        // Si es Tesorero
+        res.redirect('/dashboard/tesorero');
+
+      } else {
+        console.log('INGRESO => ADMINISTRATIVO');
+
+        // Si es Administrativo
+        res.redirect('/dashboard');
+
+      }
+
     });
 
   })(req, res, next);

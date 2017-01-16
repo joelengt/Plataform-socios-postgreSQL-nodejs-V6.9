@@ -51,7 +51,6 @@ app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use(flash())
 
-
 // Session timer estimate Limite: 30 días
 app.use(session({ secret: 'usuarioSession', cookie: { maxAge: 15 * 24 * 60 * 60 * 1000 }}))
 
@@ -72,13 +71,12 @@ register_user(app, passport)
 // Routes requerimiento
 
 // Routes - user
-
-// var login = require('./routes/login')
-// var plataforma = require('./routes/plataforma')
 var plataforma_passport = require('./routes/plataforma/passport')
 
 // Rotes - admin
 var dashboard = require('./routes/admin/dashboard')
+var dashboard_tesorero = require('./routes/admin/dashboard_tesorero')
+
 var dashboard_usurios = require('./routes/admin/dashboard/usuarios')
 
 var dashboard_perfil = require('./routes/admin/dashboard/perfil/index.js')
@@ -95,9 +93,7 @@ var dashboard_export_excel = require('./routes/admin/dashboard/excel_export/inde
 var dashboard_export_pdf = require('./routes/admin/dashboard/pdf_export/index.js')
 
 // Routes usage
-// app.use('/', login)
 app.use('/', plataforma_passport)
-// app.use('/plataforma', plataforma)
 
 app.use('/dashboard', dashboard)
 app.use('/dashboard/usuarios', dashboard_usurios)
@@ -112,6 +108,10 @@ app.use('/dashboard/socios-clientes/filter', dashboard_socios_clientes_filter)
 
 app.use('/dashboard/try-build-excel', dashboard_export_excel)
 app.use('/dashboard/try-build-pdf', dashboard_export_pdf)
+
+
+// Tesorero
+app.use('/dashboard/tesorero', dashboard_tesorero)
 
 // Error 404
 app.use(function (req, res) {
