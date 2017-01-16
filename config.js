@@ -15,7 +15,7 @@ var config = {
     },
     mongodb:{
         local: 'mongodb://localhost/caba',
-        // local: 'mongodb://astrum:astrum@ds145395.mlab.com:45395/astrum'
+        //local: 'mongodb://root:mongodb@ds111469.mlab.com:11469/caballeria'
     },
     postgresql: {
       local: 'postgres://postgres:kuroyukihime2110@localhost:4002/caballeria_db', // mac joel
