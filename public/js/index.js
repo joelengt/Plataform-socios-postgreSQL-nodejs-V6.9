@@ -326,6 +326,27 @@
     $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
   }
 
+  //Resize Table with filter
+  function resize(){
+    if (resize !== null && resize !== undefined){
+      if ($('.Filter').css('left') !==  '-300px') {
+        $('.Filter').css({
+          'left': '-300px',
+        })
+        $('.TableList').css({
+          'padding-left': '0',
+        })
+      } else {
+        $('.Filter').css({
+          'left': '0',
+        })
+        $('.TableList').css({
+          'padding-left': '300px',
+        })
+      }
+    }
+  }
+
   // Paramtros de filtro
   function workFilter(limitEachPage, contentHtml, type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic) {
 
@@ -928,6 +949,7 @@
     var $boxConntentPage = $('.App_Container__box')
     var $boxConntentHtml = document.querySelector('#boxListUsers');
     var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
+    var $Filter_resize = document.getElementById('Filter_resize')
     var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
     var $ViewboxRender = $('body')[0]
 
@@ -947,6 +969,9 @@
 
     // Paginacion
     var limitePage = 10;
+
+    // Reszise Filter
+    $Filter_resize.addEventListener('click', resize)
 
     // Lectura de Usuarios
     readUsers(limitePage, $boxConntentHtml);
