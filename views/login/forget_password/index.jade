@@ -2,22 +2,50 @@ doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
-    title hh
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+    meta(charset='UTF-8')
+    title Legión Caballeria
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(rel='stylesheet', href='/style/style.css')
   body
-    header
-      h1 hh
-    section
-      .Login-in__box
-        h3
-          | ¿Olvidades tu Contraseña?
-        .Login-in__form
-          form(action='/get-my-access/send_email/send', method='post')
-            div
-              div
-                input(type='email', name='email', placeholder='Ingresar email')
-              div
-                input(type='number', name='dni', placeholder='Ingresar tu dni')
-              div
-                p #{message}
-            div
-              button Enviar
+    //- header
+    //-   h1 hh
+    //- section
+    //-   .Login-in__box
+    //-     h3
+    //-       | ¿Olvidades tu Contraseña?
+    //-     .Login-in__form
+    //-       form(action='/get-my-access/send_email/send', method='post')
+    //-         div
+    //-           div
+    //-             input(type='email', name='email', placeholder='Ingresar email')
+    //-           div
+    //-             input(type='number', name='dni', placeholder='Ingresar tu dni')
+    //-           div
+    //-             p #{message}
+    //-         div
+    //-           button Enviar
+    .main-container
+      .container.landing
+        .row.not-margin
+          .col.s10.push-s1
+            .row.content-box.not-margin
+              .col.m5.hide-on-small-only
+                img.iphone(src='http://www.pngall.com/wp-content/uploads/2016/06/IPhone-PNG-Picture-Transparent.png', alt='iphone')
+              .col.s12.m7
+                .row
+                  .signup-box
+                    h1.title Legíon Caballería
+                    form.signup-form(action='/auth/dashboard', method='post')
+                      .section
+                       .input-field
+                         input(type='email', name='email', autocomplete='off')
+                         label(for='email') Email
+                       .input-field
+                         input(type='number', name='dni', autocomplete='off')
+                         label(for='dni') DNI
+                        button.btn.waves-effect.waves-light.btn-signup(type='submit') Enviar
+                      .section
+                        p(style="color:crimson, font-weight: 500") #{message}
+    script(src='../js/vendor/jquery.min.js')
+    script(src='../js/vendor/materialize.min.js')
