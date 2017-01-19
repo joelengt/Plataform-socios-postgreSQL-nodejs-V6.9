@@ -14,8 +14,8 @@ var config = {
         pass: 'coder123'
     },
     mongodb:{
-        local: 'mongodb://localhost/caba',
-        //local: 'mongodb://root:mongodb@ds111469.mlab.com:11469/caballeria'
+        //local: 'mongodb://localhost/caba',
+        local: 'mongodb://root:mongodb@ds111469.mlab.com:11469/caballeria'
     },
     postgresql: {
       local: 'postgres://postgres:kuroyukihime2110@localhost:4002/caballeria_db', // mac joel
