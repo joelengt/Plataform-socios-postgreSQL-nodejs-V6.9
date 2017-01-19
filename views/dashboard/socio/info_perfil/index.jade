@@ -1,375 +1,247 @@
 doctype html
 html(lang='es')
-    head
-      meta(charset='UTF-8')
-      title Legión Caballería
-      meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
-      meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
-      //- link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
-      link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
-      link(rel='stylesheet', href='/style/style.css')
-    
-    body#App_Container
-      .App_Container__box
-        nav.Header
-          .nav-wrapper.Header__container
-            a.Header__container--title.Logo.left(href='/') Legión Caballería
-            div.Header__container--search
-              input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
-              button.grey.darken-2#btn_box_search
-                i.material-icons search
+  head
+    meta(charset='UTF-8')
+    title Legión Caballería
+    meta(name='description', content='Joel Gonzales Tipismana Full-Stack Web Developer, Emprendedor, Co-Fundador y CEO de @TeamCromlu, youtuber @rktecnology. HTML5, CSS3, JavaScript, ECS6, BackboneJS, NodeJS, MongoDB')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+    //- link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    link(rel='stylesheet', href='/style/style.css')
+  
+  body#App_Container
+    .App_Container__box
+      nav.Header
+        .nav-wrapper.Header__container
+          a.Header__container--title.Logo.left(href='/') Legión Caballería
+          div.Header__container--search
+            input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
+            button.grey.darken-2#btn_box_search
+              i.material-icons search
 
-            div.Header__container--avatar.right
-              img.responsive-img.circle(width='40', src='/images/default.jpg', alt='')
-        .main-container
-          .main-container__box
-            nav.SubHeader
-              .SubHeader__box
-                .SubHeader__box--list
-                  .linkRoute Socios | 
-                    span.HeaderMain__breadgruns__left--variable-route #usuarios
-                    .fa-chevron-right.right
-                      i.material-icons keyboard_arrow_right
-                  .linkRoute #{result.nombres}
-                    .fa-chevron-right.right
-                      i.material-icons keyboard_arrow_right
-                .SubHeader__box--icons
-                  .Icons
-                    .Icons__item.btn_change_order
-                      i.material-icons filter_list
-                    .Icons__item
-                      .dropdown-button(data-activates='dropdown1')
-                        i.material-icons more_vert
-                      ul#dropdown1.dropdown-content
-                        li
-                          a(href='#!') texto
-
-            //- section(class="SocioInfo")
-            //-     article(class="SocioInfo__perfil")
-            //-         div(class="SocioInfo__perfil__avatar")
-            //-           img(src="../../../../images/default.jpg")
-
-            //-         div(class="SocioInfo__perfil__personal")
-
-            //-           div(class="SocioInfo__perfil__personal--bottom")
-            //-             div(class="SocioInfo__perfil__personal--bottom__left")
-            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
-            //-                   label Fecha de Ingreso:
-            //-                   p #{result.fecha_ingreso}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
-            //-                   label DNI:
-            //-                   p #{result.dni}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
-            //-                   label Profesión:
-            //-                   p #{result.arma}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
-            //-                   label Organización:
-            //-                   p #{result.dni}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__left--item")
-            //-                   label Situación de Trabajo:
-            //-                   p #{result.arma}
-
-            //-             div(class="SocioInfo__perfil__personal--bottom__right")
-            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
-            //-                   label Tipo de Socio:
-            //-                   p #{result.cip}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
-            //-                   label Fecha de Nacimiento:
-            //-                   p #{result.onomastico}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
-            //-                   label Carta Declaratoria:
-            //-                   p #{result.email}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
-            //-                   label Tipo de Pago:
-            //-                   p #{result.cip}
-            //-                 div(class="SocioInfo__perfil__personal--bottom__right--item")
-            //-                   label Carta Declaratoria:
-            //-                   p #{result.arma}
-
-            //-     article(class="SocioInfo__datos")
-
-            //-       div(class="SocioInfo__datos--Datos-de-Contacto")
-            //-         div(class="SocioInfo__datos--Datos-de-Contacto--title")
-            //-           h4 Datos de Contacto
-
-            //-         div(class="SocioInfo__datos--Datos-de-Contacto--content")
-                          div(class="SocioInfo__datos--Datos-de-Contacto--content--item")
-                            label Tipo de Socio:
-                            p #{result.cip}
-                          div(class="SocioInfo__datos--Datos-de-Contacto--content--item")
-                            label Fecha de Nacimiento:
-                            p #{result.onomastico}
-                          div(class="SocioInfo__datos--Datos-de-Contacto--content--item")
-                            label Carta Declaratoria:
-                            p #{result.email}
-                          div(class="SocioInfo__datos--Datos-de-Contacto--content--item")
-                            label Tipo de Pago:
-                            p #{result.cip}
-                          div(class="SocioInfo__datos--Datos-de-Contacto--content--item")
-                            label Carta Declaratoria:
-                            p #{result.arma}
-
-            //-       div(class="SocioInfo__datos--Datos-del-Conyuge")
-            //-           div(class="SocioInfo__datos--Datos-del-Conyuge--title")
-            //-             h4 Datos del Conyuge
-
-            //-           div(class="SocioInfo__datos--Datos-del-Conyuge--content")
-                            div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
-                              label Tipo de Socio:
-                              p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
-                              label Fecha de Nacimiento:
-                              p #{result.onomastico}
-                            div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
-                              label Carta Declaratoria:
-                              p #{result.email}
-                            div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
-                              label Tipo de Pago:
-                              p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-del-Conyuge--content--item")
-                              label Carta Declaratoria:
-                              p #{result.arma}
-
-            //-       div(class="SocioInfo__datos--Datos-del-Afiliado")
-            //-         div(class="SocioInfo__datos--Datos-del-Afiliado--title")
-            //-            h4 Datos del Afiliado
-                        
-            //-           div(class="SocioInfo__datos--Datos-del-Afiliado--content")
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Tipo de Socio:
-                              p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Fecha de Nacimiento:
-                              p #{result.onomastico}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Carta Declaratoria:
-                              p #{result.email}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Tipo de Pago:
-                              p #{result.cip}
-                            div(class="SocioInfo__datos--Datos-del-Afiliado--content--item")
-                              label Carta Declaratoria:
-                              p #{result.arma}
-
-            //-       div(class="SocioInfo__datos--Datos-de-Pagos")
-            //-         div(class="SocioInfo__datos--Datos-de-Pagos--title")
-            //-            h4 Datos de Pagos
-                        
-            //-            div(class="SocioInfo__datos--Datos-de-Pagos--content")
-            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
-            //-                   label Tipo de Socio:
-            //-                   p #{result.cip}
-            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
-            //-                   label Fecha de Nacimiento:
-            //-                   p #{result.onomastico}
-            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
-            //-                   label Carta Declaratoria:
-            //-                   p #{result.email}
-            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
-            //-                   label Tipo de Pago:
-            //-                   p #{result.cip}
-            //-                 div(class="SocioInfo__datos--Datos-de-Pagos--content--item")
-            //-                   label Carta Declaratoria:
-            //-                   p #{result.arma}
-            .Content
-              .UserContent
-                .UserContent__box
-                  .ShowUserInfo
-                    .ShowUserInfo__box
-                      .ShowUserInfo__box--avatar
-                        img.responsive-img.circle(src="/images/default.jpg", width="100")
-                      .ShowUserInfo__box--info
-                        .Info
-                          .Info__title
-                            h3 #{result.nombres}
-                          .Info__tag
-                            span
-                              i.material-icons.tag label
-                          .Info__situation 
-                            .btn.grey.lighten-2.grey-text.text-darken-4 #{result.situacion_trabajo}
-                          .Info__ShowMoreInfo
-                            .Info__ShowMoreInfo--left
-                              .Data
-                                p.Data__left Fecha de Ingreso:
-                                  span.Data__right #{result.fecha_ingreso}
-                              .Data
-                                p.Data__left DNI:
-                                  span.Data__right #{result.dni}
-                              .Data
-                                if (result.organizacion === 'Civil')
-                                  p.Data__left Profesión:
-                                    span.Data__right #{result.grado_profesion}
-                                else
-                                  p.Data__left CIP:
-                                    span.Data__right #{result.cip}
-                              .Data
-                                if (result.organizacion === 'Civil')
-                                  p.Data__left Organización:
-                                    span.Data__right #{result.organizacion}
-                                else
-                                  p.Data__left Fuerza:
-                                    span.Data__right #{result.organizacion}
-                              if (result.organizacion !== 'Civil')
-                                .Data
-                                  p.Data__left Grado:
-                                    span.Data__right #{result.grado_profesion}
-                              .Data
-                                p.Data__left Situación de Trabajo:
-                                  span.Data__right #{result.situacion_trabajo}
-                            .Info__ShowMoreInfo--right
-                              .Data
-                                p.Data__left Tipo de Socio:
+          div.Header__container--avatar.right
+            img.responsive-img.circle(width='40', src='/images/default.jpg', alt='')
+      .main-container
+        .main-container__box
+          nav.SubHeader
+            .SubHeader__box
+              .SubHeader__box--list
+                .linkRoute Socios | 
+                  span.HeaderMain__breadgruns__left--variable-route #usuarios
+                  .fa-chevron-right.right
+                    i.material-icons keyboard_arrow_right
+                .linkRoute #{result.nombres}
+                  .fa-chevron-right.right
+                    i.material-icons keyboard_arrow_right
+              .SubHeader__box--icons
+                .Icons
+                  .Icons__item.btn_change_order
+                    i.material-icons filter_list
+                  .Icons__item
+                    .dropdown-button(data-activates='dropdown1')
+                      i.material-icons more_vert
+                    ul#dropdown1.dropdown-content
+                      li
+                        a(href='#!') texto
+          .Content
+            .UserContent
+              .UserContent__box
+                .ShowUserInfo
+                  .ShowUserInfo__box
+                    .ShowUserInfo__box--avatar
+                      img.responsive-img.circle(src="/images/default.jpg", width="100")
+                    .ShowUserInfo__box--info
+                      .Info
+                        .Info__title
+                          h3 #{result.nombres}
+                        .Info__tag
+                          span
+                            i.material-icons.tag label
+                        .Info__situation 
+                          .btn.grey.lighten-2.grey-text.text-darken-4 #{result.situacion_trabajo}
+                        .Info__ShowMoreInfo
+                          .Info__ShowMoreInfo--left
+                            .Data
+                              p.Data__left Fecha de Ingreso:
+                                span.Data__right #{result.fecha_ingreso}
+                            .Data
+                              p.Data__left DNI:
+                                span.Data__right #{result.dni}
+                            .Data
+                              if (result.organizacion === 'Civil')
+                                p.Data__left Profesión:
+                                  span.Data__right #{result.grado_profesion}
+                              else
+                                p.Data__left CIP:
                                   span.Data__right #{result.cip}
+                            .Data
+                              if (result.organizacion === 'Civil')
+                                p.Data__left Organización:
+                                  span.Data__right #{result.organizacion}
+                              else
+                                p.Data__left Fuerza:
+                                  span.Data__right #{result.organizacion}
+                            if (result.organizacion !== 'Civil')
                               .Data
-                                p.Data__left Fecha de Nacimiento:
-                                  span.Data__right #{result.fecha_nacimiento}
+                                p.Data__left Grado:
+                                  span.Data__right #{result.grado_profesion}
+                            .Data
+                              p.Data__left Situación de Trabajo:
+                                span.Data__right #{result.situacion_trabajo}
+                          .Info__ShowMoreInfo--right
+                            .Data
+                              p.Data__left Tipo de Socio:
+                                span.Data__right #{result.cip}
+                            .Data
+                              p.Data__left Fecha de Nacimiento:
+                                span.Data__right #{result.fecha_nacimiento}
+                            .Data
+                              p.Data__left # Carnet:
+                                span.Data__right #{result.numero_carnet}
+                            .Data
+                              p.Data__left Tipo de Pago:
+                                span.Data__right #{result.tipo_pago}
+                            if (result.organizacion !== 'Civil')
                               .Data
-                                p.Data__left # Carnet:
-                                  span.Data__right #{result.numero_carnet}
-                              .Data
-                                p.Data__left Tipo de Pago:
-                                  span.Data__right #{result.tipo_pago}
-                              if (result.organizacion !== 'Civil')
-                                .Data
-                                  p.Data__left Arma:
-                                    span.Data__right #{result.arma}
-                              .Data
-                                p.Data__left Carta Declaratoria:
-                                  span.Data__right #{result.carta_declaratoria}
-                        .IconsUser
-                          .IconsUser__box
-                            .IconsUser__box--item.btn_change_order#editInfoUser
-                              i.material-icons mode_edit
-                            .IconsUser__box--item.btn_change_order#addPartner
-                              i.material-icons person_add
-                            .IconsUser__box--item
-                              .dropdown-button(data-activates='dropdown1')
-                                i.material-icons more_vert
-                              ul#dropdown1.dropdown-content
-                                li
-                                  a(href='#!') texto
-                  ul.MoreInfoUser.collapsible.popout(data-collapsible='accordion')
-                    if (result.organizacion !== 'Civil')
-                      li.MoreInfoUser__box
-                        .MoreInfoUser__box--title.collapsible-header
-                          | Datos del Trabajo
-                          .icon-edit.right#editDataWork.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                                p.Data__left Arma:
+                                  span.Data__right #{result.arma}
+                            .Data
+                              p.Data__left Carta Declaratoria:
+                                span.Data__right #{result.carta_declaratoria}
+                      .IconsUser
+                        .IconsUser__box
+                          .IconsUser__box--item.btn_change_order#editInfoUser
                             i.material-icons mode_edit
-                        .MoreInfoUser__box--content.collapsible-body
-                          .Data
-                            p.Data__left Unidad:
-                              span.Data__right #{result.unidad}
-                          .Data
-                            p.Data__left Gran Unidad:
-                              span.Data__right #{result.gguu}
-                          .Data
-                            p.Data__left Región:
-                              span.Data__right #{result.region}
-                          .Data
-                            p.Data__left Guarnición:
-                              span.Data__right #{result.guarnicion}
-                          .Data
-                            p.Data__left Filial:
-                              span.Data__right #{result.filial}
+                          .IconsUser__box--item.btn_change_order#addPartner
+                            i.material-icons person_add
+                          .IconsUser__box--item
+                            .dropdown-button(data-activates='dropdown2')
+                              i.material-icons more_vert
+                            ul#dropdown2.dropdown-content
+                              li
+                                a(href='#!') texto
+                ul.MoreInfoUser.collapsible.popout(data-collapsible='accordion')
+                  if (result.organizacion !== 'Civil')
                     li.MoreInfoUser__box
                       .MoreInfoUser__box--title.collapsible-header
-                        | Datos de Contacto
-                        .icon-edit.right#editDataContact.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        | Datos del Trabajo
+                        .icon-edit.right#editDataWork.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
                           i.material-icons mode_edit
                       .MoreInfoUser__box--content.collapsible-body
                         .Data
-                          p.Data__left Dirección:
-                            span.Data__right #{result.direccion}
+                          p.Data__left Unidad:
+                            span.Data__right #{result.unidad}
                         .Data
-                          p.Data__left Email:
-                            span.Data__right #{result.email}
+                          p.Data__left Gran Unidad:
+                            span.Data__right #{result.gguu}
                         .Data
-                          p.Data__left Celular 1:
-                            span.Data__right #{result.celular1}
+                          p.Data__left Región:
+                            span.Data__right #{result.region}
                         .Data
-                          p.Data__left Celular 2:
-                            span.Data__right #{result.celular2}
+                          p.Data__left Guarnición:
+                            span.Data__right #{result.guarnicion}
                         .Data
-                          p.Data__left Telefono 1:
-                            span.Data__right #{result.telefono1}
-                        .Data
-                          p.Data__left Telefono 2:
-                            span.Data__right #{result.telefono2}
-                    li.MoreInfoUser__box
-                      .MoreInfoUser__box--title.collapsible-header
-                        | Datos de Cónyugue
-                        .icon-edit.right#editDataSpouse.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
-                          i.material-icons mode_edit
-                      .MoreInfoUser__box--content.collapsible-body
-                        .Data
-                          p.Data__left Nombre:
-                            span.Data__right #{result.nombre_conyugue}
-                        .Data
-                          p.Data__left Apellidos:
-                            span.Data__right #{result.apellido_conyugue}
-                        .Data
-                          p.Data__left DNI:
-                            span.Data__right #{result.dni_conyugue}
-                        .Data
-                          p.Data__left Fecha de Nacimiento:
-                            span.Data__right #{result.fecha_nacimiento_conyugue}
-                        .Data
-                          p.Data__left Email:
-                            span.Data__right #{result.email_conyugue}
-                        .Data
-                          p.Data__left Celular:
-                            span.Data__right #{result.celular}
-                    li.MoreInfoUser__box
-                      .MoreInfoUser__box--title.collapsible-header
-                        | Datos de Afiliado
-                        .icon-edit.right#editDataAffiliate.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
-                          i.material-icons mode_edit
-                      .MoreInfoUser__box--content.collapsible-body
-                        .Data
-                          p.Data__left Nombre:
-                            span.Data__right #{result.cip}
-                        .Data
-                          p.Data__left Apellido:
-                            span.Data__right #{result.onomastico}
-                        .Data
-                          p.Data__left DNI:
-                            span.Data__right #{result.email}
-                        .Data
-                          p.Data__left Fecha de Ingreso:
-                            span.Data__right #{result.cip}
-                        .Data
-                          p.Data__left Dirección:
-                            span.Data__right #{result.arma}
-                        .Data
-                          p.Data__left Email:
-                            span.Data__right #{result.arma}
-                        .Data
-                          p.Data__left Celular:
-                            span.Data__right #{result.arma}
-                    li.MoreInfoUser__box
-                      .MoreInfoUser__box--title.collapsible-header
-                        | Historial de Pagos
-                        .icon-edit.right#editDataPayment.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
-                          i.material-icons mode_edit
-                      .MoreInfoUser__box--content.collapsible-body
-                        .Data
-                          p.Data__left Tipo de Socio:
-                            span.Data__right #{result.cip}
-                        .Data
-                          p.Data__left Fecha de Nacimiento:
-                            span.Data__right #{result.onomastico}
-                        .Data
-                          p.Data__left Carta Declaratoria:
-                            span.Data__right #{result.email}
-                        .Data
-                          p.Data__left Tipo de Pago:
-                            span.Data__right #{result.cip}
-                        .Data
-                          p.Data__left Carta Declaratoria:
-                            span.Data__right #{result.arma}
+                          p.Data__left Filial:
+                            span.Data__right #{result.filial}
+                  li.MoreInfoUser__box
+                    .MoreInfoUser__box--title.collapsible-header
+                      | Datos de Contacto
+                      .icon-edit.right#editDataContact.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        i.material-icons mode_edit
+                    .MoreInfoUser__box--content.collapsible-body
+                      .Data
+                        p.Data__left Dirección:
+                          span.Data__right #{result.direccion}
+                      .Data
+                        p.Data__left Email:
+                          span.Data__right #{result.email}
+                      .Data
+                        p.Data__left Celular 1:
+                          span.Data__right #{result.celular1}
+                      .Data
+                        p.Data__left Celular 2:
+                          span.Data__right #{result.celular2}
+                      .Data
+                        p.Data__left Telefono 1:
+                          span.Data__right #{result.telefono1}
+                      .Data
+                        p.Data__left Telefono 2:
+                          span.Data__right #{result.telefono2}
+                  li.MoreInfoUser__box
+                    .MoreInfoUser__box--title.collapsible-header
+                      | Datos de Cónyugue
+                      .icon-edit.right#editDataSpouse.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        i.material-icons mode_edit
+                    .MoreInfoUser__box--content.collapsible-body
+                      .Data
+                        p.Data__left Nombre:
+                          span.Data__right #{result.nombre_conyugue}
+                      .Data
+                        p.Data__left Apellidos:
+                          span.Data__right #{result.apellido_conyugue}
+                      .Data
+                        p.Data__left DNI:
+                          span.Data__right #{result.dni_conyugue}
+                      .Data
+                        p.Data__left Fecha de Nacimiento:
+                          span.Data__right #{result.fecha_nacimiento_conyugue}
+                      .Data
+                        p.Data__left Email:
+                          span.Data__right #{result.email_conyugue}
+                      .Data
+                        p.Data__left Celular:
+                          span.Data__right #{result.celular}
+                  li.MoreInfoUser__box
+                    .MoreInfoUser__box--title.collapsible-header
+                      | Datos de Afiliado
+                      .icon-edit.right#editDataAffiliate.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        i.material-icons mode_edit
+                    .MoreInfoUser__box--content.collapsible-body
+                      .Data
+                        p.Data__left Nombre:
+                          span.Data__right #{result.cip}
+                      .Data
+                        p.Data__left Apellido:
+                          span.Data__right #{result.onomastico}
+                      .Data
+                        p.Data__left DNI:
+                          span.Data__right #{result.email}
+                      .Data
+                        p.Data__left Fecha de Ingreso:
+                          span.Data__right #{result.cip}
+                      .Data
+                        p.Data__left Dirección:
+                          span.Data__right #{result.arma}
+                      .Data
+                        p.Data__left Email:
+                          span.Data__right #{result.arma}
+                      .Data
+                        p.Data__left Celular:
+                          span.Data__right #{result.arma}
+                  li.MoreInfoUser__box
+                    .MoreInfoUser__box--title.collapsible-header
+                      | Historial de Pagos
+                      .icon-edit.right#editDataPayment.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        i.material-icons mode_edit
+                    .MoreInfoUser__box--content.collapsible-body
+                      .Data
+                        p.Data__left Tipo de Socio:
+                          span.Data__right #{result.cip}
+                      .Data
+                        p.Data__left Fecha de Nacimiento:
+                          span.Data__right #{result.onomastico}
+                      .Data
+                        p.Data__left Carta Declaratoria:
+                          span.Data__right #{result.email}
+                      .Data
+                        p.Data__left Tipo de Pago:
+                          span.Data__right #{result.cip}
+                      .Data
+                        p.Data__left Carta Declaratoria:
+                          span.Data__right #{result.arma}
 
-            
-        //- Enlaces Script JS
-      script(src='/js/vendor/jquery.min.js')
-      script(src='/js/vendor/materialize.min.js')
-      script(src='/js/index.js')
+          
+      //- Enlaces Script JS
+    script(src='/js/vendor/jquery.min.js')
+    script(src='/js/vendor/materialize.min.js')
+    script(src='/js/index.js')

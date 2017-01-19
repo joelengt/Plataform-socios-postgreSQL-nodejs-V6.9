@@ -26,13 +26,21 @@ html(lang='es')
           nav.SubHeader
             .SubHeader__box
               .SubHeader__box--list
+                .linkRoute
+                  .fa-chevron-right.dropdown-button(data-activates='dropdown3')
+                    i.material-icons menu
+                  ul#dropdown3.dropdown-content
+                    li
+                      a(href='#!') Socios
+                    li
+                      a(href='#!') Planillas
                 .linkRoute Socios | TESORERO
                   span.HeaderMain__breadgruns__left--variable-route #usuarios
                   .fa-chevron-right.right
                     i.material-icons keyboard_arrow_right
               .SubHeader__box--icons
                 .Icons
-                  .Icons__item.btn_change_order
+                  .Icons__item.btn_change_order#Filter_resize
                     i.material-icons filter_list
                   .Icons__item
                     .dropdown-button(data-activates='dropdown1')
@@ -69,37 +77,6 @@ html(lang='es')
                       option(value='CPMP') CPMP
                       option(value='Pago Directo') Pago Directo
                     label Por tipo de pago
-                  .line-divider
-                  .input-field
-                    select#situation_work
-                      option(value='Todos') Todos
-                      option(value='Actividad') Actividad
-                      option(value='Retiro') Retiro
-                    label Por situación de trabajo
-                  .line-divider
-                  .input-field
-                    select#letter_declaration
-                      option(value='Todos') Todos
-                      option(value='Si') Si
-                      option(value='No') No
-                    label Carta declaratoria
-                  .line-divider
-                  .input-field
-                    select#onomastic
-                      option(value='Todos') Todos
-                      option(value='Enero') Enero
-                      option(value='Febrero') Febrero
-                      option(value='Marzo') Marzo
-                      option(value='Abril') Abril
-                      option(value='Mayo') Mayo
-                      option(value='Junio') Junio
-                      option(value='Julio') Julio
-                      option(value='Agosto') Agosto
-                      option(value='Setiembre') Setiembre
-                      option(value='Octubre') Octubre
-                      option(value='Noviembre') Noviembre
-                      option(value='Diciembre') Diciembre
-                    label Por honomástico
             .TableList
               .TableList__box
                 //- Table with Items
@@ -138,9 +115,9 @@ html(lang='es')
                 .TableList__box--pagination
                   .Pagination
                     ul.PaginationContent.pagination
-          .fixed-action-btn.horizontal
-            a#newSocio.btn-open-modal-crearSocio.btn-floating.btn-large.tooltipped(data-tooltip="Agregar nuevo socio", data-delay="50", data-position="left")
-              i.material-icons add
+          //- .fixed-action-btn.horizontal
+          //-   a#newSocio.btn-open-modal-crearSocio.btn-floating.btn-large.tooltipped(data-tooltip="Agregar nuevo socio", data-delay="50", data-position="left")
+          //-     i.material-icons add
       //- The Modal
       //- #myModal.modal
         // The Close Button
