@@ -21,7 +21,7 @@ app.get('/logout', function(req, res) {
 app.post('/auth/dashboard', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { 
-    	return next(err); 
+    	return next(err);
     }
 
     console.log('------------')
