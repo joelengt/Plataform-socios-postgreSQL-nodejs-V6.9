@@ -943,6 +943,35 @@
 
   }
 
+  function CreateFormEditSocio (contentHtml) {
+    var modal = document.createElement('div')
+    modal.setAttribute('class', 'ModalForm modal modal-fixed-footer')
+    modal.setAttribute('id', 'modalForm')
+    var template = `<div class="ModalForm__content modal-content">       
+      </div>
+      <div class="ModalContent__footer modal-footer">
+        <div class="btns left">
+          <a class=" modal-action waves-effect waves-green btn-flat btn-next">Siguiente</a>
+          <a class=" modal-action waves-effect waves-green btn-flat btn-prev">Anterior</a>
+          <a class=" modal-action waves-effect waves-green btn-flat bt-aditional">Información Adicional</a>
+        </div>
+        <div class="btns right">
+          <a class=" modal-action waves-effect waves-green btn-flat btn-save disabled">Guardar</a>
+          <a class=" modal-action modal-close waves-effect waves-green btn-flat btn-cancel">Cancelar</a>
+        </div>
+      </div>`
+
+    modal.innerHTML = template
+    contentHtml.append(modal)
+
+    $('.ModalForm').modal({
+      complete: function(ev){
+        ev.remove()
+        sessionStorage.removeItem('CS')
+      }
+    })
+  }
+
   // Funcion Principal
   function main() {
     // Obteniendo Contenedo html
@@ -950,6 +979,7 @@
     var $boxConntentHtml = document.querySelector('#boxListUsers');
     var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
     var $Filter_resize = document.getElementById('Filter_resize')
+    var $EditInfo = $('.EditInfoData')
     var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
     var $ViewboxRender = $('body')[0]
 
@@ -1078,6 +1108,13 @@
     }
 
     $newSocio.on('click', createModal)
+
+    // Creacion de Modal (editar socio)
+    function createModalEdit(){
+      CreateFormEditSocio($boxConntentPage)
+    }
+
+    $EditInfo.on('click', createModalEdit)
 
 
 

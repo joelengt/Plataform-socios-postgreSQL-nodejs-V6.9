@@ -33,16 +33,6 @@ html(lang='es')
                 .linkRoute #{result.nombres}
                   .fa-chevron-right.right
                     i.material-icons keyboard_arrow_right
-              .SubHeader__box--icons
-                .Icons
-                  .Icons__item.btn_change_order
-                    i.material-icons filter_list
-                  .Icons__item
-                    .dropdown-button(data-activates='dropdown1')
-                      i.material-icons more_vert
-                    ul#dropdown1.dropdown-content
-                      li
-                        a(href='#!') texto
           .Content
             .UserContent
               .UserContent__box
@@ -110,7 +100,7 @@ html(lang='es')
                                 span.Data__right #{result.carta_declaratoria}
                       .IconsUser
                         .IconsUser__box
-                          .IconsUser__box--item.btn_change_order#editInfoUser
+                          .IconsUser__box--item.btn_change_order#editInfoUser.EditInfoData(data-edit="editDataUser")
                             i.material-icons mode_edit
                           .IconsUser__box--item.btn_change_order#addPartner
                             i.material-icons person_add
@@ -125,7 +115,7 @@ html(lang='es')
                     li.MoreInfoUser__box
                       .MoreInfoUser__box--title.collapsible-header
                         | Datos del Trabajo
-                        .icon-edit.right#editDataWork.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        .icon-edit.right#editDataWork.tooltipped.EditInfoData(data-edit="editDataWork",data-tooltip="Editar", data-delay="50", data-position="right")
                           i.material-icons mode_edit
                       .MoreInfoUser__box--content.collapsible-body
                         .Data
@@ -146,7 +136,7 @@ html(lang='es')
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Contacto
-                      .icon-edit.right#editDataContact.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataContact.tooltipped.EditInfoData(data-edit="editDataContact",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
@@ -170,7 +160,7 @@ html(lang='es')
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Cónyugue
-                      .icon-edit.right#editDataSpouse.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataSpouse.tooltipped.EditInfoData(data-edit="editDataSpouse",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
@@ -194,7 +184,7 @@ html(lang='es')
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Afiliado
-                      .icon-edit.right#editDataAffiliate.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataAffiliate.tooltipped.EditInfoData(data-edit="editDataAffiliate",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
@@ -221,7 +211,7 @@ html(lang='es')
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Historial de Pagos
-                      .icon-edit.right#editDataPayment.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataPayment.tooltipped.EditInfoData(data-edit="editDataPayment",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
