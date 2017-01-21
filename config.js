@@ -10,17 +10,17 @@ var config = {
         pass : '12345678'
     },
     mailing: {
-        user: 'astrumdata3043@gmail.com',
-        pass: 'coder123'
+        user: 'mozosdecaba1983@gmail.com',
+        pass: '3LECCIONES'
     },
     mongodb:{
-        //local: 'mongodb://localhost/caba',
-        local: 'mongodb://root:mongodb@ds111469.mlab.com:11469/caballeria'
+        local: 'mongodb://localhost/caba',
+        //local: 'mongodb://root:mongodb@ds111469.mlab.com:11469/caballeria'
     },
     postgresql: {
-      //local: 'postgres://postgres:kuroyukihime2110@localhost:4002/caballeria_db', // mac joel
+      local: 'postgres://postgres:kuroyukihime2110@localhost:4002/caballeria_db', // mac joel
       //local: 'postgres://postgres:postgres@localhost:5432/caballeria_db',         // servidor
-      local: 'postgres://postgres:gatogato@localhost:5432/caballeria_db',           // windows maycon
+      //local: 'postgres://postgres:gatogato@localhost:5432/caballeria_db',           // windows maycon
     },
     status: {
         pendiente:     'pendiente',
