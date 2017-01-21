@@ -260,12 +260,6 @@ app.get('/table/:table_select/columns/params', function (req, res) {
                         builder.where('carta_declaratoria', filtro_carta_declaratoria);
                     }
 
-                    // if(filtro_onomastico !== '') {
-                    //     console.log('Filtro para fecha_nacimiento');
-
-                    //     builder.where('fecha_nacimiento', filtro_onomastico);
-                    // }
-
                 });
 
             }
@@ -281,6 +275,8 @@ app.get('/table/:table_select/columns/params', function (req, res) {
 
                 console.log('TOTAL', count);
 
+                var user_by_onomastico = [];
+
                 // Filter by date 
                 if(filtro_onomastico !== '') {
                     console.log('Filtro para fecha_nacimiento');
@@ -289,28 +285,44 @@ app.get('/table/:table_select/columns/params', function (req, res) {
                     for(var j = 0; j <= response.socios.length - 1; j++) {
                         var element = response.socios[j];
                         
+                        console.log('---------------------------------');
+
                         console.log('User id', element.id);
-                        
+                        console.log('Fecha de nacimiento', element.fecha_nacimiento);
+
+                        console.log(typeof element.fecha_nacimiento);
+
                         // Filter by date birthday
                         var birthday_partner = new Date(element.fecha_nacimiento)
-                        var month_partner = birthday_partner.getMonth();
+                        var month_partner = birthday_partner.getMonth() + 1;
 
-                        console.log('onomastico',birthday_partner);
+                        console.log('nacimiento en formato js ', birthday_partner);
                         console.log('month partner', month_partner);
+
+                        console.log('---------------------------------');
 
                         if(month_partner === filtro_onomastico) {
                             console.log('EL MES COINCIDE');
+
+                            user_by_onomastico.push(element);
+
                         }
 
                     }
 
+                    return res.status(200).json({
+                       status: 'ok Pg',
+                       list: user_by_onomastico
+                    })
+
+                } else {
+
+                    return res.status(200).json({
+                       status: 'ok Pg',
+                       list: response.socios
+                    })
+
                 }
-
-                return res.status(200).json({
-                   status: 'ok Pg',
-                   list: response.socios
-                })
-
             });
 
 
