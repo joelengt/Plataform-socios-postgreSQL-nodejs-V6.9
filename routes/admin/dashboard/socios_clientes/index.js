@@ -130,11 +130,53 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
                         })
                     } 
 
-                    res.status(200).json({
-                        status: 'ok',
-                        result: results[0],
-                        message: 'El socio cliente fue encontrado en la base de datos',
-                        user: req.user
+                    var socio_user = results[0];
+                    var results_conyugue = [];
+                    var results_afiliado = [];
+                    
+                    // Obteniendo datos del conyuge 
+                    const query_conyugue = client.query(`SELECT * FROM ${ data_value_tablas[1] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                    
+                    query_conyugue.on('row', (row) => {
+                        results_conyugue.push(row)
+                    })
+
+                    query_conyugue.on('end', () => {
+                        done();
+
+                        socio_user.datos_extra = {
+                          conyuge: '',
+                          afiliado: ''
+                        }
+
+                        if(results_conyugue.length !== 0) {
+                            socio_user.datos_extra.conyuge = results_conyugue[0]
+                        } 
+
+                        // Obteniendo datos del afiliado
+                        const query_afiliado = client.query(`SELECT * FROM ${ data_value_tablas[2] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                        
+                        query_afiliado.on('row', (row) => {
+                            results_afiliado.push(row)
+                        })
+
+                        query_afiliado.on('end', () => {
+                            done();
+
+
+                            if(results_afiliado.length !== 0) {
+                                socio_user.datos_extra.afiliado = results_afiliado[0]
+                            } 
+
+                            res.status(200).json({
+                                status: 'ok',
+                                result: socio_user,
+                                message: 'El socio cliente fue encontrado en la base de datos',
+                                user: req.user
+                            })
+
+                        })
+
                     })
 
                 })
