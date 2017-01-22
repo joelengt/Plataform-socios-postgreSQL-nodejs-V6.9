@@ -1,6 +1,6 @@
 var config = {
     server: {
-        port: 5000
+        port: 5002
     },
     owner: {
         name: 'Caballeria'
@@ -10,8 +10,8 @@ var config = {
         pass : '12345678'
     },
     mailing: {
-        user: 'astrumdata3043@gmail.com',
-        pass: 'coder123'
+        user: 'mozosdecaba1983@gmail.com',
+        pass: '3LECCIONES'
     },
     mongodb:{
         //local: 'mongodb://localhost/caba',

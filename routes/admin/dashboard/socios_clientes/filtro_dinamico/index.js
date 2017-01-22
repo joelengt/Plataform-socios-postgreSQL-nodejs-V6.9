@@ -176,51 +176,51 @@ app.get('/table/:table_select/columns/params', function (req, res) {
                 switch (socio_filter_params.onomastico) {
                     case 'Enero':
                         
-                        filtro_onomastico = "Enero";
+                        filtro_onomastico = 1;
                         break;
 
                     case 'Febrero':
-                        filtro_onomastico = "Febrero";
+                        filtro_onomastico = 2;
                         break;
 
                     case 'Marzo':
-                        filtro_onomastico = "Marzo";
+                        filtro_onomastico = 3;
                         break;
 
                     case 'Abril':
-                        filtro_onomastico = "Abril";
+                        filtro_onomastico = 4;
                         break;
 
                     case 'Mayo':
-                        filtro_onomastico = "Mayo";
+                        filtro_onomastico = 5;
                         break;
 
                     case 'Junio':
-                        filtro_onomastico = "Junio";
+                        filtro_onomastico = 6;
                         break;
 
                     case 'Julio':
-                        filtro_onomastico = "Julio";
+                        filtro_onomastico = 7;
                         break;
 
                     case 'Agosto':
-                        filtro_onomastico = "Agosto";
+                        filtro_onomastico = 8;
                         break;
 
                     case 'Septiembre':
-                        filtro_onomastico = "Septiembre";
+                        filtro_onomastico = 9;
                         break;
 
                     case 'Octubre':
-                        filtro_onomastico = "Octubre";
+                        filtro_onomastico = 10;
                         break;
 
                     case 'Noviembre':
-                        filtro_onomastico = "Noviembre";
+                        filtro_onomastico = 11;
                         break;
 
                     case 'Diciembre':
-                        filtro_onomastico = "Diciembre";
+                        filtro_onomastico = 12;
                         break;
 
                     case 'Todos':
@@ -260,25 +260,69 @@ app.get('/table/:table_select/columns/params', function (req, res) {
                         builder.where('carta_declaratoria', filtro_carta_declaratoria);
                     }
 
-                    if(filtro_onomastico !== '') {
-                        console.log('Filtro para fecha_nacimiento');
-
-                        builder.where('fecha_nacimiento', filtro_onomastico);
-                    }
-
                 });
 
             }
 
             PostgreSQL.exec(function(err, response) {
                 // console.log(response);
-                // console.log(response.afiliado_socio);
+                var count = 0;
 
-                return res.status(200).json({
-                   status: 'ok Pg',
-                   list: response.socios
-                })
+                for(var j = 0; j <= response.socios.length - 1; j++) {
+                    var element = response.socios[j];
+                    count++;
+                }
 
+                console.log('TOTAL', count);
+
+                var user_by_onomastico = [];
+
+                // Filter by date 
+                if(filtro_onomastico !== '') {
+                    console.log('Filtro para fecha_nacimiento');
+                    console.log('La Fecha es ', filtro_onomastico);
+
+                    for(var j = 0; j <= response.socios.length - 1; j++) {
+                        var element = response.socios[j];
+                        
+                        console.log('---------------------------------');
+
+                        console.log('User id', element.id);
+                        console.log('Fecha de nacimiento', element.fecha_nacimiento);
+
+                        console.log(typeof element.fecha_nacimiento);
+
+                        // Filter by date birthday
+                        var birthday_partner = new Date(element.fecha_nacimiento)
+                        var month_partner = birthday_partner.getMonth() + 1;
+
+                        console.log('nacimiento en formato js ', birthday_partner);
+                        console.log('month partner', month_partner);
+
+                        console.log('---------------------------------');
+
+                        if(month_partner === filtro_onomastico) {
+                            console.log('EL MES COINCIDE');
+
+                            user_by_onomastico.push(element);
+
+                        }
+
+                    }
+
+                    return res.status(200).json({
+                       status: 'ok Pg',
+                       list: user_by_onomastico
+                    })
+
+                } else {
+
+                    return res.status(200).json({
+                       status: 'ok Pg',
+                       list: response.socios
+                    })
+
+                }
             });
 
 

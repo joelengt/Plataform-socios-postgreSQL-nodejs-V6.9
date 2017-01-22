@@ -23,6 +23,7 @@ html(lang='es')
             img.responsive-img.circle(width='40', src='/images/default.jpg', alt='')
       .main-container
         .main-container__box
+          div.data_idSocio(style="display:none") #{result.id}
           nav.SubHeader
             .SubHeader__box
               .SubHeader__box--list
@@ -33,16 +34,6 @@ html(lang='es')
                 .linkRoute #{result.nombres}
                   .fa-chevron-right.right
                     i.material-icons keyboard_arrow_right
-              .SubHeader__box--icons
-                .Icons
-                  .Icons__item.btn_change_order
-                    i.material-icons filter_list
-                  .Icons__item
-                    .dropdown-button(data-activates='dropdown1')
-                      i.material-icons more_vert
-                    ul#dropdown1.dropdown-content
-                      li
-                        a(href='#!') texto
           .Content
             .UserContent
               .UserContent__box
@@ -53,7 +44,9 @@ html(lang='es')
                     .ShowUserInfo__box--info
                       .Info
                         .Info__title
-                          h3 #{result.nombres}
+                          h3 
+                            span.names #{result.nombres} 
+                            span.last_names #{result.apellidos}
                         .Info__tag
                           span
                             i.material-icons.tag label
@@ -63,54 +56,54 @@ html(lang='es')
                           .Info__ShowMoreInfo--left
                             .Data
                               p.Data__left Fecha de Ingreso:
-                                span.Data__right #{result.fecha_ingreso}
+                                span.Data__right.fecha_ingreso #{result.fecha_ingreso}
                             .Data
                               p.Data__left DNI:
-                                span.Data__right #{result.dni}
+                                span.Data__right.dni #{result.dni}
                             .Data
                               if (result.organizacion === 'Civil')
                                 p.Data__left Profesión:
-                                  span.Data__right #{result.grado_profesion}
+                                  span.Data__right.grado_profesion #{result.grado_profesion}
                               else
                                 p.Data__left CIP:
-                                  span.Data__right #{result.cip}
+                                  span.Data__right.cip #{result.cip}
                             .Data
                               if (result.organizacion === 'Civil')
                                 p.Data__left Organización:
-                                  span.Data__right #{result.organizacion}
+                                  span.Data__right.organization #{result.organizacion}
                               else
                                 p.Data__left Fuerza:
-                                  span.Data__right #{result.organizacion}
+                                  span.Data__right.organizacion #{result.organizacion}
                             if (result.organizacion !== 'Civil')
                               .Data
                                 p.Data__left Grado:
-                                  span.Data__right #{result.grado_profesion}
+                                  span.Data__right.grado_profesion #{result.grado_profesion}
                             .Data
                               p.Data__left Situación de Trabajo:
-                                span.Data__right #{result.situacion_trabajo}
+                                span.Data__right.situacion_trabajo #{result.situacion_trabajo}
                           .Info__ShowMoreInfo--right
                             .Data
                               p.Data__left Tipo de Socio:
-                                span.Data__right #{result.cip}
+                                span.Data__right.cip #{result.cip}
                             .Data
                               p.Data__left Fecha de Nacimiento:
-                                span.Data__right #{result.fecha_nacimiento}
+                                span.Data__right.fecha_nacimiento #{result.fecha_nacimiento}
                             .Data
                               p.Data__left # Carnet:
-                                span.Data__right #{result.numero_carnet}
+                                span.Data__right.numero_carnet #{result.numero_carnet}
                             .Data
                               p.Data__left Tipo de Pago:
-                                span.Data__right #{result.tipo_pago}
+                                span.Data__right.tipo_pago #{result.tipo_pago}
                             if (result.organizacion !== 'Civil')
                               .Data
                                 p.Data__left Arma:
-                                  span.Data__right #{result.arma}
+                                  span.Data__right.arma #{result.arma}
                             .Data
                               p.Data__left Carta Declaratoria:
-                                span.Data__right #{result.carta_declaratoria}
+                                span.Data__right.carta_declaratoria #{result.carta_declaratoria}
                       .IconsUser
                         .IconsUser__box
-                          .IconsUser__box--item.btn_change_order#editInfoUser
+                          .IconsUser__box--item.btn_change_order#editInfoUser.EditInfoData(data-edit="editDataUser")
                             i.material-icons mode_edit
                           .IconsUser__box--item.btn_change_order#addPartner
                             i.material-icons person_add
@@ -125,103 +118,103 @@ html(lang='es')
                     li.MoreInfoUser__box
                       .MoreInfoUser__box--title.collapsible-header
                         | Datos del Trabajo
-                        .icon-edit.right#editDataWork.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                        .icon-edit.right#editDataWork.tooltipped.EditInfoData(data-edit="editDataWork",data-tooltip="Editar", data-delay="50", data-position="right")
                           i.material-icons mode_edit
                       .MoreInfoUser__box--content.collapsible-body
                         .Data
                           p.Data__left Unidad:
-                            span.Data__right #{result.unidad}
+                            span.Data__right.unidad #{result.unidad}
                         .Data
                           p.Data__left Gran Unidad:
-                            span.Data__right #{result.gguu}
+                            span.Data__right.gguu #{result.gguu}
                         .Data
                           p.Data__left Región:
-                            span.Data__right #{result.region}
+                            span.Data__right.region #{result.region}
                         .Data
                           p.Data__left Guarnición:
-                            span.Data__right #{result.guarnicion}
+                            span.Data__right.guarnicion #{result.guarnicion}
                         .Data
                           p.Data__left Filial:
-                            span.Data__right #{result.filial}
+                            span.Data__right.filial #{result.filial}
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Contacto
-                      .icon-edit.right#editDataContact.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataContact.tooltipped.EditInfoData(data-edit="editDataContact",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
                         p.Data__left Dirección:
-                          span.Data__right #{result.direccion}
+                          span.Data__right.direccion #{result.direccion}
                       .Data
                         p.Data__left Email:
-                          span.Data__right #{result.email}
+                          span.Data__right.email #{result.email}
                       .Data
                         p.Data__left Celular 1:
-                          span.Data__right #{result.celular1}
+                          span.Data__right.celular1 #{result.celular1}
                       .Data
                         p.Data__left Celular 2:
-                          span.Data__right #{result.celular2}
+                          span.Data__right.celular2 #{result.celular2}
                       .Data
                         p.Data__left Telefono 1:
-                          span.Data__right #{result.telefono1}
+                          span.Data__right.telefono1 #{result.telefono1}
                       .Data
                         p.Data__left Telefono 2:
-                          span.Data__right #{result.telefono2}
+                          span.Data__right.telefono2 #{result.telefono2}
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Cónyugue
-                      .icon-edit.right#editDataSpouse.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataSpouse.tooltipped.EditInfoData(data-edit="editDataSpouse",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
-                        p.Data__left Nombre:
+                        p.Data__left.nombre_conyugue Nombre:
                           span.Data__right #{result.nombre_conyugue}
                       .Data
                         p.Data__left Apellidos:
-                          span.Data__right #{result.apellido_conyugue}
+                          span.Data__right.apellido_conyugue #{result.apellido_conyugue}
                       .Data
                         p.Data__left DNI:
-                          span.Data__right #{result.dni_conyugue}
+                          span.Data__right.dni_conyugue #{result.dni_conyugue}
                       .Data
                         p.Data__left Fecha de Nacimiento:
-                          span.Data__right #{result.fecha_nacimiento_conyugue}
+                          span.Data__right.fecha_nacimiento_conyugue #{result.fecha_nacimiento_conyugue}
                       .Data
                         p.Data__left Email:
-                          span.Data__right #{result.email_conyugue}
+                          span.Data__right.email_conyugue #{result.email_conyugue}
                       .Data
                         p.Data__left Celular:
-                          span.Data__right #{result.celular}
+                          span.Data__right.celular_conyugue #{result.celular_conyugue}
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Afiliado
-                      .icon-edit.right#editDataAffiliate.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataAffiliate.tooltipped.EditInfoData(data-edit="editDataAffiliate",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
                         p.Data__left Nombre:
-                          span.Data__right #{result.cip}
+                          span.Data__right.cip_afiliado #{result.cip_afiliado}
                       .Data
                         p.Data__left Apellido:
-                          span.Data__right #{result.onomastico}
+                          span.Data__right.onomastico_afiliado #{result.onomastico_afiliado}
                       .Data
                         p.Data__left DNI:
-                          span.Data__right #{result.email}
+                          span.Data__right.email_afiliado #{result.email_afiliado}
                       .Data
                         p.Data__left Fecha de Ingreso:
-                          span.Data__right #{result.cip}
+                          span.Data__right.cip_afiliado #{result.cip_afiliado}
                       .Data
                         p.Data__left Dirección:
-                          span.Data__right #{result.arma}
+                          span.Data__right.arma_afiliado #{result.arma_afiliado}
                       .Data
                         p.Data__left Email:
-                          span.Data__right #{result.arma}
+                          span.Data__right.email_afiliado #{result.email_afiliado}
                       .Data
                         p.Data__left Celular:
-                          span.Data__right #{result.arma}
+                          span.Data__right-celular_afiliado #{result.celular_afiliado}
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Historial de Pagos
-                      .icon-edit.right#editDataPayment.tooltipped(data-tooltip="Editar", data-delay="50", data-position="right")
+                      .icon-edit.right#editDataPayment.tooltipped.EditInfoData(data-edit="editDataPayment",data-tooltip="Editar", data-delay="50", data-position="right")
                         i.material-icons mode_edit
                     .MoreInfoUser__box--content.collapsible-body
                       .Data

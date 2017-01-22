@@ -54,7 +54,9 @@
 
     // Render Template
     setUserTemplate(contentHtml) {
-      contentHtml.innerHTML+= this.buildUserTemplate();
+      if (contentHtml !== null) {
+        contentHtml.innerHTML+= this.buildUserTemplate();
+      }
     }
   }
 
@@ -67,9 +69,12 @@
 
   // Recorriendo lista obtenida
   function runList(array, limitStart, limitEnd, contentHtml) {
-    contentHtml.innerHTML = '';
+    if (contentHtml !== null) {
+      contentHtml.innerHTML = '';
+    }
     // Evento ciclo
     for(var i = limitStart; i <= limitEnd; i++) {
+      console.log(array)
       var elemento_usuario = array[i];
 
       // Creando nuevo usuario
@@ -88,7 +93,9 @@
       method: 'get',
       success: function (listUsuarios) {
 
-        contentHtml.innerHTML = '';
+        if (contentHtml !== null) {
+          contentHtml.innerHTML = '';
+        }
 
         getPaginationTemplate(limitEachPage, listUsuarios.result.length);
         var valueInit = 0;
@@ -129,7 +136,7 @@
       method: 'get',
       success: function (listUsuarios) {
         console.log('Lista obtenida');
-        console.log(listUsuarios);
+        // console.log(listUsuarios);
 
         console.log('Comparando el .name con ' + nameUser);
 
@@ -137,30 +144,57 @@
 
         // Recorre lista y render Template en html
         for(var j = 0; j <= listUsuarios.result.length - 1; j++) {
-          console.log(j);
+          // console.log(j);
           var elementoUser = listUsuarios.result[j]
+          numero_dni = parseInt(nameUser)
+          // console.log(numero_dni)
+          var numero = isNaN(numero_dni)
+          // console.log(!numero)
+          if (!numero) {
+            var numberSolicitada = elementoUser.dni
+            var coincidenciaMinima = 0;
+            numero_dni = numero_dni.toString()
+            console.log(numero_dni.length)
 
-          var fullName = elementoUser.nombres + ' ' + elementoUser.apellidos;
+            for(var m = 0; m <= numberSolicitada.length - 1; m++) {
+              if(numberSolicitada[m] !== numero_dni[m]) {
+                  console.log('Ya no coincide')
+                  break
+              }
 
-          var wordSolicitada = fullName.toLowerCase();
-          nameUser = nameUser.toLowerCase()
-          var coincidenciaMinima = 0;
+              console.log(m)
 
-          // Buscando coindicencia de la palabra
-          for(var m = 0; m <= wordSolicitada.length - 1; m++) {
-            if(wordSolicitada[m] !== nameUser[m]) {
-                console.log('Ya no coincide')
-                break
+              coincidenciaMinima++;
             }
 
-            console.log(m)
+            if(coincidenciaMinima === numero_dni.length) {
+              listUserFound.push(elementoUser);
+            }
 
-            coincidenciaMinima++;
-            
-          }
+          } else {
+            var fullName = elementoUser.apellidos + ' ' + elementoUser.nombres;
 
-          if(coincidenciaMinima === nameUser.length) {
-            listUserFound.push(elementoUser);
+            var wordSolicitada = fullName.toLowerCase();
+            nameUser = nameUser.toLowerCase()
+            var coincidenciaMinima = 0;
+
+            // Buscando coindicencia de la palabra
+            for(var m = 0; m <= wordSolicitada.length - 1; m++) {
+              if(wordSolicitada[m] !== nameUser[m]) {
+                  console.log('Ya no coincide')
+                  break
+              }
+
+              console.log(m)
+
+              coincidenciaMinima++;
+              
+            }
+            console.log(nameUser)
+            console.log(coincidenciaMinima, nameUser.length)
+            if(coincidenciaMinima === nameUser.length) {
+              listUserFound.push(elementoUser);
+            }
           }
   
         }
@@ -200,7 +234,9 @@
       numberPages = numberPages + 1;
     }
 
-    $boxPagination.innerHTML = '';
+    if ($boxPagination !== null) {
+      $boxPagination.innerHTML = '';
+    }
 
     console.log('Pagina a imprimir: ' + numberPages);
 
@@ -223,7 +259,9 @@
         listCantidad = listCantidad - residuo;
       }
 
-      $boxPagination.innerHTML += `<li class="selectPage waves-effect grey lighten-3" data-init="${ value_init }" data-end="${ value_end }"><a>${ g }</a></li>`
+      if ($boxPagination !== null) {
+        $boxPagination.innerHTML += `<li class="selectPage waves-effect grey lighten-3" data-init="${ value_init }" data-end="${ value_end }"><a>${ g }</a></li>`
+      }
 
     }
 
@@ -276,7 +314,6 @@
      span.onclick = function() { 
      modal.style.display = "none";
      }
-
 
   }
 
@@ -358,16 +395,16 @@
       url: `/dashboard/socios-clientes/filter/table/0/columns/params?tipo_socio=${type_partner}&situacion_socio=${situation_partner}&tipo_pago=${type_payment}&situacion_trabajo=${situation_work}&carta_declaratoria=${letter_declaration}&onomastico=${onomastic}`,
       method: 'get',
       success: function(listUsuarios){
-        console.log(listUsuarios)
+        console.log(listUsuarios.list)
         contentHtml.innerHTML = '';
 
         if (listUsuarios.status !== 'not_found') {
-          getPaginationTemplate(limitEachPage, listUsuarios.result.length);
+          getPaginationTemplate(limitEachPage, listUsuarios.list.length);
           var valueInit = 0;
           var valueEnd = 9;
 
           // Recorre lista y render Template en html
-          runList(listUsuarios.result, valueInit, valueEnd, contentHtml);
+          runList(listUsuarios.list, valueInit, valueEnd, contentHtml);
         } else {
           contentHtml.innerHTML = '<tr>No se encontraron elementos con ese nombre</tr>';
         }
@@ -380,18 +417,33 @@
   }
 
   //Almacenamiento de data de nuevo socio
-  function saveData(data){
+  function saveData(data, extra){
     // var storage = sessionStorage.getItem('CS')
     var dataForm = JSON.parse(sessionStorage.getItem('CS'))
     console.log(data)
     // console.log(new_Data)
-    data = data.split('&')
-    for (var i = 0; i < data.length; i++) {
-      data[i] = data[i].split('=')
-    }
-    console.log(data)
-    for (var i = 0; i < data.length; i++) {
-      dataForm[data[i][0]] = data[i][1] || ''
+    if (extra === 'spouse') {
+      dataForm.datos_extra = {}
+      dataForm.datos_extra.conyugue = {}
+      console.log(data)
+      console.log(dataForm)
+      data = data.split('&')
+      for (var i = 0; i < data.length; i++) {
+        data[i] = data[i].split('=')
+      }
+      console.log(data)
+      for (var i = 0; i < data.length; i++) {
+        dataForm.datos_extra.conyugue[data[i][0]] = data[i][1] || ''
+      }
+    } else {
+      data = data.split('&')
+      for (var i = 0; i < data.length; i++) {
+        data[i] = data[i].split('=')
+      }
+      console.log(data)
+      for (var i = 0; i < data.length; i++) {
+        dataForm[data[i][0]] = data[i][1] || ''
+      }
     }
     var dataForm = JSON.stringify(dataForm)
     // console.log(dataForm)
@@ -436,30 +488,30 @@
   function actionBtnPrev(form, dataBtn, modal_body, btnMore, btnPrev, btnNext) {
     form.remove()
     if (dataBtn === 'tpl_data_civil') {
-      tpl_create_partner(modal_body)
+      tpl_create_partner(modal_body, 'Crear Socio')
       btnMore.css('display', 'block')
       btnPrev.css('display', 'none')
       btnNext.css('display', 'none')
     } else if(dataBtn === 'tpl_data_pnp'){
-      tpl_create_partner(modal_body)
+      tpl_create_partner(modal_body, 'Crear Socio')
       btnMore.css('display', 'block')
       btnPrev.css('display', 'none')
       btnNext.css('display', 'none')
     } else if(dataBtn === 'tpl_data_work'){
-      tpl_data_pnp(modal_body)
+      tpl_data_pnp(modal_body, 'Crear Socio')
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     } else if(dataBtn === 'tpl_data_contact'){
       var dataForm = JSON.parse(sessionStorage.getItem('CS'))
       if (dataForm.organizacion === 'Civil') {
-        tpl_data_civil(modal_body)
+        tpl_data_civil(modal_body, 'Crear Socio')
       } else {
-        tpl_data_work(modal_body)        
+        tpl_data_work(modal_body, 'Crear Socio')        
       }
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     } else {
-      tpl_data_contact(modal_body)
+      tpl_data_contact(modal_body, 'Crear Socio')
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     }
@@ -471,19 +523,19 @@
     form.remove()
     console.log(form, data, modal_body, btnPrev, btnNext)
     if (data === 'tpl_data_pnp') {
-      tpl_data_work(modal_body)
+      tpl_data_work(modal_body, 'Crear Socio')
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     } else if(data === 'tpl_data_work'){
-      tpl_data_contact(modal_body)
+      tpl_data_contact(modal_body, 'Crear Socio')
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     } else if(data === 'tpl_data_contact'){
-      tpl_data_spouse(modal_body)
+      tpl_data_spouse(modal_body, 'Crear Socio')
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     } else if(data === 'tpl_data_spouse'){
-      tpl_create_partner(modal_body)
+      tpl_create_partner(modal_body, 'Crear Socio')
       btnPrev.css('display', 'none')
       btnNext.css('display', 'none')
       btnSave.removeClass('disabled')
@@ -508,12 +560,12 @@
     var dataForm = JSON.parse(sessionStorage.getItem('CS'))
 
     if (dataForm.organizacion === 'Civil') {
-      tpl_data_civil(modal_body, 'tpl_create_partner')      
+      tpl_data_civil(modal_body, 'Crear Socio', 'tpl_create_partner')      
     } else {
       if (dataForm.organizacion === 'P.N.P'){
-        tpl_data_pnp(modal_body, 'tpl_create_partner', 'PNP')
+        tpl_data_pnp(modal_body, 'Crear Socio', 'tpl_create_partner', 'PNP')
       } else{
-        tpl_data_pnp(modal_body, 'tpl_create_partner', 'Fuerzas')
+        tpl_data_pnp(modal_body, 'Crear Socio', 'tpl_create_partner', 'Fuerzas')
       }
     }
 
@@ -539,6 +591,7 @@
 
     actionBtnPrev(form, dataPart, modal_body, btnMore, btnPrev, btnNext)
   }
+
   // Accion de boton en formulario
   function btnNext() {
     // var btn = $(this)
@@ -551,15 +604,23 @@
     var btnSave = parent.find('.btn-save')
 
     var data = meSerialize(form)
-    saveData(data)
+
+    if (form.attr('data-form-part') === 'tpl_data_spouse') {
+      saveData(data, 'spouse')
+    } else {
+      saveData(data)
+    }
+    
+
 
     actionBtnNext(form, dataPart, modal_body, btnPrev, btnNext, btnSave)
   }
+
   // Accion de boton en formulario
   function btnSave() {
     var parent = $(this).parents('#modalForm')
     var modal_body = parent.find('.ModalForm__content')
-    var modalFooter = parent.find('.ModalContent__footer')
+    var modalFooter = parent.find('.ModalForm__footer')
     var form = parent.find('.ModalForm__content--part')
 
     var updateData = meSerialize(form)
@@ -572,6 +633,7 @@
     preloader.innerHTML = tpl
     // console.log(parent[0], modalFooter[0])
     modalFooter.append(preloader)
+    console.log($('.progress'))
 
     $.ajax({
       type: 'POST',
@@ -602,13 +664,22 @@
   }
 
   // Template para llenado de datos de nuevo socio
-  function tpl_create_partner(modal_body, params){
+  function tpl_create_partner(modal_body, titleModal, params){
+
+    var time = new Date()
+    var dia = ("0" +time.getDate()).slice(-2);
+    var mes = ("0" + (time.getMonth() + 1)).slice(-2);
+    var año = time.getFullYear() ;
+    var time = año +'-'+ mes +'-'+ dia
+
+    var dateNow = time
+
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
     content.setAttribute('class', 'ModalForm__content--part')
     content.setAttribute('id', 'ModalForm__content--part')
     content.setAttribute('data-form-part', 'tpl_create_partner')
-    var tpl = `<h5 class="Title">Crear Socio</h5>
+    var tpl = `<h5 class="Title">${titleModal}</h5>
           <div class="row">
             <div class="input-field col s5">
               <input value="${data.nombres || ''}" name="nombres" id="nombres" type="text" class="validate">
@@ -633,12 +704,12 @@
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.dni || ''}" name="dni" id="dni" type="text" class="validate">
+              <input value="${data.dni || ''}" name="dni" id="dni" type="number" class="validate">
               <label for="dni">DNI</label>
             </div>
             <div class="input-field col s5">
               <label class="date" for="fecha_nacimiento">Fecha de Nacimiento</label>
-              <input value="${data.fecha_nacimiento || ''}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="">
+              <input value="${data.fecha_nacimiento || dateNow}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="" max="${dateNow}">
             </div>
           </div>
           <div class="row">
@@ -648,21 +719,34 @@
             </div>
           </div>`
 
+
     content.innerHTML = tpl
     modal_body.append(content)
+
+    $('#dni').on('keypress', function(){
+      nombre=$(this).val();       
+      //Comprobamos la longitud de caracteres
+      if (nombre.length<8){
+        return true;
+      }
+      else {
+        return false;         
+      }
+    })
+
     $('.selectForm').material_select()
     Materialize.updateTextFields()
   }
 
   // Template para datos de socio civil
-  function tpl_data_civil(modal_body, prev, params){
+  function tpl_data_civil(modal_body, titleModal, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
     content.setAttribute('class', 'ModalForm__content--part')
     content.setAttribute('id', 'ModalForm__content--part')
     content.setAttribute('data-form-part', 'tpl_data_civil')
     content.setAttribute('data-form-prev', prev)
-    var tpl = `<h5 class="Title">Crear Socio</h5>
+    var tpl = `<h5 class="Title">${titleModal}</h5>
           <div class="row">
             <div class="input-field col s5">
               <input value="${data.grado_profesion || ''}" name="grado_profesion" id="grado_profesion" type="text" class="validate">
@@ -701,7 +785,7 @@
   }
 
   // Template para datos de socio PNP
-  function tpl_data_pnp(modal_body, prev, typeFource, params){
+  function tpl_data_pnp(modal_body, titleModal, prev, typeFource, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     console.log(typeFource)
     var content = document.createElement('form')
@@ -709,7 +793,7 @@
     content.setAttribute('id', 'ModalForm__content--part')
     content.setAttribute('data-form-part', 'tpl_data_pnp')
     content.setAttribute('data-form-prev', prev)
-    var tpl = `<h5 class="Title">Crear Socio</h5>
+    var tpl = `<h5 class="Title">${titleModal}</h5>
           <div class="row">
             <div class="input-field col s5">
               <input value="${data.cip || ''}" name="cip" id="cip" type="text" class="validate">
@@ -755,14 +839,14 @@
   }
 
   // Template para datos de trabajo 
-  function tpl_data_work(modal_body, prev, params){
+  function tpl_data_work(modal_body, titleModal, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
     content.setAttribute('class', 'ModalForm__content--part')
     content.setAttribute('id', 'ModalForm__content--part')
     content.setAttribute('data-form-part', 'tpl_data_work')
     content.setAttribute('data-form-prev', prev)
-    var tpl = `<h5 class="Title">Crear Socio</h5>
+    var tpl = `<h5 class="Title">${titleModal}</h5>
           <h6 class="Subtitle">DATOS DEL TRABAJO</h6>
           <div class="row">
             <div class="input-field col s5">
@@ -798,14 +882,14 @@
   }
 
   // Template para datos de contacto
-  function tpl_data_contact(modal_body, prev, params){
+  function tpl_data_contact(modal_body, titleModal, prev, params){
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
     content.setAttribute('class', 'ModalForm__content--part')
     content.setAttribute('id', 'ModalForm__content--part')
     content.setAttribute('data-form-part', 'tpl_data_contact')
     content.setAttribute('data-form-prev', prev)
-    var tpl = `<h5 class="Title">Crear Socio</h5>
+    var tpl = `<h5 class="Title">${titleModal}</h5>
           <h6 class="Subtitle">DATOS DE CONTACTO</h6>
           <div class="row">
             <div class="input-field col s10">
@@ -815,27 +899,27 @@
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.email || ''}" name="email" id="email" type="text" class="validate">
+              <input value="${data.email || ''}" name="email" id="email" type="email" class="validate">
               <label for="email">Email</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.celular1 || ''}" name="celular1" id="celular1" type="text" class="validate">
+              <input value="${data.celular1 || ''}" name="celular1" id="celular1" type="number" class="validate">
               <label for="celular1">Celular 1</label>
             </div>
             <div class="input-field col s5">
-              <input value="${data.celular2 || ''}" name="celular2" id="celular2" type="text" class="validate">
+              <input value="${data.celular2 || ''}" name="celular2" id="celular2" type="number" class="validate">
               <label for="celular2">Celular 2</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.telefono1 || ''}" name="telefono1" id="telefono1" type="text" class="validate">
+              <input value="${data.telefono1 || ''}" name="telefono1" id="telefono1" type="number" class="validate">
               <label for="telefono1">Telefono 1</label>
             </div>
             <div class="input-field col s5">
-              <input value="${data.telefono2 || ''}" name="telefono2" id="telefono2" type="text" class="validate">
+              <input value="${data.telefono2 || ''}" name="telefono2" id="telefono2" type="number" class="validate">
               <label for="telefono2">Telefono 2</label>
             </div>
           </div>`
@@ -847,14 +931,23 @@
   }
 
   //Template para datos de conyugue de socio
-  function tpl_data_spouse(modal_body, prev, params){
+  function tpl_data_spouse(modal_body, titleModal, prev, params){
+
+    var time = new Date()
+    var dia = ("0" +time.getDate()).slice(-2);
+    var mes = ("0" + (time.getMonth() + 1)).slice(-2);
+    var año = time.getFullYear() ;
+    var time = año +'-'+ mes +'-'+ dia
+
+    var dateNow = time
+
     var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
     var content = document.createElement('form')
     content.setAttribute('class', 'ModalForm__content--part')
     content.setAttribute('id', 'ModalForm__content--part')
     content.setAttribute('data-form-part', 'tpl_data_spouse')
     content.setAttribute('data-form-prev', prev)
-    var tpl = `<h5 class="Title">Crear Socio</h5>
+    var tpl = `<h5 class="Title">${titleModal}</h5>
           <h6 class="Subtitle">DATOS DE CÓNYUGUE</h6>
           <div class="row">
             <div class="input-field col s5">
@@ -868,12 +961,12 @@
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.dni_conyugue || ''}" name="dni_conyugue" id="dni_conyugue" type="text" class="validate">
+              <input value="${data.dni_conyugue || ''}" name="dni_conyugue" id="dni_conyugue" type="number" class="validate">
               <label for="dni_conyugue">DNI</label>
             </div>
             <div class="input-field col s5">
-              <label value="${data.fecha_nacimiento_conyugue || new Date()}" class="date" for="fecha_nacimiento_conyugue">Fecha de Nacimiento</label>
-              <input name="fecha_nacimiento_conyugue" id="fecha_nacimiento_conyugue" type="date" placeholder="">
+              <label class="date" for="fecha_nacimiento_conyugue">Fecha de Nacimiento</label>
+              <input value="${data.fecha_nacimiento_conyugue || dateNow}" name="fecha_nacimiento_conyugue" id="fecha_nacimiento_conyugue" type="date" placeholder="" max="${dateNow}">
             </div>
           </div>
           <div class="row">
@@ -889,8 +982,55 @@
     
     content.innerHTML = tpl
     modal_body.append(content)
+
+    $('#dni_conyugue').on('keypress', function(){
+      nombre=$(this).val();       
+      //Comprobamos la longitud de caracteres
+      if (nombre.length<8){
+        return true;
+      }
+      else {
+        return false;         
+      }
+    })
+
     $('.selectForm').material_select()
     Materialize.updateTextFields()
+  }
+
+  function btnUpdate() {
+    var id_socio = $(this).attr('data-idSocio')
+    var parent = $(this).parents('#modalForm')
+    var modal_body = parent.find('.ModalForm__content')
+    var modalFooter = parent.find('.ModalForm__footer')
+    var form = parent.find('.ModalForm__content--part')
+
+    var updateData = meSerialize(form)
+    saveData(updateData)
+    
+    var data = JSON.parse(sessionStorage.getItem('CS'))
+    var preloader = document.createElement('div')
+    preloader.setAttribute('class', 'progress')
+    tpl = `<div class="indeterminate"></div>`
+    preloader.innerHTML = tpl
+    // console.log(parent[0], modalFooter[0])
+    modalFooter.append(preloader)
+    console.log($('.progress'))
+
+    $.ajax({
+      type: 'POST',
+      url: `/dashboard/socios-clientes/item/update/0/${id_socio}?_method=put`,
+      data: data,
+      success: function(res){
+        console.log(res)
+        $('#modalForm').modal('close')
+        sessionStorage.removeItem('CS')
+        location.reload()
+      },
+      err: function(err){
+        console.log(err)
+      }
+    })
   }
 
   // Modal para creacion de nuevo socio
@@ -901,7 +1041,7 @@
     modal.setAttribute('id', 'modalForm')
     var template = `<div class="ModalForm__content modal-content">       
       </div>
-      <div class="ModalContent__footer modal-footer">
+      <div class="ModalForm__footer modal-footer">
         <div class="btns left">
           <a class=" modal-action waves-effect waves-green btn-flat btn-next">Siguiente</a>
           <a class=" modal-action waves-effect waves-green btn-flat btn-prev">Anterior</a>
@@ -927,7 +1067,7 @@
 
     var $modal_body = $('.ModalForm__content')
 
-    tpl_create_partner($modal_body)
+    tpl_create_partner($modal_body, 'Crear Socio')
     // $('.selectForm').material_select();
 
     var $btn_next = $('.btn-next')
@@ -940,7 +1080,119 @@
     $btn_prev.on('click', btnPrev)
     $btn_next.on('click', btnNext)
     $btn_save.on('click', btnSave)
+  }
 
+  function CreateFormEditSocio (contentHtml, data_infoEdit) {
+    sessionStorage.setItem('CS', JSON.stringify({}))
+    var modal = document.createElement('div')
+    var id_socio = document.querySelector('.data_idSocio').innerHTML
+    modal.setAttribute('class', 'ModalForm modal modal-fixed-footer')
+    modal.setAttribute('id', 'modalForm')
+    var template = `<div class="ModalForm__content modal-content">
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>  
+      </div>
+      <div class="ModalForm__footer modal-footer">
+        <div class="btns left">
+          <a class=" modal-action waves-effect waves-green btn-flat btn-next">Siguiente</a>
+          <a class=" modal-action waves-effect waves-green btn-flat btn-prev">Anterior</a>
+          <a class=" modal-action waves-effect waves-green btn-flat bt-aditional">Información Adicional</a>
+        </div>
+        <div class="btns right">
+          <a class=" modal-action waves-effect waves-green btn-flat btn-update disabled" data-idSocio="${id_socio}">Actualizar Datos</a>
+          <a class=" modal-action modal-close waves-effect waves-green btn-flat btn-cancel">Cancelar</a>
+        </div>
+      </div>`
+
+    modal.innerHTML = template
+    contentHtml.append(modal)
+
+    $('.ModalForm').modal({
+      complete: function(ev){
+        ev.remove()
+        sessionStorage.removeItem('CS')
+      }
+    })
+
+    $('#modalForm').modal('open');
+
+    var $modal_body = $('.ModalForm__content')
+    var $btn_update = $('.btn-update')
+
+
+    $.ajax({
+      url: `/dashboard/socios-clientes/item/to-json/0/${id_socio}`,
+      method: 'GET',
+      success: function(res){
+        document.querySelector('.progress').remove()
+        var data_socio = res.result
+        console.log(data_socio)
+
+        if (data_infoEdit === 'editDataUser') {
+
+          var $btn_moreInfo = $('.bt-aditional')
+          var $btn_prev = $('.btn-prev')
+          tpl_create_partner($modal_body, 'Editar Socio', data_socio)
+
+          $btn_moreInfo.on('click', function(){
+            var Form =$('.ModalForm__content--part')
+            $btn_update.removeClass('disabled')
+            console.log(Form)
+            var data = meSerialize(Form)
+            saveData(data)
+
+            $btn_moreInfo.css({'display':'none'})
+            document.querySelector('[data-form-part="tpl_create_partner"').remove()
+            if (data_socio.organizacion === 'Civil') {
+
+            } else if(data_socio.organizacion === 'P.N.P'){
+
+            } else {
+              console.log('Pertenece a Fuerzas especiales')
+              tpl_data_pnp($modal_body, 'Editar Socio', $btn_prev, 'Fuerzas', data_socio)
+            }
+          })
+        } else if(data_infoEdit === 'editDataCivil'){
+          var $btn_moreInfo = $('.bt-aditional')
+          $btn_moreInfo.css({'display': 'none'})
+          $btn_update.removeClass('disabled')
+          tpl_data_civil($modal_body, 'Editar Socio', null, data_socio)
+        } else if(data_infoEdit === 'editDataPNP') {
+          var $btn_moreInfo = $('.bt-aditional')
+          $btn_moreInfo.css({'display': 'none'})
+          $btn_update.removeClass('disabled')
+          if (data_socio.organizacion === 'PNP') {
+            tpl_data_pnp($modal_body, 'Editar Socio', null, 'PNP', data_socio)
+          } else {
+            tpl_data_pnp($modal_body, 'Editar Socio', null, data_socio.organizacion, data_socio)
+          }
+        } else if(data_infoEdit === 'editDataWork'){
+          var $btn_moreInfo = $('.bt-aditional')
+          $btn_moreInfo.css({'display': 'none'})
+          $btn_update.removeClass('disabled')
+          tpl_data_work($modal_body, 'Editar Socio', null, data_socio)
+        } else if(data_infoEdit === 'editDataContact'){
+          var $btn_moreInfo = $('.bt-aditional')
+          $btn_moreInfo.css({'display': 'none'})
+          $btn_update.removeClass('disabled')
+          tpl_data_contact($modal_body, 'Editar Socio', null, data_socio)
+        } else if(data_infoEdit === 'editDataSpouse'){
+          var $btn_moreInfo = $('.bt-aditional')
+          $btn_moreInfo.css({'display': 'none'})
+          $btn_update.removeClass('disabled')
+          tpl_data_spouse($modal_body, 'Editar Socio', null, data_socio)
+        }
+      }
+    })
+
+    // var $btn_next = $('.btn-next')
+
+    // // $btn_prev.on('click', prevForm)
+    // $btn_moreInfo.on('click', moreInfo)
+    // $btn_prev.on('click', btnPrev)
+    // $btn_next.on('click', btnNext)
+    $btn_update.on('click', btnUpdate)
   }
 
   // Funcion Principal
@@ -950,6 +1202,7 @@
     var $boxConntentHtml = document.querySelector('#boxListUsers');
     var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
     var $Filter_resize = document.getElementById('Filter_resize')
+    var $EditInfo = $('.EditInfoData')
     var $ArticlesContainerPages = $('#App_Container').find('.Pagination');
     var $ViewboxRender = $('body')[0]
 
@@ -971,7 +1224,9 @@
     var limitePage = 10;
 
     // Reszise Filter
-    $Filter_resize.addEventListener('click', resize)
+    if ($Filter_resize !== null) {
+      $Filter_resize.addEventListener('click', resize)
+    }
 
     // Lectura de Usuarios
     readUsers(limitePage, $boxConntentHtml);
@@ -996,14 +1251,6 @@
 
      //Activando estilo de caja de Filtros lateral
     $('select').material_select();
-
-     // Evento click -> Cambiar Orden
-     // $btn_change_order.addEventListener('click', function () {
-     //      console.log('hi');
-
-     //      changePosition($boxConntentHtml)
-
-     // })
 
      // Filter mientras la caja de texto cambia
     $('#txt_box_search').bind('input', function() { 
@@ -1049,17 +1296,6 @@
 
     })
 
-     // /dashboard/socios-clientes/item/0/1
-
-     // $ArticlesContainer.on('click', '.SocioItem', function (ev) {
-     //      console.log('DATOSS DEL SOCIO POR ID');
-     //      var socio_id = this.dataset.id
-
-     //      readUserById(socio_id, $ViewboxRender);
-
-     //  })
-
-
     // Busqueda por Filtro
     function searchFilter(){
       workFilter(limitePage, $boxConntentHtml, $type_partner.val(), $situation_partner.val(), $type_payment.val(), $situation_work.val(), $letter_declaration.val(), $onomastic.val())
@@ -1079,6 +1315,14 @@
 
     $newSocio.on('click', createModal)
 
+    // Creacion de Modal (editar socio)
+    function createModalEdit(){
+      var data_info = $(this).attr('data-edit')
+      CreateFormEditSocio($boxConntentPage, data_info)
+    }
+
+    $EditInfo.on('click', createModalEdit)
+
 
 
 
@@ -1091,7 +1335,6 @@
      //  })
 
     // goheadfixed('table.fixed')
-
   }
 
   // Inicializando Lectura
