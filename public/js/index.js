@@ -208,8 +208,14 @@
           
         } else {
           contentHtml.innerHTML = '';
+          getPaginationTemplate(10, listUserFound.length);
+          var valueInit = 0;
+          var valueEnd = 9;
 
-          runList(listUserFound, 0, listUserFound.length - 1, contentHtml)
+          // Recorre lista y render Template en html
+          runList(listUserFound, valueInit, valueEnd, contentHtml);
+
+          // runList(listUserFound, 0, listUserFound.length - 1, contentHtml)
         }
 
       }
@@ -951,32 +957,32 @@
           <h6 class="Subtitle">DATOS DE CÓNYUGUE</h6>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.nombre_conyuge || ''}" name="nombre_conyuge" id="nombre_conyuge" type="text" class="validate">
-              <label for="nombre_conyuge">Nombre</label>
+              <input value="${data.datos_extra.conyugue.nombre || ''}" name="nombre" id="nombre" type="text" class="validate">
+              <label for="nombre">Nombre</label>
             </div>
             <div class="input-field col s5">
-              <input value="${data.apellido_conyugue || ''}" name="apellido_conyugue" id="apellido_conyugue" type="text" class="validate">
-              <label for="apellido_conyugue">Apellido</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s5">
-              <input value="${data.dni_conyugue || ''}" name="dni_conyugue" id="dni_conyugue" type="number" class="validate">
-              <label for="dni_conyugue">DNI</label>
-            </div>
-            <div class="input-field col s5">
-              <label class="date" for="fecha_nacimiento_conyugue">Fecha de Nacimiento</label>
-              <input value="${data.fecha_nacimiento_conyugue || dateNow}" name="fecha_nacimiento_conyugue" id="fecha_nacimiento_conyugue" type="date" placeholder="" max="${dateNow}">
+              <input value="${data.datos_extra.conyugue.apellido || ''}" name="apellido" id="apellido" type="text" class="validate">
+              <label for="apellido">Apellido</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.email_conyugue || ''}" name="email_conyugue" id="email_conyugue" type="text" class="validate">
-              <label for="email_conyugue">Email</label>
+              <input value="${data.datos_extra.conyugue.dni || ''}" name="dni" id="dni" type="number" class="validate">
+              <label for="dni">DNI</label>
             </div>
             <div class="input-field col s5">
-              <input value="${data.celular_conyugue || ''}" name="celular_conyugue" id="celular_conyugue" type="number">
-              <label class="number" for="celular_conyugue">Celular</label>
+              <label class="date" for="fecha_nacimiento">Fecha de Nacimiento</label>
+              <input value="${data.datos_extra.conyugue.fecha_nacimiento || dateNow}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="" max="${dateNow}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.email || ''}" name="email" id="email" type="text" class="validate">
+              <label for="email">Email</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.celular || ''}" name="celular" id="celular" type="number">
+              <label class="number" for="celular">Celular</label>
             </div>
           </div>`
     
