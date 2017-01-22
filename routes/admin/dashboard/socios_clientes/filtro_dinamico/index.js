@@ -29,11 +29,11 @@ function isLoggedIn(req, res, next) {
 }
 
 // READ One item by id from list
-app.get('/table/:table_select/columns/params', function (req, res) {
-    // if(req.user.permiso === users_type.onwers ||
-    //    req.user.permiso === users_type.admins ||
-    //    req.user.permiso === users_type.officers ||
-    //    req.user.permiso === users_type.viewer) {
+app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
+    if(req.user.permiso === users_type.onwers ||
+       req.user.permiso === users_type.admins ||
+       req.user.permiso === users_type.officers ||
+       req.user.permiso === users_type.viewer) {
 
         var table_select = Number(req.params.table_select);
 
@@ -333,13 +333,13 @@ app.get('/table/:table_select/columns/params', function (req, res) {
           })
         }
 
-    // } else {
-    //     console.log('El usuario no esta autentificado. Requiere logearse')
-    //     res.status(403).json({
-    //         status: 'not_access',
-    //         message: 'El usuario no esta autentificado. Requiere logearse'
-    //     })
-    // }
+    } else {
+        console.log('El usuario no esta autentificado. Requiere logearse')
+        res.status(403).json({
+            status: 'not_access',
+            message: 'El usuario no esta autentificado. Requiere logearse'
+        })
+    }
 });
 
 module.exports = app

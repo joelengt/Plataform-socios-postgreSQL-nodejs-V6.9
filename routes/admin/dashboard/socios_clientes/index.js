@@ -8,6 +8,8 @@ var config = require('../../../../config')
 var users_type = config.users_access
 var connectionString = config.postgresql.local
 
+var getDatePerrty = require('../../../../controllers/get_date_pretty');
+
 var data_value_tablas = [
   'socios',   // 0
   'conyuges_socio',  // 1
@@ -158,16 +160,28 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
 // CREATE item for list
 app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
-       req.user.permiso === users_type.administrador ||
-       req.user.permiso === users_type.tesorero) {
+        req.user.permiso === users_type.administrador ||
+        req.user.permiso === users_type.tesorero) {
+
         var table_select = Number(req.params.table_select);
 
         var results = [];
+        var results2 = [];
+
         var lista_table = [];
 
+        // Obteniendo techa del dia
+        var RTime = new Date();
+        var month = RTime.getMonth() + 1   // 0 - 11 *
+        var day = RTime.getDate()          // 1- 31  *
+        var year = RTime.getFullYear()     // año   *
+
+        var date_today = `${ year }-${ month }-${ day }`;
+
         // Obeteniendo nuevo usuario registrado
+
         var socioNuevo = {
-            fecha_ingreso:                req.body.fecha_ingreso  || '',
+            fecha_ingreso:                date_today,
             nombres:                      req.body.nombres  || '',
             apellidos:                    req.body.apellidos  || '',
             numero_carnet:                req.body.numero_carnet  || '',
@@ -194,7 +208,44 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
             tipo_pago:                    req.body.tipo_pago  || '',
             situacion_socio:              req.body.situacion_socio  || '',
             foto:                         req.body.foto  || '',
-            situacion_alerta:             req.body.situacion_alerta  || ''
+            situacion_alerta:             req.body.situacion_alerta  || '',
+            datos_extra:  {
+              conyuge: {
+                nombres:               '',
+                apellidos:             '',
+                dni:                   '',
+                fecha_nacimiento:      '',
+                celular:               '',
+                fecha_ingreso:         date_today,
+                email:                 '',
+                id_socio_afiliado:     ''
+              },
+              afiliado: {
+                nombres:              '',
+                apellidos:            '',
+                dni:                  '',
+                fecha_nacimiento:     '',
+                direccion:            '',
+                email:                '',
+                celular:              '',
+                telefono:             '',
+                fecha_ingreso:        '',
+                carta_declaratoria:   '',
+                id_socio_afiliado:    ''
+              }
+          }
+        }
+
+        if(req.body.hasOwnProperty('datos_extra')) {
+          var datos_extra = req.body.datos_extra;
+
+          socioNuevo.datos_extra.conyuge.nombres = datos_extra.conyuge.nombre || '';
+          socioNuevo.datos_extra.conyuge.apellidos = datos_extra.conyuge.apellidos || '';
+          socioNuevo.datos_extra.conyuge.dni = datos_extra.conyuge.dni || '';
+          socioNuevo.datos_extra.conyuge.fecha_nacimiento = datos_extra.conyuge.fecha_nacimiento || '';
+          socioNuevo.datos_extra.conyuge.celular = datos_extra.conyuge.celular || '';
+          socioNuevo.datos_extra.conyuge.email = datos_extra.conyuge.email || '';
+
         }
 
         console.log('Datos que obtengo de la subida');
@@ -236,7 +287,7 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
                            // El usuario es nuevo -> Registrar
                            console.log('El usuario es nuevo, y esta listo para guarda en la base de datos');
 
-                          // Almacenando en la DB
+                          // Almacenando socio en la DB
                           client.query(`INSERT INTO ${ data_value_tablas[table_select] }
                                        (fecha_ingreso,
                                        nombres,
@@ -296,12 +347,76 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
                                        '${ socioNuevo.foto }',
                                        '${ socioNuevo.situacion_alerta }');`);
 
-                          console.log('El socio se registro efectivamente en la DB');
+                          // Almacenando al conyuge en la DB
+                          // Llamando al socio
+                          const query2 = client.query(`SELECT * FROM ${ data_value_tablas[table_select] } WHERE dni = '${ socioNuevo.dni }';`)
 
-                          res.status(200).json({
-                              status: 'ok',
-                              result: socioNuevo,
-                              message: 'El socio se registro efectivamente en la DB'
+                          query2.on('row', (row) => {
+                              results2.push(row)
+                          })
+
+                          query2.on('end', () => {
+                              done()
+
+                              // Actualizando conyuge con el id del socio afiliado
+                              socioNuevo.datos_extra.conyuge.id_socio_afiliado = results2[0].id;
+                              socioNuevo.datos_extra.afiliado.id_socio_afiliado = results2[0].id;
+
+                              // Guardando conyuge en la DB
+                              client.query(`INSERT INTO ${ data_value_tablas[1] }
+                                           (nombres,
+                                           apellidos,
+                                           dni,
+                                           fecha_nacimiento,
+                                           celular,
+                                           fecha_ingreso,
+                                           email,
+                                           id_socio_afiliado
+                                           ) VALUES (
+                                           '${ socioNuevo.datos_extra.conyuge.nombres }',
+                                           '${ socioNuevo.datos_extra.conyuge.apellidos }',
+                                           '${ socioNuevo.datos_extra.conyuge.dni }',
+                                           '${ socioNuevo.datos_extra.conyuge.fecha_nacimiento }',
+                                           '${ socioNuevo.datos_extra.conyuge.celular }',
+                                           '${ socioNuevo.datos_extra.conyuge.fecha_ingreso }',
+                                           '${ socioNuevo.datos_extra.conyuge.email }',
+                                           '${ socioNuevo.datos_extra.conyuge.id_socio_afiliado }');`);
+
+                              // Guardando afiliado en la DB
+                              client.query(`INSERT INTO ${ data_value_tablas[2] }
+                                           (nombres,
+                                           apellidos,
+                                           dni,
+                                           fecha_nacimiento,
+                                           direccion,
+                                           email,
+                                           celular,
+                                           telefono,
+                                           fecha_ingreso,
+                                           carta_declaratoria,
+                                           id_socio_afiliado
+                                           ) VALUES (
+                                           '${ socioNuevo.datos_extra.afiliado.nombres }',
+                                           '${ socioNuevo.datos_extra.afiliado.apellidos }',
+                                           '${ socioNuevo.datos_extra.afiliado.dni }',
+                                           '${ socioNuevo.datos_extra.afiliado.fecha_nacimiento }',
+                                           '${ socioNuevo.datos_extra.afiliado.direccion }',
+                                           '${ socioNuevo.datos_extra.afiliado.email }',
+                                           '${ socioNuevo.datos_extra.afiliado.celular }',
+                                           '${ socioNuevo.datos_extra.afiliado.telefono }',
+                                           '${ socioNuevo.datos_extra.afiliado.fecha_ingreso }',
+                                           '${ socioNuevo.datos_extra.afiliado.carta_declaratoria }',
+                                           '${ socioNuevo.datos_extra.afiliado.id_socio_afiliado }');`);
+
+
+                              console.log('El socio se registro efectivamente en la DB');
+
+                              res.status(200).json({
+                                  status: 'ok',
+                                  result: socioNuevo,
+                                  message: 'El socio se registro efectivamente en la DB'
+                              })
+
                           })
 
                         } else {
