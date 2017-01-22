@@ -158,10 +158,11 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
 });
 
 // CREATE item for list
-app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.super_admin ||
-        req.user.permiso === users_type.administrador ||
-        req.user.permiso === users_type.tesorero) {
+app.post('/item/socio/add/:table_select', function (req, res) {
+    // if(req.user.permiso === users_type.super_admin ||
+    //     req.user.permiso === users_type.administrador ||
+    //     req.user.permiso === users_type.tesorero) {
+
         var table_select = Number(req.params.table_select);
 
         var results = [];
@@ -178,6 +179,7 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
         var date_today = `${ year }-${ month }-${ day }`;
 
         // Obeteniendo nuevo usuario registrado
+
         var socioNuevo = {
             fecha_ingreso:                date_today,
             nombres:                      req.body.nombres  || '',
@@ -208,31 +210,42 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
             foto:                         req.body.foto  || '',
             situacion_alerta:             req.body.situacion_alerta  || '',
             datos_extra:  {
-                conyuge: {
-                  nombres:               req.body.datos_extra.conyuge.nombre,
-                  apellidos:             req.body.datos_extra.conyuge.apellido,
-                  dni:                   req.body.datos_extra.conyuge.dni,
-                  fecha_nacimiento:      req.body.datos_extra.conyuge.fecha_nacimiento,
-                  celular:               req.body.datos_extra.conyuge.celular,
-                  fecha_ingreso:         date_today,
-                  email:                 req.body.datos_extra.conyuge.email,
-                  id_socio_afiliado:     '',
-                  
-                },
-                afiliado: {
-                  nombres:              '',
-                  apellidos:            '',
-                  dni:                  '',
-                  fecha_nacimiento:     '',
-                  direccion:            '',
-                  email:                '',
-                  celular:              '',
-                  telefono:             '',
-                  fecha_ingreso:        '',
-                  carta_declaratoria:   '',
-                  id_socio_afiliado:    ''
-                }
-            }
+              conyuge: {
+                nombres:               '',
+                apellidos:             '',
+                dni:                   '',
+                fecha_nacimiento:      '',
+                celular:               '',
+                fecha_ingreso:         date_today,
+                email:                 '',
+                id_socio_afiliado:     ''
+              },
+              afiliado: {
+                nombres:              '',
+                apellidos:            '',
+                dni:                  '',
+                fecha_nacimiento:     '',
+                direccion:            '',
+                email:                '',
+                celular:              '',
+                telefono:             '',
+                fecha_ingreso:        '',
+                carta_declaratoria:   '',
+                id_socio_afiliado:    ''
+              }
+          }
+        }
+
+        if(req.body.hasOwnProperty('datos_extra')) {
+          var datos_extra = req.body.datos_extra;
+
+          socioNuevo.datos_extra.conyuge.nombres = datos_extra.conyuge.nombre || '';
+          socioNuevo.datos_extra.conyuge.apellidos = datos_extra.conyuge.apellidos || '';
+          socioNuevo.datos_extra.conyuge.dni = datos_extra.conyuge.dni || '';
+          socioNuevo.datos_extra.conyuge.fecha_nacimiento = datos_extra.conyuge.fecha_nacimiento || '';
+          socioNuevo.datos_extra.conyuge.celular = datos_extra.conyuge.celular || '';
+          socioNuevo.datos_extra.conyuge.email = datos_extra.conyuge.email || '';
+
         }
 
         console.log('Datos que obtengo de la subida');
@@ -370,7 +383,7 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
                                            '${ socioNuevo.datos_extra.conyuge.id_socio_afiliado }');`);
 
                               // Guardando afiliado en la DB
-                              client.query(`INSERT INTO ${ data_value_tablas[1] }
+                              client.query(`INSERT INTO ${ data_value_tablas[2] }
                                            (nombres,
                                            apellidos,
                                            dni,
@@ -438,13 +451,13 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
           })
         }
 
-    } else {
-        console.log('El usuario no esta autentificado. Requiere logearse')
-        res.status(403).json({
-            status: 'not_access',
-            message: 'El usuario no esta autentificado. Requiere logearse'
-        })
-    }
+    // } else {
+    //     console.log('El usuario no esta autentificado. Requiere logearse')
+    //     res.status(403).json({
+    //         status: 'not_access',
+    //         message: 'El usuario no esta autentificado. Requiere logearse'
+    //     })
+    // }
 })
 
 // DELETE item from list
