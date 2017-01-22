@@ -23,7 +23,7 @@ function isLoggedIn(req, res, next) {
 }
 
 // API: READ Lista de usuarios segun el tipo
-app.get('/list/:type_user', function (req, res) {
+app.get('/list/:type_user', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {
@@ -113,7 +113,7 @@ app.get('/list/:type_user', function (req, res) {
 })
 
 // API: CREATE - Registrando nuevo usuario
-app.post('/:type_user/register', function (req, res) {
+app.post('/:type_user/register', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {
@@ -299,7 +299,7 @@ app.post('/:type_user/register', function (req, res) {
 })
 
 // API: READ - Obteniendo usuario por id
-app.get('/:user_id', function (req, res) {
+app.get('/:user_id', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {
@@ -342,7 +342,7 @@ app.get('/:user_id', function (req, res) {
 })
 
 // API: DELETE - Eliminando usuario 
-app.delete('/delete/:user_id', function (req, res) {
+app.delete('/delete/:user_id', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {
@@ -379,7 +379,7 @@ app.delete('/delete/:user_id', function (req, res) {
 })
 
 // API: UPDATE - Edit usuario
-app.put('/edit/:user_id', function (req, res) {
+app.put('/edit/:user_id', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {
@@ -519,7 +519,7 @@ app.put('/edit/:user_id', function (req, res) {
 })
 
 // Render select de opciones y todos los usuarios
-app.get('/get-list', function (req, res) {
+app.get('/get-list', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {
@@ -555,7 +555,7 @@ app.get('/get-list', function (req, res) {
 })
 
 //  Filtro: Busqueda dinamica
-app.get('/dynamic-filter/:user_type/:estado', function (req, res) {
+app.get('/dynamic-filter/:user_type/:estado', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
        req.user.permiso === users_type.administrador ||
        req.user.permiso === users_type.tesorero) {

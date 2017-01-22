@@ -158,10 +158,10 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
 });
 
 // CREATE item for list
-app.post('/item/socio/add/:table_select', function (req, res) {
-    // if(req.user.permiso === users_type.super_admin ||
-    //     req.user.permiso === users_type.administrador ||
-    //     req.user.permiso === users_type.tesorero) {
+app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
+    if(req.user.permiso === users_type.super_admin ||
+        req.user.permiso === users_type.administrador ||
+        req.user.permiso === users_type.tesorero) {
 
         var table_select = Number(req.params.table_select);
 
@@ -451,13 +451,13 @@ app.post('/item/socio/add/:table_select', function (req, res) {
           })
         }
 
-    // } else {
-    //     console.log('El usuario no esta autentificado. Requiere logearse')
-    //     res.status(403).json({
-    //         status: 'not_access',
-    //         message: 'El usuario no esta autentificado. Requiere logearse'
-    //     })
-    // }
+    } else {
+        console.log('El usuario no esta autentificado. Requiere logearse')
+        res.status(403).json({
+            status: 'not_access',
+            message: 'El usuario no esta autentificado. Requiere logearse'
+        })
+    }
 })
 
 // DELETE item from list
