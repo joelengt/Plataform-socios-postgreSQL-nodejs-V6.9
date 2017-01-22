@@ -74,6 +74,7 @@
     }
     // Evento ciclo
     for(var i = limitStart; i <= limitEnd; i++) {
+      console.log(array)
       var elemento_usuario = array[i];
 
       // Creando nuevo usuario
@@ -135,7 +136,7 @@
       method: 'get',
       success: function (listUsuarios) {
         console.log('Lista obtenida');
-        console.log(listUsuarios);
+        // console.log(listUsuarios);
 
         console.log('Comparando el .name con ' + nameUser);
 
@@ -143,30 +144,57 @@
 
         // Recorre lista y render Template en html
         for(var j = 0; j <= listUsuarios.result.length - 1; j++) {
-          console.log(j);
+          // console.log(j);
           var elementoUser = listUsuarios.result[j]
+          numero_dni = parseInt(nameUser)
+          // console.log(numero_dni)
+          var numero = isNaN(numero_dni)
+          // console.log(!numero)
+          if (!numero) {
+            var numberSolicitada = elementoUser.dni
+            var coincidenciaMinima = 0;
+            numero_dni = numero_dni.toString()
+            console.log(numero_dni.length)
 
-          var fullName = elementoUser.nombres + ' ' + elementoUser.apellidos;
+            for(var m = 0; m <= numberSolicitada.length - 1; m++) {
+              if(numberSolicitada[m] !== numero_dni[m]) {
+                  console.log('Ya no coincide')
+                  break
+              }
 
-          var wordSolicitada = fullName.toLowerCase();
-          nameUser = nameUser.toLowerCase()
-          var coincidenciaMinima = 0;
+              console.log(m)
 
-          // Buscando coindicencia de la palabra
-          for(var m = 0; m <= wordSolicitada.length - 1; m++) {
-            if(wordSolicitada[m] !== nameUser[m]) {
-                console.log('Ya no coincide')
-                break
+              coincidenciaMinima++;
             }
 
-            console.log(m)
+            if(coincidenciaMinima === numero_dni.length) {
+              listUserFound.push(elementoUser);
+            }
 
-            coincidenciaMinima++;
-            
-          }
+          } else {
+            var fullName = elementoUser.apellidos + ' ' + elementoUser.nombres;
 
-          if(coincidenciaMinima === nameUser.length) {
-            listUserFound.push(elementoUser);
+            var wordSolicitada = fullName.toLowerCase();
+            nameUser = nameUser.toLowerCase()
+            var coincidenciaMinima = 0;
+
+            // Buscando coindicencia de la palabra
+            for(var m = 0; m <= wordSolicitada.length - 1; m++) {
+              if(wordSolicitada[m] !== nameUser[m]) {
+                  console.log('Ya no coincide')
+                  break
+              }
+
+              console.log(m)
+
+              coincidenciaMinima++;
+              
+            }
+            console.log(nameUser)
+            console.log(coincidenciaMinima, nameUser.length)
+            if(coincidenciaMinima === nameUser.length) {
+              listUserFound.push(elementoUser);
+            }
           }
   
         }
@@ -287,7 +315,6 @@
      modal.style.display = "none";
      }
 
-
   }
 
   function goheadfixed(classtable) {
@@ -368,16 +395,16 @@
       url: `/dashboard/socios-clientes/filter/table/0/columns/params?tipo_socio=${type_partner}&situacion_socio=${situation_partner}&tipo_pago=${type_payment}&situacion_trabajo=${situation_work}&carta_declaratoria=${letter_declaration}&onomastico=${onomastic}`,
       method: 'get',
       success: function(listUsuarios){
-        console.log(listUsuarios)
+        console.log(listUsuarios.list)
         contentHtml.innerHTML = '';
 
         if (listUsuarios.status !== 'not_found') {
-          getPaginationTemplate(limitEachPage, listUsuarios.result.length);
+          getPaginationTemplate(limitEachPage, listUsuarios.list.length);
           var valueInit = 0;
           var valueEnd = 9;
 
           // Recorre lista y render Template en html
-          runList(listUsuarios.result, valueInit, valueEnd, contentHtml);
+          runList(listUsuarios.list, valueInit, valueEnd, contentHtml);
         } else {
           contentHtml.innerHTML = '<tr>No se encontraron elementos con ese nombre</tr>';
         }
@@ -564,6 +591,7 @@
 
     actionBtnPrev(form, dataPart, modal_body, btnMore, btnPrev, btnNext)
   }
+
   // Accion de boton en formulario
   function btnNext() {
     // var btn = $(this)
@@ -587,6 +615,7 @@
 
     actionBtnNext(form, dataPart, modal_body, btnPrev, btnNext, btnSave)
   }
+
   // Accion de boton en formulario
   function btnSave() {
     var parent = $(this).parents('#modalForm')
@@ -1051,7 +1080,6 @@
     $btn_prev.on('click', btnPrev)
     $btn_next.on('click', btnNext)
     $btn_save.on('click', btnSave)
-
   }
 
   function CreateFormEditSocio (contentHtml, data_infoEdit) {
@@ -1307,7 +1335,6 @@
      //  })
 
     // goheadfixed('table.fixed')
-
   }
 
   // Inicializando Lectura
