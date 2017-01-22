@@ -158,8 +158,8 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
 // CREATE item for list
 app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
     if(req.user.permiso === users_type.super_admin ||
-       req.user.permiso === users_type.administrador ||
-       req.user.permiso === users_type.tesorero) {
+        req.user.permiso === users_type.administrador ||
+        req.user.permiso === users_type.tesorero) {
         var table_select = Number(req.params.table_select);
 
         var results = [];
@@ -194,7 +194,33 @@ app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
             tipo_pago:                    req.body.tipo_pago  || '',
             situacion_socio:              req.body.situacion_socio  || '',
             foto:                         req.body.foto  || '',
-            situacion_alerta:             req.body.situacion_alerta  || ''
+            situacion_alerta:             req.body.situacion_alerta  || '',
+            datos_extra:  {
+                conyuge: {
+                  nombres:               req.body.datos_extra.conyuge.nombre,
+                  apellidos:             req.body.datos_extra.conyuge.apellido,
+                  dni:                   req.body.datos_extra.conyuge.dni,
+                  fecha_nacimiento:      req.body.datos_extra.conyuge.fecha_nacimiento
+                  celular:               req.body.datos_extra.conyuge.celular,
+                  fecha_ingreso:         req.body.datos_extra.conyuge.fecha_ingreso,
+                  email:                 req.body.datos_extra.conyuge.email,
+                  id_socio_afiliado:     '',
+                  
+                },
+                afiliado: {
+                  nombres:              req.body.datos_extra.afiliado.nombre,
+                  apellidos:            req.body.datos_extra.afiliado.apellido,
+                  dni:                  req.body.datos_extra.afiliado.dni,
+                  fecha_nacimiento:     req.body.datos_extra.conyuge.fecha_nacimiento
+                  direccion:            req.body.datos_extra.afiliado.direccion,
+                  email:                req.body.datos_extra.afiliado.email,
+                  celular:              req.body.datos_extra.afiliado.celular,
+                  telefono:             req.body.datos_extra.afiliado.telefono,
+                  fecha_ingreso:        req.body.datos_extra.conyuge.fecha_ingreso,
+                  carta_declaratoria:   req.body.datos_extra.conyuge.carta_declaratoria,
+                  id_socio_afiliado:    ''
+                }
+            }
         }
 
         console.log('Datos que obtengo de la subida');
