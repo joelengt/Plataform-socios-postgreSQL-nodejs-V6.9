@@ -85,6 +85,32 @@
     }
   }
 
+  // Template para lista de search
+  function runListSearch(array, contentHtml) {
+    console.log(array, contentHtml)
+
+    // if (!document.querySelector('.searchContainer')) {
+    //   console.log('jajajaja')
+    //   var container = document.createElement('div')
+    //   container.setAttribute('class', 'searchContainer')
+    //   contentHtml.append(container)
+    // }
+
+    for (var i = 0; i < array.length; i++) {
+
+      var element_user = array[i]
+      console.log(element_user)
+      var user_div = document.createElement('div')
+      user_div.setAttribute('class', 'searchContainer__item')
+      var tpl = `<a class="searchContainer__item--link" href="/dashboard/socios-clientes/item/0/${element_user.id}">${element_user.nombres} ${element_user.apellidos}</a>`
+
+      user_div.innerHTML = tpl
+
+      contentHtml.append(user_div)
+
+    }
+  }
+
   // READ Todos los Usuarios
   function readUsers(limitEachPage, contentHtml) {
     // GET :: READ Lista de usuarios
@@ -131,96 +157,99 @@
   // Filtrando usuario por nombre
   function searchByName(nameUser, contentHtml) {
     let listUserFound = [];
-    $.ajax({
-      url: '/dashboard/socios-clientes/list/0',
-      method: 'get',
-      success: function (listUsuarios) {
-        console.log('Lista obtenida');
-        // console.log(listUsuarios);
+    if (nameUser !== '') {
+      $.ajax({
+        url: '/dashboard/socios-clientes/list/0',
+        method: 'get',
+        success: function (listUsuarios) {
+          console.log('Lista obtenida');
+          // console.log(listUsuarios);
 
-        console.log('Comparando el .name con ' + nameUser);
+          console.log('Comparando el .name con ' + nameUser);
 
-        contentHtml.innerHTML = '';
-
-        // Recorre lista y render Template en html
-        for(var j = 0; j <= listUsuarios.result.length - 1; j++) {
-          // console.log(j);
-          var elementoUser = listUsuarios.result[j]
-          numero_dni = parseInt(nameUser)
-          // console.log(numero_dni)
-          var numero = isNaN(numero_dni)
-          // console.log(!numero)
-          if (!numero) {
-            var numberSolicitada = elementoUser.dni
-            var coincidenciaMinima = 0;
-            numero_dni = numero_dni.toString()
-            console.log(numero_dni.length)
-
-            for(var m = 0; m <= numberSolicitada.length - 1; m++) {
-              if(numberSolicitada[m] !== numero_dni[m]) {
-                  console.log('Ya no coincide')
-                  break
-              }
-
-              console.log(m)
-
-              coincidenciaMinima++;
-            }
-
-            if(coincidenciaMinima === numero_dni.length) {
-              listUserFound.push(elementoUser);
-            }
-
-          } else {
-            var fullName = elementoUser.apellidos + ' ' + elementoUser.nombres;
-
-            var wordSolicitada = fullName.toLowerCase();
-            nameUser = nameUser.toLowerCase()
-            var coincidenciaMinima = 0;
-
-            // Buscando coindicencia de la palabra
-            for(var m = 0; m <= wordSolicitada.length - 1; m++) {
-              if(wordSolicitada[m] !== nameUser[m]) {
-                  console.log('Ya no coincide')
-                  break
-              }
-
-              console.log(m)
-
-              coincidenciaMinima++;
-              
-            }
-            console.log(nameUser)
-            console.log(coincidenciaMinima, nameUser.length)
-            if(coincidenciaMinima === nameUser.length) {
-              listUserFound.push(elementoUser);
-            }
-          }
-  
-        }
-
-        console.log('Resultado del filtrado');
-        console.log(listUserFound);
-
-        // Render de kas coincidencias
-        if(listUserFound.length === 0) {
-          contentHtml.innerHTML = '<tr>No se encontraron elementos con ese nombre</tr>';
-          
-        } else {
           contentHtml.innerHTML = '';
-          getPaginationTemplate(10, listUserFound.length);
-          var valueInit = 0;
-          var valueEnd = 9;
 
           // Recorre lista y render Template en html
-          runList(listUserFound, valueInit, valueEnd, contentHtml);
+          for(var j = 0; j <= listUsuarios.result.length - 1; j++) {
+            // console.log(j);
+            var elementoUser = listUsuarios.result[j]
+            numero_dni = parseInt(nameUser)
+            // console.log(numero_dni)
+            var numero = isNaN(numero_dni)
+            // console.log(!numero)
+            if (!numero) {
+              var numberSolicitada = elementoUser.dni
+              var coincidenciaMinima = 0;
+              numero_dni = numero_dni.toString()
+              console.log(numero_dni.length)
 
-          // runList(listUserFound, 0, listUserFound.length - 1, contentHtml)
+              for(var m = 0; m <= numberSolicitada.length - 1; m++) {
+                if(numberSolicitada[m] !== numero_dni[m]) {
+                    console.log('Ya no coincide')
+                    break
+                }
+
+                console.log(m)
+
+                coincidenciaMinima++;
+              }
+
+              if(coincidenciaMinima === numero_dni.length) {
+                listUserFound.push(elementoUser);
+              }
+
+            } else {
+              var fullName = elementoUser.apellidos + ' ' + elementoUser.nombres;
+
+              var wordSolicitada = fullName.toLowerCase();
+              nameUser = nameUser.toLowerCase()
+              var coincidenciaMinima = 0;
+
+              // Buscando coindicencia de la palabra
+              for(var m = 0; m <= wordSolicitada.length - 1; m++) {
+                if(wordSolicitada[m] !== nameUser[m]) {
+                    console.log('Ya no coincide')
+                    break
+                }
+
+                console.log(m)
+
+                coincidenciaMinima++;
+                
+              }
+              console.log(nameUser)
+              console.log(coincidenciaMinima, nameUser.length)
+              if(coincidenciaMinima === nameUser.length) {
+                listUserFound.push(elementoUser);
+              }
+            }
+      
+          }
+
+          console.log('Resultado del filtrado');
+          console.log(listUserFound);
+
+          // Render de kas coincidencias
+          if(listUserFound.length === 0) {
+            // contentHtml.innerHTML = '<div>No se encontraron elementos con ese nombre</div>';          
+          } else {
+            // contentHtml.innerHTML = '';
+            // getPaginationTemplate(10, listUserFound.length);
+            // var valueInit = 0;
+            // var valueEnd = 9;
+
+            // Recorre lista y render Template en html
+            // runList(listUserFound, valueInit, valueEnd, contentHtml);
+            runListSearch(listUserFound, contentHtml)
+
+            // runList(listUserFound, 0, listUserFound.length - 1, contentHtml)
+          }
+
         }
-
-      }
-    })
-
+      })
+    } else {
+      document.querySelector('.searchContainer').innerHTML = ''
+    }
   }
 
   // Obtener Render de Paginacion
@@ -270,8 +299,6 @@
       }
 
     }
-
-
   }
 
   // Cambiar orden de columna
@@ -294,7 +321,6 @@
     }
 
     console.log('--------------------');
-
   }
   
   // Modal de image
@@ -320,7 +346,6 @@
      span.onclick = function() { 
      modal.style.display = "none";
      }
-
   }
 
   function goheadfixed(classtable) {
@@ -364,10 +389,10 @@
     }
   }
 
-  function goresize() {
-    $('.fix-head').css('width', $('.fix-inner table').outerWidth(true)+'px');
-    $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
-  }
+  // function goresize() {
+  //   $('.fix-head').css('width', $('.fix-inner table').outerWidth(true)+'px');
+  //   $('.fix-head').css('height', $('.fix-inner table thead').outerHeight(true)+'px');
+  // }
 
   //Resize Table with filter
   function resize(){
@@ -428,18 +453,26 @@
     var dataForm = JSON.parse(sessionStorage.getItem('CS'))
     console.log(data)
     // console.log(new_Data)
-    if (extra === 'spouse') {
+    if (extra !== null) {
       dataForm.datos_extra = {}
-      dataForm.datos_extra.conyugue = {}
       console.log(data)
       console.log(dataForm)
       data = data.split('&')
       for (var i = 0; i < data.length; i++) {
         data[i] = data[i].split('=')
       }
-      console.log(data)
-      for (var i = 0; i < data.length; i++) {
-        dataForm.datos_extra.conyugue[data[i][0]] = data[i][1] || ''
+      if (extra === 'spouse') {
+        dataForm.datos_extra.conyugue = {}
+        console.log(data)
+        for (var i = 0; i < data.length; i++) {
+          dataForm.datos_extra.conyugue[data[i][0]] = data[i][1] || ''
+        }
+      } else if(extra === 'afiliatte') {
+        dataForm.datos_extra.afiliado = {}
+        console.log(data)
+        for (var i = 0; i < data.length; i++) {
+          dataForm.datos_extra.afiliado[data[i][0]] = data[i][1] || ''
+        }
       }
     } else {
       data = data.split('&')
@@ -521,7 +554,6 @@
       btnPrev.css('display', 'block')
       btnNext.css('display', 'block')
     }
-
   }
 
   // Accion de boton Siguiente para template de formulario
@@ -577,7 +609,6 @@
 
     btnNext.css('display', 'block')
     btnPrev.css('display', 'block')
-
   }
 
   // Accion de boton en formulario
@@ -1002,8 +1033,77 @@
 
     $('.selectForm').material_select()
     Materialize.updateTextFields()
+
   }
 
+  // Template para datos de afiliados
+  function tpl_data_afiliatte(modal_body, titleModal, prev, params){
+    var time = new Date()
+    var dia = ("0" +time.getDate()).slice(-2);
+    var mes = ("0" + (time.getMonth() + 1)).slice(-2);
+    var año = time.getFullYear() ;
+    var time = año +'-'+ mes +'-'+ dia
+
+    var dateNow = time
+
+    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var content = document.createElement('form')
+    content.setAttribute('class', 'ModalForm__content--part')
+    content.setAttribute('id', 'ModalForm__content--part')
+    content.setAttribute('data-form-part', 'tpl_data_afiliatte')
+    content.setAttribute('data-form-prev', prev)
+    var tpl = `<h5 class="Title">${titleModal}</h5>
+          <h6 class="Subtitle">DATOS DE CÓNYUGUE</h6>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.nombre || ''}" name="nombre" id="nombre" type="text" class="validate">
+              <label for="nombre">Nombre</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.apellido || ''}" name="apellido" id="apellido" type="text" class="validate">
+              <label for="apellido">Apellido</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.dni || ''}" name="dni" id="dni" type="number" class="validate">
+              <label for="dni">DNI</label>
+            </div>
+            <div class="input-field col s5">
+              <label class="date" for="fecha_nacimiento">Fecha de Nacimiento</label>
+              <input value="${data.datos_extra.conyugue.fecha_nacimiento || dateNow}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="" max="${dateNow}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.email || ''}" name="email" id="email" type="text" class="validate">
+              <label for="email">Email</label>
+            </div>
+            <div class="input-field col s5">
+              <input value="${data.datos_extra.conyugue.celular || ''}" name="celular" id="celular" type="number">
+              <label class="number" for="celular">Celular</label>
+            </div>
+          </div>`
+    
+    content.innerHTML = tpl
+    modal_body.append(content)
+
+    $('#dni_conyugue').on('keypress', function(){
+      nombre=$(this).val();       
+      //Comprobamos la longitud de caracteres
+      if (nombre.length<8){
+        return true;
+      }
+      else {
+        return false;         
+      }
+    })
+
+    $('.selectForm').material_select()
+    Materialize.updateTextFields()
+  }
+
+  // Actualizacion de datos de socio
   function btnUpdate() {
     var id_socio = $(this).attr('data-idSocio')
     var parent = $(this).parents('#modalForm')
@@ -1041,6 +1141,7 @@
 
   // Modal para creacion de nuevo socio
   function CreateFormSocio(contentHtml, params) {
+
     sessionStorage.setItem('CS', JSON.stringify({}))
     var modal = document.createElement('div')
     modal.setAttribute('class', 'ModalForm modal modal-fixed-footer')
@@ -1063,10 +1164,12 @@
     contentHtml.append(modal)
 
     $('.ModalForm').modal({
+
       complete: function(ev){
         ev.remove()
         sessionStorage.removeItem('CS')
       }
+
     })
 
     $('#modalForm').modal('open');
@@ -1086,14 +1189,18 @@
     $btn_prev.on('click', btnPrev)
     $btn_next.on('click', btnNext)
     $btn_save.on('click', btnSave)
+
   }
 
+  // Edicion de datos de un socio
   function CreateFormEditSocio (contentHtml, data_infoEdit) {
+
     sessionStorage.setItem('CS', JSON.stringify({}))
     var modal = document.createElement('div')
     var id_socio = document.querySelector('.data_idSocio').innerHTML
     modal.setAttribute('class', 'ModalForm modal modal-fixed-footer')
     modal.setAttribute('id', 'modalForm')
+
     var template = `<div class="ModalForm__content modal-content">
         <div class="progress">
           <div class="indeterminate"></div>
@@ -1116,9 +1223,12 @@
 
     $('.ModalForm').modal({
       complete: function(ev){
+
         ev.remove()
         sessionStorage.removeItem('CS')
+
       }
+
     })
 
     $('#modalForm').modal('open');
@@ -1126,11 +1236,11 @@
     var $modal_body = $('.ModalForm__content')
     var $btn_update = $('.btn-update')
 
-
     $.ajax({
       url: `/dashboard/socios-clientes/item/to-json/0/${id_socio}`,
       method: 'GET',
       success: function(res){
+
         document.querySelector('.progress').remove()
         var data_socio = res.result
         console.log(data_socio)
@@ -1138,10 +1248,10 @@
         if (data_infoEdit === 'editDataUser') {
 
           var $btn_moreInfo = $('.bt-aditional')
-          var $btn_prev = $('.btn-prev')
           tpl_create_partner($modal_body, 'Editar Socio', data_socio)
 
           $btn_moreInfo.on('click', function(){
+
             var Form =$('.ModalForm__content--part')
             $btn_update.removeClass('disabled')
             console.log(Form)
@@ -1150,60 +1260,86 @@
 
             $btn_moreInfo.css({'display':'none'})
             document.querySelector('[data-form-part="tpl_create_partner"').remove()
+
             if (data_socio.organizacion === 'Civil') {
+
+              console.log('Pertenece a Fuerzas especiales')
+              tpl_data_civil($modal_body, 'Editar Socio', null, data_socio)
 
             } else if(data_socio.organizacion === 'P.N.P'){
 
+              console.log('Pertenece a Fuerzas especiales')
+              tpl_data_pnp($modal_body, 'Editar Socio', $btn_prev, 'PNP', data_socio)
+
             } else {
+
               console.log('Pertenece a Fuerzas especiales')
               tpl_data_pnp($modal_body, 'Editar Socio', $btn_prev, 'Fuerzas', data_socio)
+
             }
           })
-        } else if(data_infoEdit === 'editDataCivil'){
-          var $btn_moreInfo = $('.bt-aditional')
-          $btn_moreInfo.css({'display': 'none'})
-          $btn_update.removeClass('disabled')
-          tpl_data_civil($modal_body, 'Editar Socio', null, data_socio)
-        } else if(data_infoEdit === 'editDataPNP') {
-          var $btn_moreInfo = $('.bt-aditional')
-          $btn_moreInfo.css({'display': 'none'})
-          $btn_update.removeClass('disabled')
-          if (data_socio.organizacion === 'PNP') {
-            tpl_data_pnp($modal_body, 'Editar Socio', null, 'PNP', data_socio)
-          } else {
-            tpl_data_pnp($modal_body, 'Editar Socio', null, data_socio.organizacion, data_socio)
-          }
-        } else if(data_infoEdit === 'editDataWork'){
+        } 
+        // else if(data_infoEdit === 'editDataCivil'){
+        //   var $btn_moreInfo = $('.bt-aditional')
+        //   $btn_moreInfo.css({'display': 'none'})
+        //   $btn_update.removeClass('disabled')
+        //   tpl_data_civil($modal_body, 'Editar Socio', null, data_socio)
+        // } else if(data_infoEdit === 'editDataPNP') {
+        //   var $btn_moreInfo = $('.bt-aditional')
+        //   $btn_moreInfo.css({'display': 'none'})
+        //   $btn_update.removeClass('disabled')
+        //   if (data_socio.organizacion === 'PNP') {
+        //     tpl_data_pnp($modal_body, 'Editar Socio', null, 'PNP', data_socio)
+        //   } else {
+        //     tpl_data_pnp($modal_body, 'Editar Socio', null, data_socio.organizacion, data_socio)
+        //   }
+        // } 
+        else if(data_infoEdit === 'editDataWork'){
+
           var $btn_moreInfo = $('.bt-aditional')
           $btn_moreInfo.css({'display': 'none'})
           $btn_update.removeClass('disabled')
           tpl_data_work($modal_body, 'Editar Socio', null, data_socio)
+
         } else if(data_infoEdit === 'editDataContact'){
+
           var $btn_moreInfo = $('.bt-aditional')
           $btn_moreInfo.css({'display': 'none'})
           $btn_update.removeClass('disabled')
           tpl_data_contact($modal_body, 'Editar Socio', null, data_socio)
+
         } else if(data_infoEdit === 'editDataSpouse'){
+
           var $btn_moreInfo = $('.bt-aditional')
           $btn_moreInfo.css({'display': 'none'})
           $btn_update.removeClass('disabled')
           tpl_data_spouse($modal_body, 'Editar Socio', null, data_socio)
+
+        } else if(data_infoEdit === 'editDataAfiliatte'){
+
+          var $btn_moreInfo = $('.bt-aditional')
+          $btn_moreInfo.css({'display': 'none'})
+          $btn_update.removeClass('disabled')
+          tpl_data_afiliatte($modal_body, 'Editar Socio', null, data_socio)
+
+        } else {
+
+          console.log('corresponde a un template que al parecer no esta definido')
+          console.log(data_infoEdit)
+
         }
       }
+
     })
 
-    // var $btn_next = $('.btn-next')
-
-    // // $btn_prev.on('click', prevForm)
-    // $btn_moreInfo.on('click', moreInfo)
-    // $btn_prev.on('click', btnPrev)
-    // $btn_next.on('click', btnNext)
     $btn_update.on('click', btnUpdate)
+
   }
 
   // Funcion Principal
   function main() {
-    // Obteniendo Contenedo html
+
+    // Obteniendo Contenedor html
     var $boxConntentPage = $('.App_Container__box')
     var $boxConntentHtml = document.querySelector('#boxListUsers');
     var $ArticlesContainer = $('#App_Container').find('.Articles_containers');
@@ -1231,50 +1367,69 @@
 
     // Reszise Filter
     if ($Filter_resize !== null) {
+
       $Filter_resize.addEventListener('click', resize)
+
     }
 
     // Lectura de Usuarios
     readUsers(limitePage, $boxConntentHtml);
 
-    // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
-    $btnBoxSearchByName.addEventListener('click', function (ev) {
-      let nameUser = $txtBoxSearchByName.value;
-      console.log('BUSQUEDA POR NOMBRE O DNI -> click');
-      console.log(nameUser);
-      searchByName(nameUser, $boxConntentHtml);
+    $txtBoxSearchByName.addEventListener('focus', function(){
+      $('.searchContainer').css({'display': 'block'})
     })
 
-     // Filtro por evento key: enter
+    $txtBoxSearchByName.addEventListener('blur', function(){
+      setTimeout(function(){
+        $('.searchContainer').css({'display': 'none'})
+      }, 100)
+    })
+
+    // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
+    $btnBoxSearchByName.addEventListener('click', function (ev) {
+
+      let nameUser = $txtBoxSearchByName.value;
+      var contentHTML = document.querySelector('.searchContainer')
+      console.log('BUSQUEDA POR NOMBRE O DNI -> click');
+      console.log(nameUser);
+      searchByName(nameUser, contentHTML);
+
+    })
+
+    // Filtro por evento key: enter
     $txtBoxSearchByName.addEventListener('keypress', function (event) {
       let nameUser = $txtBoxSearchByName.value;
       console.log('BUSQUEDA POR NOMBRE O DNI -> keypress enter');
+      var contentHTML = document.querySelector('.searchContainer')
       console.log(nameUser);
       if(event.charCode === 13) {
-        searchByName(nameUser, $boxConntentHtml);
+        searchByName(nameUser, contentHTML);
       }
     })
 
-     //Activando estilo de caja de Filtros lateral
+    //Activando estilo de caja de Filtros lateral
     $('select').material_select();
 
-     // Filter mientras la caja de texto cambia
+    // Filter mientras la caja de texto cambia
     $('#txt_box_search').bind('input', function() { 
-      if($(this).val() === '') {
-        nameUserWord = '';
-        readUsers($boxConntentHtml)
-      }
+      // if($(this).val() === '') {
+      //   nameUserWord = '';
+      //   readUsers($boxConntentHtml)
+      // }
 
       nameUserWord = $(this).val()
 
       console.log('BUSQUEDA POR NOMBRE O DNI -> Input change');
+      var contentHTML = document.querySelector('.searchContainer')
       console.log(nameUserWord);
 
-      searchByName(nameUserWord, $boxConntentHtml);
+      searchByName(nameUserWord, contentHTML);
+
     });      
      
-     // Filtro por evento key: enter
+    // Filtro por evento key: enter
     $ArticlesContainerPages.on('click', '.selectPage', function (ev) {
+
       let $this = $(this)
       console.log(this);
 
@@ -1298,13 +1453,16 @@
           runList(listUsuarios.result, dataInit, dataEnd, $boxConntentHtml);
 
         }
+
       })  
 
     })
 
     // Busqueda por Filtro
     function searchFilter(){
+
       workFilter(limitePage, $boxConntentHtml, $type_partner.val(), $situation_partner.val(), $type_payment.val(), $situation_work.val(), $letter_declaration.val(), $onomastic.val())
+
     }
 
     $type_partner.on('change', searchFilter)
@@ -1316,34 +1474,26 @@
 
     //Creacion de Modal (crear socio)
     function createModal(){
+
       CreateFormSocio($boxConntentPage)
+
     }
 
     $newSocio.on('click', createModal)
 
     // Creacion de Modal (editar socio)
     function createModalEdit(){
+
       var data_info = $(this).attr('data-edit')
       CreateFormEditSocio($boxConntentPage, data_info)
+
     }
 
     $EditInfo.on('click', createModalEdit)
 
-
-
-
-     // $ArticlesContainer.on('click', '.imagenAvatar', function (ev) {
-     //  console.log('Click');
-     //      var imageUrl = this.src
-     //      var imageAlt = this.alt
-     //      showModalImage(imageUrl, imageAlt);
-
-     //  })
-
-    // goheadfixed('table.fixed')
   }
 
   // Inicializando Lectura
-  window.addEventListener('load', main);
+  window.addEventListener('load', main)
 
 })();

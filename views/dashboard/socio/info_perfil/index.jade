@@ -18,6 +18,7 @@ html(lang='es')
             input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
             button.grey.darken-2#btn_box_search
               i.material-icons search
+            .searchContainer
 
           div.Header__container--avatar.right
             img.responsive-img.circle(width='40', src='/images/default.jpg', alt='')
@@ -105,14 +106,15 @@ html(lang='es')
                         .IconsUser__box
                           .IconsUser__box--item.btn_change_order#editInfoUser.EditInfoData(data-edit="editDataUser")
                             i.material-icons mode_edit
-                          .IconsUser__box--item.btn_change_order#addPartner
-                            i.material-icons person_add
+                          //- if (result.datos_extra.afiliado.dni === null || result.datos_extra.afiliado.dni === '')
+                          //-   .IconsUser__box--item.btn_change_order#addPartner
+                          //-     i.material-icons person_add
                           .IconsUser__box--item
                             .dropdown-button(data-activates='dropdown2')
                               i.material-icons more_vert
                             ul#dropdown2.dropdown-content
                               li
-                                a(href='#!') texto
+                                a(href='#!') Eliminar Socio
                 ul.MoreInfoUser.collapsible.popout(data-collapsible='accordion')
                   if (result.organizacion !== 'Civil')
                     li.MoreInfoUser__box
