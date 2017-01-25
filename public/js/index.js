@@ -1136,9 +1136,16 @@
     var form = parent.find('.ModalForm__content--part')
 
     var updateData = meSerialize(form)
-    saveData(updateData)
+
+    if (form.attr('data-form-part') === 'tpl_data_spouse') {
+      console.log('jajaja')
+      saveData(updateData, 'spouse')
+    } else {
+      saveData(updateData)
+    }
     
     var data = JSON.parse(sessionStorage.getItem('CS'))
+    console.log(data)
     var preloader = document.createElement('div')
     preloader.setAttribute('class', 'progress')
     tpl = `<div class="indeterminate"></div>`
@@ -1146,6 +1153,8 @@
     // console.log(parent[0], modalFooter[0])
     modalFooter.append(preloader)
     console.log($('.progress'))
+
+    // console.log(updateData)
 
     $.ajax({
       type: 'POST',
@@ -1155,7 +1164,7 @@
         console.log(res)
         $('#modalForm').modal('close')
         sessionStorage.removeItem('CS')
-        location.reload()
+        // location.reload()
       },
       err: function(err){
         console.log(err)
@@ -1337,7 +1346,7 @@
           var $btn_moreInfo = $('.bt-aditional')
           $btn_moreInfo.css({'display': 'none'})
           $btn_update.removeClass('disabled')
-          tpl_data_spouse($modal_body, 'Editar Socio', null, data_socio)
+          tpl_data_spouse($modal_body, 'Editar Socio', null, data_socio.datos_extra.conyuge)
 
         } else if(data_infoEdit === 'editDataAfiliatte'){
 
