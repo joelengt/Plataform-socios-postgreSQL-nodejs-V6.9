@@ -170,22 +170,22 @@ html(lang='es')
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
                         p.Data__left.nombre_conyugue Nombre:
-                          span.Data__right #{result.nombre_conyugue}
+                          span.Data__right #{result.datos_extra.conyuge.nombres}
                       .Data
                         p.Data__left Apellidos:
-                          span.Data__right.apellido_conyugue #{result.apellido_conyugue}
+                          span.Data__right.apellido_conyugue #{result.datos_extra.conyuge.apellidos}
                       .Data
                         p.Data__left DNI:
-                          span.Data__right.dni_conyugue #{result.dni_conyugue}
+                          span.Data__right.dni_conyugue #{result.datos_extra.conyuge.dni}
                       .Data
                         p.Data__left Fecha de Nacimiento:
-                          span.Data__right.fecha_nacimiento_conyugue #{result.fecha_nacimiento_conyugue}
+                          span.Data__right.fecha_nacimiento_conyugue #{result.datos_extra.conyuge.fecha_nacimiento}
                       .Data
                         p.Data__left Email:
-                          span.Data__right.email_conyugue #{result.email_conyugue}
+                          span.Data__right.email_conyugue #{result.datos_extra.conyuge.email}
                       .Data
                         p.Data__left Celular:
-                          span.Data__right.celular_conyugue #{result.celular_conyugue}
+                          span.Data__right.celular_conyugue #{result.datos_extra.conyuge.celular}
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Afiliado
