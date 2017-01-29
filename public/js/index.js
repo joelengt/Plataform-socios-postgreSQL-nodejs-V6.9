@@ -418,13 +418,13 @@
   // Paramtros de filtro
   function workFilter(limitEachPage, contentHtml, type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic) {
 
-    // console.log(type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic)
+    console.log(type_partner, situation_partner, type_payment, situation_work, letter_declaration, onomastic)
     let listUserFound = [];
     // let limitEachPage = limitEachPage;
 
     $.ajax({
       url: `/dashboard/socios-clientes/filter/table/0/columns/params?tipo_socio=${type_partner}&situacion_socio=${situation_partner}&tipo_pago=${type_payment}&situacion_trabajo=${situation_work}&carta_declaratoria=${letter_declaration}&onomastico=${onomastic}`,
-      method: 'get',
+      method: 'GET',
       success: function(listUsuarios){
         console.log(listUsuarios.list)
         contentHtml.innerHTML = '';
@@ -452,8 +452,9 @@
     // var storage = sessionStorage.getItem('CS')
     var dataForm = JSON.parse(sessionStorage.getItem('CS'))
     console.log(data)
+    console.log(extra)
     // console.log(new_Data)
-    if (extra !== null) {
+    if (extra) {
       dataForm.datos_extra = {}
       console.log(data)
       console.log(dataForm)
@@ -462,10 +463,10 @@
         data[i] = data[i].split('=')
       }
       if (extra === 'spouse') {
-        dataForm.datos_extra.conyugue = {}
+        dataForm.datos_extra.conyuge = {}
         console.log(data)
         for (var i = 0; i < data.length; i++) {
-          dataForm.datos_extra.conyugue[data[i][0]] = data[i][1] || ''
+          dataForm.datos_extra.conyuge[data[i][0]] = data[i][1] || ''
         }
       } else if(extra === 'afiliatte') {
         dataForm.datos_extra.afiliado = {}
@@ -624,7 +625,12 @@
     var btnPrev = parent.find('.btn-prev')
 
     var data = meSerialize(form)
-    saveData(data)
+
+    if (form.attr('data-form-part') === 'tpl_data_spouse') {
+      saveData(data, 'spouse')
+    } else {
+      saveData(data)
+    }
 
     actionBtnPrev(form, dataPart, modal_body, btnMore, btnPrev, btnNext)
   }
@@ -978,7 +984,25 @@
 
     var dateNow = time
 
-    var data = params || JSON.parse(sessionStorage.getItem('CS')) || null
+    var dataCs
+
+    if (JSON.parse(sessionStorage.getItem('CS'))) {
+      // console.log(JSON.parse(sessionStorage.getItem('CS')))
+      if (JSON.parse(sessionStorage.getItem('CS')).datos_extra === undefined) {
+        dataCS = JSON.parse(sessionStorage.getItem('CS'))
+        // console.log(dataCS)
+        dataCS.datos_extra =  {}
+        dataCS.datos_extra.conyuge =  {nombres:null, apellidos:null, dni:null, fecha_nacimiento:null, email:null, celular: null}
+      } else {
+        dataCS = JSON.parse(sessionStorage.getItem('CS'))
+      }
+    }
+
+    var data = params || dataCS.datos_extra.conyuge || null
+    console.log(data)
+    // var conyuge = data.datos_extra.conyuge
+    // {nombres:null, apellidos:null, dni:null, fecha_nacimiento:null, email:null, celular: null}
+    // console.log(conyuge)
     var content = document.createElement('form')
     content.setAttribute('class', 'ModalForm__content--part')
     content.setAttribute('id', 'ModalForm__content--part')
@@ -988,31 +1012,31 @@
           <h6 class="Subtitle">DATOS DE CÓNYUGUE</h6>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.datos_extra.conyugue.nombre || ''}" name="nombre" id="nombre" type="text" class="validate">
-              <label for="nombre">Nombre</label>
+              <input value="${data.nombres || ''}" name="nombres" id="nombres" type="text" class="validate">
+              <label for="nombres">Nombre</label>
             </div>
             <div class="input-field col s5">
-              <input value="${data.datos_extra.conyugue.apellido || ''}" name="apellido" id="apellido" type="text" class="validate">
-              <label for="apellido">Apellido</label>
+              <input value="${data.apellidos || ''}" name="apellidos" id="apellidos" type="text" class="validate">
+              <label for="apellidos">Apellido</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.datos_extra.conyugue.dni || ''}" name="dni" id="dni" type="number" class="validate">
+              <input value="${data.dni || ''}" name="dni" id="dni" type="number" class="validate">
               <label for="dni">DNI</label>
             </div>
             <div class="input-field col s5">
               <label class="date" for="fecha_nacimiento">Fecha de Nacimiento</label>
-              <input value="${data.datos_extra.conyugue.fecha_nacimiento || dateNow}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="" max="${dateNow}">
+              <input value="${data.fecha_nacimiento || dateNow}" name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="" max="${dateNow}">
             </div>
           </div>
           <div class="row">
             <div class="input-field col s5">
-              <input value="${data.datos_extra.conyugue.email || ''}" name="email" id="email" type="text" class="validate">
+              <input value="${data.email || ''}" name="email" id="email" type="text" class="validate">
               <label for="email">Email</label>
             </div>
             <div class="input-field col s5">
-              <input value="${data.datos_extra.conyugue.celular || ''}" name="celular" id="celular" type="number">
+              <input value="${data.celular || ''}" name="celular" id="celular" type="number">
               <label class="number" for="celular">Celular</label>
             </div>
           </div>`
@@ -1020,7 +1044,7 @@
     content.innerHTML = tpl
     modal_body.append(content)
 
-    $('#dni_conyugue').on('keypress', function(){
+    $('#dni').on('keypress', function(){
       nombre=$(this).val();       
       //Comprobamos la longitud de caracteres
       if (nombre.length<8){
@@ -1112,9 +1136,16 @@
     var form = parent.find('.ModalForm__content--part')
 
     var updateData = meSerialize(form)
-    saveData(updateData)
+
+    if (form.attr('data-form-part') === 'tpl_data_spouse') {
+      console.log('jajaja')
+      saveData(updateData, 'spouse')
+    } else {
+      saveData(updateData)
+    }
     
     var data = JSON.parse(sessionStorage.getItem('CS'))
+    console.log(data)
     var preloader = document.createElement('div')
     preloader.setAttribute('class', 'progress')
     tpl = `<div class="indeterminate"></div>`
@@ -1122,6 +1153,8 @@
     // console.log(parent[0], modalFooter[0])
     modalFooter.append(preloader)
     console.log($('.progress'))
+
+    // console.log(updateData)
 
     $.ajax({
       type: 'POST',
@@ -1131,7 +1164,7 @@
         console.log(res)
         $('#modalForm').modal('close')
         sessionStorage.removeItem('CS')
-        location.reload()
+        // location.reload()
       },
       err: function(err){
         console.log(err)
@@ -1313,7 +1346,7 @@
           var $btn_moreInfo = $('.bt-aditional')
           $btn_moreInfo.css({'display': 'none'})
           $btn_update.removeClass('disabled')
-          tpl_data_spouse($modal_body, 'Editar Socio', null, data_socio)
+          tpl_data_spouse($modal_body, 'Editar Socio', null, data_socio.datos_extra.conyuge)
 
         } else if(data_infoEdit === 'editDataAfiliatte'){
 
