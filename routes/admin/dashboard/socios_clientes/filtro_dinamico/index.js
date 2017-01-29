@@ -30,10 +30,9 @@ function isLoggedIn(req, res, next) {
 
 // READ One item by id from list
 app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
-    if(req.user.permiso === users_type.onwers ||
-       req.user.permiso === users_type.admins ||
-       req.user.permiso === users_type.officers ||
-       req.user.permiso === users_type.viewer) {
+    if(req.user.permiso === users_type.super_admin ||
+       req.user.permiso === users_type.administrador ||
+       req.user.permiso === users_type.tesorero) {
 
         var table_select = Number(req.params.table_select);
 
