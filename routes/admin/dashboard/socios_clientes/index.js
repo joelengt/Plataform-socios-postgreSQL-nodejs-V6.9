@@ -711,6 +711,9 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
 
                        if(req.body.hasOwnProperty('datos_extra')) {
 
+                           console.log('DATOS EXTRA DEL CLIENTE');
+                           console.log(req.body.datos_extra);
+
                            var datos_extra = req.body.datos_extra;
 
                            // Obteniendo datos del conyuge
@@ -757,6 +760,9 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                                     // Actualizando conyuge
                                     if(datos_extra.conyuge !== undefined && datos_extra.conyuge !== null) {
 
+                                        console.log('DATOS CONYUGE PASARON');
+                                        console.log(datos_extra.conyuge);
+
                                          socioNuevo.datos_extra.conyuge.nombres =           socio_user.datos_extra.conyuge.nombres;
                                          socioNuevo.datos_extra.conyuge.apellidos =         socio_user.datos_extra.conyuge.apellidos;
                                          socioNuevo.datos_extra.conyuge.dni =               socio_user.datos_extra.conyuge.dni;
@@ -789,7 +795,17 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                                          }
 
                                          // Guardando conyuge en la DB
-                                         client.query(`UPDATE ${ data_value_tablas[1] } SET
+                                        
+                                        console.log('tabla ', data_value_tablas[1]);
+
+                                        console.log('datos socio');
+                                        console.log(socioNuevo);
+
+                                        console.log('id socio');
+                                        console.log(socio_id);
+
+                                         // SQL Query > Select Data
+                                        client.query(`UPDATE ${ data_value_tablas[1] } SET
                                                       nombres =           '${ socioNuevo.datos_extra.conyuge.nombres }',
                                                       apellidos =         '${ socioNuevo.datos_extra.conyuge.apellidos }',
                                                       dni =               '${ socioNuevo.datos_extra.conyuge.dni }',
@@ -797,11 +813,10 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                                                       celular =           '${ socioNuevo.datos_extra.conyuge.celular }',
                                                       email =             '${ socioNuevo.datos_extra.conyuge.email }'
                                                       WHERE 
-                                                      id = '${ socio_id }';
+                                                      id_socio_afiliado = '${ socio_id }';
                                                       `);
 
                                           console.log('El conyuge del socio fue actualizado');
-
 
                                     }
 
@@ -864,9 +879,9 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                                                       email =              '${ socioNuevo.datos_extra.afiliado.email }',
                                                       celular =            '${ socioNuevo.datos_extra.afiliado.celular }',
                                                       telefono =           '${ socioNuevo.datos_extra.afiliado.telefono }',
-                                                      carta_declaratoria = '${ socioNuevo.datos_extra.afiliado.carta_declaratoria }',
+                                                      carta_declaratoria = '${ socioNuevo.datos_extra.afiliado.carta_declaratoria }'
                                                       WHERE 
-                                                      id = '${ socio_id }';
+                                                      id_socio_afiliado = '${ socio_id }';
                                                       `);
 
                                           console.log('El afiliado del socio fue actualizado');
