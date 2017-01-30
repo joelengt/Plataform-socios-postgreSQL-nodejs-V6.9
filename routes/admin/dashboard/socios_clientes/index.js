@@ -130,11 +130,53 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
                         })
                     } 
 
-                    res.status(200).json({
-                        status: 'ok',
-                        result: results[0],
-                        message: 'El socio cliente fue encontrado en la base de datos',
-                        user: req.user
+                    var socio_user = results[0];
+                    var results_conyugue = [];
+                    var results_afiliado = [];
+                    
+                    // Obteniendo datos del conyuge 
+                    const query_conyugue = client.query(`SELECT * FROM ${ data_value_tablas[1] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                    
+                    query_conyugue.on('row', (row) => {
+                        results_conyugue.push(row)
+                    })
+
+                    query_conyugue.on('end', () => {
+                        done();
+
+                        socio_user.datos_extra = {
+                          conyuge: '',
+                          afiliado: ''
+                        }
+
+                        if(results_conyugue.length !== 0) {
+                            socio_user.datos_extra.conyuge = results_conyugue[0]
+                        } 
+
+                        // Obteniendo datos del afiliado
+                        const query_afiliado = client.query(`SELECT * FROM ${ data_value_tablas[2] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                        
+                        query_afiliado.on('row', (row) => {
+                            results_afiliado.push(row)
+                        })
+
+                        query_afiliado.on('end', () => {
+                            done();
+
+
+                            if(results_afiliado.length !== 0) {
+                                socio_user.datos_extra.afiliado = results_afiliado[0]
+                            } 
+
+                            res.status(200).json({
+                                status: 'ok',
+                                result: socio_user,
+                                message: 'El socio cliente fue encontrado en la base de datos',
+                                user: req.user
+                            })
+
+                        })
+
                     })
 
                 })
@@ -158,10 +200,10 @@ app.get('/item/to-json/:table_select/:socio_id', isLoggedIn, function (req, res)
 });
 
 // CREATE item for list
-app.post('/item/socio/add/:table_select', function (req, res) {
-    // if(req.user.permiso === users_type.super_admin ||
-    //     req.user.permiso === users_type.administrador ||
-    //     req.user.permiso === users_type.tesorero) {
+app.post('/item/socio/add/:table_select', isLoggedIn, function (req, res) {
+    if(req.user.permiso === users_type.super_admin ||
+        req.user.permiso === users_type.administrador ||
+        req.user.permiso === users_type.tesorero) {
 
         var table_select = Number(req.params.table_select);
 
@@ -239,12 +281,36 @@ app.post('/item/socio/add/:table_select', function (req, res) {
         if(req.body.hasOwnProperty('datos_extra')) {
           var datos_extra = req.body.datos_extra;
 
-          socioNuevo.datos_extra.conyuge.nombres = datos_extra.conyuge.nombre || '';
-          socioNuevo.datos_extra.conyuge.apellidos = datos_extra.conyuge.apellidos || '';
-          socioNuevo.datos_extra.conyuge.dni = datos_extra.conyuge.dni || '';
-          socioNuevo.datos_extra.conyuge.fecha_nacimiento = datos_extra.conyuge.fecha_nacimiento || '';
-          socioNuevo.datos_extra.conyuge.celular = datos_extra.conyuge.celular || '';
-          socioNuevo.datos_extra.conyuge.email = datos_extra.conyuge.email || '';
+          // Actualizando conyuge
+          if(datos_extra.conyuge !== undefined && datos_extra.conyuge !== null) {
+
+               if(datos_extra.conyuge.nombres !== '' && datos_extra.conyuge.nombres !== undefined) {
+                 socioNuevo.datos_extra.conyuge.nombres =  datos_extra.conyuge.nombres;
+               }
+
+               if(datos_extra.conyuge.apellidos !== '' && datos_extra.conyuge.apellidos !== undefined) {
+                 socioNuevo.datos_extra.conyuge.apellidos =  datos_extra.conyuge.apellidos;
+               }
+
+               if(datos_extra.conyuge.dni !== '' && datos_extra.conyuge.dni !== undefined) {
+                 socioNuevo.datos_extra.conyuge.dni =  datos_extra.conyuge.dni;
+               }
+
+               if(datos_extra.conyuge.fecha_nacimiento !== '' && datos_extra.conyuge.fecha_nacimiento !== undefined) {
+                 socioNuevo.datos_extra.conyuge.fecha_nacimiento =  datos_extra.conyuge.fecha_nacimiento;
+               }
+
+               if(datos_extra.conyuge.celular !== '' && datos_extra.conyuge.celular !== undefined) {
+                 socioNuevo.datos_extra.conyuge.celular =  datos_extra.conyuge.celular;
+               }
+
+               if(datos_extra.conyuge.email !== '' && datos_extra.conyuge.email !== undefined) {
+                 socioNuevo.datos_extra.conyuge.email =  datos_extra.conyuge.email;
+               }
+
+                console.log('El conyuge del socio fue asociado con la data enviada');
+
+          }
 
         }
 
@@ -451,13 +517,13 @@ app.post('/item/socio/add/:table_select', function (req, res) {
           })
         }
 
-    // } else {
-    //     console.log('El usuario no esta autentificado. Requiere logearse')
-    //     res.status(403).json({
-    //         status: 'not_access',
-    //         message: 'El usuario no esta autentificado. Requiere logearse'
-    //     })
-    // }
+    } else {
+        console.log('El usuario no esta autentificado. Requiere logearse')
+        res.status(403).json({
+            status: 'not_access',
+            message: 'El usuario no esta autentificado. Requiere logearse'
+        })
+    }
 })
 
 // DELETE item from list
@@ -615,7 +681,204 @@ app.put('/item/update/:table_select/:socio_id', isLoggedIn, function (req, res) 
                            tipo_pago:                    req.body.tipo_pago         || results[0].tipo_pago,
                            situacion_socio:              req.body.situacion_socio   || results[0].situacion_socio,
                            foto:                         req.body.foto              || results[0].foto,
-                           situacion_alerta:             req.body.situacion_alerta  || results[0].situacion_alerta
+                           situacion_alerta:             req.body.situacion_alerta  || results[0].situacion_alerta,
+                           datos_extra:  {
+                                 conyuge: {
+                                   nombres:               '',
+                                   apellidos:             '',
+                                   dni:                   '',
+                                   fecha_nacimiento:      '',
+                                   celular:               '',
+                                   fecha_ingreso:         '',
+                                   email:                 '',
+                                   id_socio_afiliado:     ''
+                                 },
+                                 afiliado: {
+                                   nombres:              '',
+                                   apellidos:            '',
+                                   dni:                  '',
+                                   fecha_nacimiento:     '',
+                                   direccion:            '',
+                                   email:                '',
+                                   celular:              '',
+                                   telefono:             '',
+                                   fecha_ingreso:        '',
+                                   carta_declaratoria:   '',
+                                   id_socio_afiliado:    ''
+                                 }
+                           }
+                       }
+
+                       if(req.body.hasOwnProperty('datos_extra')) {
+
+                           var datos_extra = req.body.datos_extra;
+
+                           // Obteniendo datos del conyuge
+
+                           // Obteniendos datos del afiliado
+                           var socio_user = results[0];
+                           var results_conyugue = [];
+                           var results_afiliado = [];
+                           
+                           // Obteniendo datos del conyuge 
+                           const query_conyugue = client.query(`SELECT * FROM ${ data_value_tablas[1] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                           
+                           query_conyugue.on('row', (row) => {
+                               results_conyugue.push(row)
+                           })
+
+                           query_conyugue.on('end', () => {
+                               done();
+
+                               socio_user.datos_extra = {
+                                 conyuge: '',
+                                 afiliado: ''
+                               }
+
+                               if(results_conyugue.length !== 0) {
+                                   socio_user.datos_extra.conyuge = results_conyugue[0]
+                               } 
+
+                               // Obteniendo datos del afiliado
+                               const query_afiliado = client.query(`SELECT * FROM ${ data_value_tablas[2] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                               
+                               query_afiliado.on('row', (row) => {
+                                   results_afiliado.push(row)
+                               })
+
+                               query_afiliado.on('end', () => {
+                                   done();
+
+
+                                   if(results_afiliado.length !== 0) {
+                                       socio_user.datos_extra.afiliado = results_afiliado[0]
+                                   } 
+
+                                    // Actualizando conyuge
+                                    if(datos_extra.conyuge !== undefined && datos_extra.conyuge !== null) {
+
+                                         socioNuevo.datos_extra.conyuge.nombres =           socio_user.datos_extra.conyuge.nombres;
+                                         socioNuevo.datos_extra.conyuge.apellidos =         socio_user.datos_extra.conyuge.apellidos;
+                                         socioNuevo.datos_extra.conyuge.dni =               socio_user.datos_extra.conyuge.dni;
+                                         socioNuevo.datos_extra.conyuge.fecha_nacimiento =  socio_user.datos_extra.conyuge.fecha_nacimiento;
+                                         socioNuevo.datos_extra.conyuge.celular =           socio_user.datos_extra.conyuge.celular;
+                                         socioNuevo.datos_extra.conyuge.email =             socio_user.datos_extra.conyuge.email;
+
+                                         if(datos_extra.conyuge.nombres !== '' && datos_extra.conyuge.nombres !== undefined) {
+                                           socioNuevo.datos_extra.conyuge.nombres =  datos_extra.conyuge.nombres;
+                                         }
+
+                                         if(datos_extra.conyuge.apellidos !== '' && datos_extra.conyuge.apellidos !== undefined) {
+                                           socioNuevo.datos_extra.conyuge.apellidos =  datos_extra.conyuge.apellidos;
+                                         }
+
+                                         if(datos_extra.conyuge.dni !== '' && datos_extra.conyuge.dni !== undefined) {
+                                           socioNuevo.datos_extra.conyuge.dni =  datos_extra.conyuge.dni;
+                                         }
+
+                                         if(datos_extra.conyuge.fecha_nacimiento !== '' && datos_extra.conyuge.fecha_nacimiento !== undefined) {
+                                           socioNuevo.datos_extra.conyuge.fecha_nacimiento =  datos_extra.conyuge.fecha_nacimiento;
+                                         }
+
+                                         if(datos_extra.conyuge.celular !== '' && datos_extra.conyuge.celular !== undefined) {
+                                           socioNuevo.datos_extra.conyuge.celular =  datos_extra.conyuge.celular;
+                                         }
+
+                                         if(datos_extra.conyuge.email !== '' && datos_extra.conyuge.email !== undefined) {
+                                           socioNuevo.datos_extra.conyuge.email =  datos_extra.conyuge.email;
+                                         }
+
+                                         // Guardando conyuge en la DB
+                                         client.query(`UPDATE ${ data_value_tablas[1] } SET
+                                                      nombres =           '${ socioNuevo.datos_extra.conyuge.nombres }',
+                                                      apellidos =         '${ socioNuevo.datos_extra.conyuge.apellidos }',
+                                                      dni =               '${ socioNuevo.datos_extra.conyuge.dni }',
+                                                      fecha_nacimiento =  '${ socioNuevo.datos_extra.conyuge.fecha_nacimiento }',
+                                                      celular =           '${ socioNuevo.datos_extra.conyuge.celular }',
+                                                      email =             '${ socioNuevo.datos_extra.conyuge.email }'
+                                                      WHERE 
+                                                      id = '${ socio_id }';
+                                                      `);
+
+                                          console.log('El conyuge del socio fue actualizado');
+
+
+                                    }
+
+                                    // Actualizando afiliado
+                                    if(datos_extra.afiliado !== undefined && datos_extra.afiliado !== null) {
+                                         socioNuevo.datos_extra.afiliado.nombres =             socio_user.datos_extra.afiliado.nombres;
+                                         socioNuevo.datos_extra.afiliado.apellidos =           socio_user.datos_extra.afiliado.apellidos;
+                                         socioNuevo.datos_extra.afiliado.dni =                 socio_user.datos_extra.afiliado.dni;
+                                         socioNuevo.datos_extra.afiliado.fecha_nacimiento =    socio_user.datos_extra.afiliado.fecha_nacimiento;
+                                         socioNuevo.datos_extra.afiliado.direccion =           socio_user.datos_extra.afiliado.direccion;
+                                         socioNuevo.datos_extra.afiliado.email =               socio_user.datos_extra.afiliado.email;
+                                         socioNuevo.datos_extra.afiliado.celular =             socio_user.datos_extra.afiliado.celular;
+                                         socioNuevo.datos_extra.afiliado.telefono =            socio_user.datos_extra.afiliado.telefono;
+                                         socioNuevo.datos_extra.afiliado.carta_declaratoria =  socio_user.datos_extra.afiliado.carta_declaratoria;
+                                          
+                                         if(datos_extra.afiliado.nombres !== '' && datos_extra.afiliado.nombres !== undefined) {
+                                           socioNuevo.datos_extra.afiliado.nombres =  datos_extra.afiliado.nombres;
+                                         }
+
+                                         if(datos_extra.afiliado.apellidos !== '' && datos_extra.afiliado.apellidos !== undefined) {
+                                          socioNuevo.datos_extra.afiliado.apellidos =   datos_extra.afiliado.apellidos;
+                                         }
+
+                                         if(datos_extra.afiliado.dni !== '' && datos_extra.afiliado.dni !== undefined) {
+                                            socioNuevo.datos_extra.afiliado.dni =  datos_extra.afiliado.dni;
+                                         }
+
+                                         if(datos_extra.afiliado.fecha_nacimiento !== '' && datos_extra.afiliado.fecha_nacimiento !== undefined) {
+                                            socioNuevo.datos_extra.afiliado.fecha_nacimiento =   datos_extra.afiliado.fecha_nacimiento;
+                                         }
+
+                                         if(datos_extra.afiliado.direccion !== '' && datos_extra.afiliado.direccion !== undefined) {
+                                           socioNuevo.datos_extra.afiliado.direccion =  datos_extra.afiliado.direccion;
+                                         }
+
+                                         if(datos_extra.afiliado.email !== '' && datos_extra.afiliado.email !== undefined) {
+                                            socioNuevo.datos_extra.afiliado.email =   datos_extra.afiliado.email;
+                                         }
+
+                                         if(datos_extra.afiliado.celular !== '' && datos_extra.afiliado.celular !== undefined) {
+                                            socioNuevo.datos_extra.afiliado.celular =  datos_extra.afiliado.celular;
+                                         }
+
+                                         if(datos_extra.afiliado.telefono !== '' && datos_extra.afiliado.telefono !== undefined) {
+                                            socioNuevo.datos_extra.afiliado.telefono =  datos_extra.afiliado.telefono;
+                                         }
+
+                                         if(datos_extra.afiliado.carta_declaratoria !== '' && datos_extra.afiliado.carta_declaratoria !== undefined) {
+                                            socioNuevo.datos_extra.afiliado.carta_declaratoria =  datos_extra.afiliado.carta_declaratoria;
+                                         }
+
+
+                                         // Guardando afiliado en la DB
+                                         client.query(`UPDATE ${ data_value_tablas[2] } SET
+                                                      nombres =            '${ socioNuevo.datos_extra.afiliado.nombres }',
+                                                      apellidos =          '${ socioNuevo.datos_extra.afiliado.apellidos }',
+                                                      dni =                '${ socioNuevo.datos_extra.afiliado.dni }',
+                                                      fecha_nacimiento =   '${ socioNuevo.datos_extra.afiliado.fecha_nacimiento }',
+                                                      direccion =          '${ socioNuevo.datos_extra.afiliado.direccion }',
+                                                      email =              '${ socioNuevo.datos_extra.afiliado.email }',
+                                                      celular =            '${ socioNuevo.datos_extra.afiliado.celular }',
+                                                      telefono =           '${ socioNuevo.datos_extra.afiliado.telefono }',
+                                                      carta_declaratoria = '${ socioNuevo.datos_extra.afiliado.carta_declaratoria }',
+                                                      WHERE 
+                                                      id = '${ socio_id }';
+                                                      `);
+
+                                          console.log('El afiliado del socio fue actualizado');
+
+
+                                    }
+
+
+                               })
+
+                           })
+
                        }
 
                        console.log('Datos listos para subirse');
@@ -726,11 +989,56 @@ app.get('/item/:table_select/:socio_id', isLoggedIn, function (req, res) {
                         })
                     } 
 
-                    res.status(200).render('./dashboard/socio/info_perfil/index.jade',{
-                        status: 'ok',
-                        result: results[0],
-                        message: 'El socio cliente fue encontrado en la base de datos',
-                        user: req.user
+                    var socio_user = results[0];
+                    var results_conyugue = [];
+                    var results_afiliado = [];
+                    
+                    // Obteniendo datos del conyuge 
+                    const query_conyugue = client.query(`SELECT * FROM ${ data_value_tablas[1] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                    
+                    query_conyugue.on('row', (row) => {
+                        results_conyugue.push(row)
+                    })
+
+                    query_conyugue.on('end', () => {
+                        done();
+
+                        socio_user.datos_extra = {
+                          conyuge: '',
+                          afiliado: ''
+                        }
+
+                        if(results_conyugue.length !== 0) {
+                            socio_user.datos_extra.conyuge = results_conyugue[0]
+                        } 
+
+                        // Obteniendo datos del afiliado
+                        const query_afiliado = client.query(`SELECT * FROM ${ data_value_tablas[2] } WHERE id_socio_afiliado = '${ socio_user.id }';`)
+                        
+                        query_afiliado.on('row', (row) => {
+                            results_afiliado.push(row)
+                        })
+
+                        query_afiliado.on('end', () => {
+                            done();
+
+
+                            if(results_afiliado.length !== 0) {
+                                socio_user.datos_extra.afiliado = results_afiliado[0]
+                            } 
+
+                            console.log('DATOS EL SOCIO ');
+                            console.log(socio_user);
+
+                            res.status(200).render('./dashboard/socio/info_perfil/index.jade',{
+                                status: 'ok',
+                                result: socio_user,
+                                message: 'El socio cliente fue encontrado en la base de datos',
+                                user: req.user
+                            })
+
+                        })
+
                     })
 
                 })

@@ -18,6 +18,7 @@ html(lang='es')
             input#txt_box_search(type='search', required='', placeholder="Buscar socio por nombre o DNI")
             button.grey.darken-2#btn_box_search
               i.material-icons search
+            .searchContainer
 
           div.Header__container--avatar.right
             img.responsive-img.circle(width='40', src='/images/default.jpg', alt='')
@@ -105,14 +106,15 @@ html(lang='es')
                         .IconsUser__box
                           .IconsUser__box--item.btn_change_order#editInfoUser.EditInfoData(data-edit="editDataUser")
                             i.material-icons mode_edit
-                          .IconsUser__box--item.btn_change_order#addPartner
-                            i.material-icons person_add
+                          //- if (result.datos_extra.afiliado.dni === null || result.datos_extra.afiliado.dni === '')
+                          //-   .IconsUser__box--item.btn_change_order#addPartner
+                          //-     i.material-icons person_add
                           .IconsUser__box--item
                             .dropdown-button(data-activates='dropdown2')
                               i.material-icons more_vert
                             ul#dropdown2.dropdown-content
                               li
-                                a(href='#!') texto
+                                a(href='#!') Eliminar Socio
                 ul.MoreInfoUser.collapsible.popout(data-collapsible='accordion')
                   if (result.organizacion !== 'Civil')
                     li.MoreInfoUser__box
@@ -168,22 +170,22 @@ html(lang='es')
                     .MoreInfoUser__box--content.collapsible-body
                       .Data
                         p.Data__left.nombre_conyugue Nombre:
-                          span.Data__right #{result.nombre_conyugue}
+                          span.Data__right #{result.datos_extra.conyuge.nombres}
                       .Data
                         p.Data__left Apellidos:
-                          span.Data__right.apellido_conyugue #{result.apellido_conyugue}
+                          span.Data__right.apellido_conyugue #{result.datos_extra.conyuge.apellidos}
                       .Data
                         p.Data__left DNI:
-                          span.Data__right.dni_conyugue #{result.dni_conyugue}
+                          span.Data__right.dni_conyugue #{result.datos_extra.conyuge.dni}
                       .Data
                         p.Data__left Fecha de Nacimiento:
-                          span.Data__right.fecha_nacimiento_conyugue #{result.fecha_nacimiento_conyugue}
+                          span.Data__right.fecha_nacimiento_conyugue #{result.datos_extra.conyuge.fecha_nacimiento}
                       .Data
                         p.Data__left Email:
-                          span.Data__right.email_conyugue #{result.email_conyugue}
+                          span.Data__right.email_conyugue #{result.datos_extra.conyuge.email}
                       .Data
                         p.Data__left Celular:
-                          span.Data__right.celular_conyugue #{result.celular_conyugue}
+                          span.Data__right.celular_conyugue #{result.datos_extra.conyuge.celular}
                   li.MoreInfoUser__box
                     .MoreInfoUser__box--title.collapsible-header
                       | Datos de Afiliado

@@ -1,7 +1,7 @@
 .Header
 	position relative
 	width 100%
-	z-index 50
+	z-index 60
 	height 60px
 	padding-left 30px
 	background-color GrisGoogle
@@ -45,6 +45,25 @@
 					font-size 1rem !important
 					height 30px
 					line-height 30px
+			.searchContainer
+				top 47px
+				box-shadow 0 1px 3px #d8d8d8
+				display none
+				width 100%
+				position absolute
+				max-height 400px
+				background-color white
+				overflow auto
+				&__item
+					border-bottom 1px solid #ececec
+					&--link
+						display block
+						color color_text1
+						padding 0 1em
+						font-size 14px
+						&:hover
+							background-color #f9f9f9
+							// color color_text1
 		&--avatar
 			height 60px
 			img
