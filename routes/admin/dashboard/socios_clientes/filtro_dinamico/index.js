@@ -206,7 +206,7 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                         filtro_onomastico = 8;
                         break;
 
-                    case 'Septiembre':
+                    case 'Setiembre':
                         filtro_onomastico = 9;
                         break;
 
