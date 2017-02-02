@@ -85,11 +85,11 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                 // Evaluando el filtro => 'Tipo Socio'
                 switch (socio_filter_params.tipo_socio) {
                     case 'Activos':
-                        filtro_tipo_socio = "Activos";
+                        filtro_tipo_socio = "ACTIVO";
                         break;
 
                     case 'Adherentes':
-                        filtro_tipo_socio = "Adherentes";
+                        filtro_tipo_socio = "ADHERENTE";
                         break;
 
                     case 'Todos':
@@ -101,11 +101,11 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                 // Evaluando el filtro => 'Situacion de socio'
                 switch (socio_filter_params.situacion_socio) {
                     case 'Habil':
-                        filtro_situacion_socio = "Habil";
+                        filtro_situacion_socio = "HABIL";
                         break;
 
                     case 'Inhabil':
-                        filtro_situacion_socio = "Inhabil";
+                        filtro_situacion_socio = "INHABIL";
                         break;
 
                     case 'Renunciante':
@@ -133,7 +133,7 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                         break;
 
                     case 'Pago Directo':
-                        filtro_tipo_pago = "Pago Directo";
+                        filtro_tipo_pago = "PAGO DIRECTO";
                         break;
 
                     case 'Todos':
@@ -144,11 +144,11 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                 // Evaluando el filtro => 'Situación de trabajo'
                 switch (socio_filter_params.situacion_trabajo) {
                     case 'Actividad':
-                        filtro_situacion_trabajo = "Actividad";
+                        filtro_situacion_trabajo = "ACTIVIDAD";
                         break;
 
                     case 'Retiro':
-                        filtro_situacion_trabajo = "Retiro";
+                        filtro_situacion_trabajo = "RETIRO";
                         break;
 
                     case 'Todos':
@@ -159,11 +159,11 @@ app.get('/table/:table_select/columns/params', isLoggedIn, function (req, res) {
                 // Evaluando el filtro => 'Carta declaratoria'
                 switch (socio_filter_params.carta_declaratoria) {
                     case 'Si':
-                        filtro_carta_declaratoria = "Si";
+                        filtro_carta_declaratoria = "1";
                         break;
 
                     case 'No':
-                        filtro_carta_declaratoria = "No";
+                        filtro_carta_declaratoria = "0";
                         break;
 
                     case 'Todos':
