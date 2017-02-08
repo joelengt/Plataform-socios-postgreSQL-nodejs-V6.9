@@ -1154,7 +1154,7 @@
     modalFooter.append(preloader)
     console.log($('.progress'))
 
-    // console.log(updateData)
+    console.log(data)
 
     $.ajax({
       type: 'POST',
@@ -1164,7 +1164,7 @@
         console.log(res)
         $('#modalForm').modal('close')
         sessionStorage.removeItem('CS')
-        // location.reload()
+        location.reload()
       },
       err: function(err){
         console.log(err)
@@ -1296,18 +1296,18 @@
 
             if (data_socio.organizacion === 'Civil') {
 
-              console.log('Pertenece a Fuerzas especiales')
+              console.log('Pertenece a civil')
               tpl_data_civil($modal_body, 'Editar Socio', null, data_socio)
 
             } else if(data_socio.organizacion === 'P.N.P'){
 
-              console.log('Pertenece a Fuerzas especiales')
-              tpl_data_pnp($modal_body, 'Editar Socio', $btn_prev, 'PNP', data_socio)
+              console.log('Pertenece a pnp')
+              tpl_data_pnp($modal_body, 'Editar Socio', null, 'PNP', data_socio)
 
             } else {
 
               console.log('Pertenece a Fuerzas especiales')
-              tpl_data_pnp($modal_body, 'Editar Socio', $btn_prev, 'Fuerzas', data_socio)
+              tpl_data_pnp($modal_body, 'Editar Socio', null, 'Fuerzas', data_socio)
 
             }
           })
@@ -1415,7 +1415,7 @@
     $txtBoxSearchByName.addEventListener('blur', function(){
       setTimeout(function(){
         $('.searchContainer').css({'display': 'none'})
-      }, 100)
+      }, 150)
     })
 
     // Filtro por caja de texto by name - Por coincidencia de parte de la palabra
